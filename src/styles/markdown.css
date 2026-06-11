@@ -51,7 +51,7 @@
 .markdown-content blockquote {
   margin-inline: 0;
   padding-inline-start: 1rem;
-  border-inline-start: 3px solid var(--color-purple);
+  border-inline-start: 3px solid var(--color-border-strong);
   color: var(--color-text-muted);
 }
 

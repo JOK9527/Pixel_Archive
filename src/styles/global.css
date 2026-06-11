@@ -1,4 +1,5 @@
 @import "./theme.css";
+@import "./pixel.css";
 
 *,
 *::before,
@@ -15,7 +16,16 @@ html {
 body {
   min-height: 100vh;
   margin: 0;
-  background: var(--color-bg);
+  background:
+    linear-gradient(
+      90deg,
+      transparent 0 calc(100% - 1px),
+      color-mix(in srgb, var(--color-border) 18%, transparent) calc(100% - 1px)
+    ),
+    var(--color-bg);
+  background-size: min(100%, 80rem) 100%;
+  background-position: center;
+  background-repeat: no-repeat;
   color: var(--color-text);
   font-family: var(--font-sans);
   line-height: 1.65;
@@ -39,7 +49,7 @@ a {
 }
 
 a {
-  color: var(--color-purple);
+  color: var(--color-accent);
   text-decoration-thickness: 0.08em;
   text-underline-offset: 0.2em;
 }
@@ -49,7 +59,7 @@ a:hover {
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-purple);
+  outline: 2px solid var(--color-accent);
   outline-offset: 3px;
 }
 

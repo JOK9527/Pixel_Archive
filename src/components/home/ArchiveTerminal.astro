@@ -52,23 +52,43 @@ const {
   .archive-terminal {
     position: relative;
     overflow: hidden;
-    border: 2px solid var(--color-border-strong);
+    border: 1px solid var(--color-border-strong);
     border-radius: var(--radius-sm);
-    background: var(--color-surface);
-    box-shadow: var(--shadow-pixel);
+    background: var(--color-surface-raised);
+    box-shadow:
+      var(--shadow-soft),
+      var(--shadow-inset);
+  }
+
+  .archive-terminal::before,
+  .archive-terminal::after {
+    position: absolute;
+    content: "";
+    pointer-events: none;
+  }
+
+  .archive-terminal::before {
+    top: 2.75rem;
+    right: 0;
+    width: 9rem;
+    height: 1px;
+    background:
+      repeating-linear-gradient(
+        90deg,
+        var(--color-border-strong) 0 6px,
+        transparent 6px 11px
+      );
+    opacity: 0.5;
   }
 
   .archive-terminal::after {
-    position: absolute;
-    right: -3rem;
-    bottom: -3rem;
-    width: 10rem;
-    height: 10rem;
-    border: 1px solid var(--color-purple-soft);
-    content: "";
-    opacity: 0.7;
-    transform: rotate(45deg);
-    pointer-events: none;
+    right: 1rem;
+    bottom: 1rem;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-right: var(--pixel-unit) solid var(--color-accent);
+    border-bottom: var(--pixel-unit) solid var(--color-accent);
+    opacity: 0.55;
   }
 
   .archive-terminal__topbar {
@@ -79,7 +99,11 @@ const {
     gap: 1rem;
     padding-inline: 1rem;
     border-bottom: 1px solid var(--color-border);
-    background: var(--color-surface-muted);
+    background: color-mix(
+      in srgb,
+      var(--color-surface-muted) 76%,
+      var(--color-surface)
+    );
   }
 
   .archive-terminal__topbar p {
@@ -106,7 +130,7 @@ const {
   }
 
   .archive-terminal__controls span:nth-child(2) {
-    background: var(--color-purple);
+    background: var(--color-accent);
   }
 
   .archive-terminal__controls span:nth-child(3) {
@@ -154,7 +178,7 @@ const {
     display: flex;
     align-items: center;
     margin-bottom: 0;
-    color: var(--color-purple);
+    color: var(--color-accent);
   }
 
   .archive-terminal__cursor {

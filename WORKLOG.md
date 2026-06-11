@@ -520,3 +520,46 @@ Pixel Archive 第一阶段基础版本满足构建、页面、内容、视觉、
 ### 下一步建议
 
 - Phase 10：迁移真实 Projects、Notes、Archive 和图片内容。
+
+## 2026-06-11 / Phase 10
+
+### 阶段
+
+Phase 10：视觉系统再校准
+
+### 完成内容
+
+- 重建浅色与暗色语义 token，新增 raised surface、status、pixel mark 等角色，暗色模式改为独立的低亮度墨黑 / 石灰层级。
+- 将紫色从普通结构边框降级为 active、focus、链接和少量像素角标使用的强调色。
+- 新增 `pixel-corners`、`pixel-ruler`、`pixel-dots` 和 `status-block` 基础视觉语法。
+- 统一 Archive Terminal、Save Slots、Project、Note、Archive、Lab、Empty State 等组件的中性边框、表面和状态反馈。
+- 为 Project 与 Lab 建立差异化 CSS 像素封面图形，不新增图片或第三方依赖。
+- 为首页增加低对比网格、刻度与坐标标记，增强留白秩序，不增加实质内容。
+- 保持 Notes 正文区域克制，像素装饰不进入连续阅读段落。
+- 修复 390px 首页装饰伪元素造成的 6px 横向溢出。
+
+### 边界
+
+- 未新增功能、路由、内容集合、真实内容或数据字段。
+- 未新增 Tailwind、UI 框架、动画库、CMS、数据库或 API。
+- 运行依赖保持 Astro 与 `@astrojs/mdx`。
+
+### 构建与验收结果
+
+- `npm run build`：通过，生成 9 个静态页面。
+- `npm run dev`：正常启动，Astro 6.4.6 ready。
+- 桌面端 9 个页面：加载正常，无横向溢出。
+- 390 × 844 移动端 9 个页面：无横向溢出。
+- 浅色 / 暗色主题：切换正常，刷新后暗色状态保持。
+- 浏览器控制台：0 error，0 warning。
+- 首页、Projects、Lab、Notes 正文和移动端截图：人工检查通过。
+- 源码差异空白检查：通过；两份阶段文档保留 Markdown 双空格硬换行。
+
+### 已知问题
+
+- 当前公开内容仍以规范占位内容为主，真实内容迁移不属于本阶段。
+- Git remote 与 Cloudflare Pages 尚未连接，本阶段未执行 push 或线上验收。
+
+### 下一步建议
+
+- 进入 Phase 11：小规模迁移真实 Projects、Notes、Archive 与图片内容。

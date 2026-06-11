@@ -26,9 +26,28 @@ const {
     margin-bottom: clamp(2.5rem, 6vw, 4.5rem);
   }
 
+  .section-header::after {
+    display: block;
+    width: min(9rem, 35%);
+    height: 1px;
+    margin-top: 1.35rem;
+    background:
+      repeating-linear-gradient(
+        90deg,
+        var(--color-border-strong) 0 7px,
+        transparent 7px 12px
+      );
+    content: "";
+    opacity: 0.6;
+  }
+
   .section-header--center {
     margin-inline: auto;
     text-align: center;
+  }
+
+  .section-header--center::after {
+    margin-inline: auto;
   }
 
   .section-header__eyebrow {

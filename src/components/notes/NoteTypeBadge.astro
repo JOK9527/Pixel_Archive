@@ -25,7 +25,7 @@ const meta = typeMeta[type];
     display: inline-flex;
     width: fit-content;
     padding: 0.28rem 0.48rem;
-    border: 1px solid currentColor;
+    border: 1px solid var(--color-border);
     border-radius: var(--radius-sm);
     font-family: var(--font-mono);
     font-size: 0.63rem;
@@ -36,11 +36,13 @@ const meta = typeMeta[type];
   }
 
   .note-type--purple {
-    color: var(--color-purple);
+    background: var(--color-accent-soft);
+    color: var(--color-accent);
   }
 
   .note-type--green {
-    color: var(--color-green);
+    background: var(--color-status-soft);
+    color: var(--color-status);
   }
 
   .note-type--neutral {

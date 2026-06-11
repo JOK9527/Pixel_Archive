@@ -32,7 +32,13 @@ const {
 } = Astro.props;
 ---
 
-<article class:list={["project-card", { "project-card--featured": featured }]}>
+<article
+  class:list={[
+    "project-card",
+    "pixel-corners",
+    { "project-card--featured": featured },
+  ]}
+>
   <a class="project-card__link" href={href} aria-label={`Open project: ${title}`}>
     <div class="project-card__cover">
       {
@@ -40,8 +46,10 @@ const {
           <img src={cover} alt="" loading="lazy" />
         ) : (
           <div class="project-card__placeholder" aria-hidden="true">
-            <span>PA</span>
-            <span>NO COVER DATA</span>
+            <div class="project-card__glyph">
+              {Array.from({ length: 15 }, (_, index) => <span data-index={index}></span>)}
+            </div>
+            <span>PROJECT / NO COVER</span>
           </div>
         )
       }
@@ -72,7 +80,7 @@ const {
     min-width: 0;
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
-    background: var(--color-surface);
+    background: var(--color-surface-raised);
     box-shadow: var(--shadow-soft);
     transition:
       border-color var(--transition-fast),
@@ -84,12 +92,14 @@ const {
   .project-card:focus-within {
     border-color: var(--color-border-strong);
     box-shadow: var(--shadow-pixel);
-    transform: translate(-2px, -2px);
+    transform: translate(-1px, -1px);
   }
 
   .project-card--featured {
-    border-width: 2px;
     border-color: var(--color-border-strong);
+    box-shadow:
+      inset 0 3px 0 var(--color-pixel-mark),
+      var(--shadow-soft);
   }
 
   .project-card__link {
@@ -121,15 +131,16 @@ const {
     background:
       linear-gradient(
         90deg,
-        transparent 0 94%,
-        color-mix(in srgb, var(--color-purple) 13%, transparent) 94%
+        transparent 0 calc(100% - 1px),
+        color-mix(in srgb, var(--color-border) 38%, transparent)
+          calc(100% - 1px)
       ),
       linear-gradient(
-        color-mix(in srgb, var(--color-green) 12%, transparent) 0 6%,
-        transparent 6% 100%
+        color-mix(in srgb, var(--color-border) 32%, transparent) 0 1px,
+        transparent 1px 100%
       ),
       var(--color-surface-muted);
-    background-size: 1rem 1rem;
+    background-size: 2rem 2rem;
     align-items: flex-end;
     justify-content: space-between;
     gap: 1rem;
@@ -140,11 +151,32 @@ const {
     letter-spacing: 0.08em;
   }
 
-  .project-card__placeholder span:first-child {
-    color: var(--color-purple);
-    font-size: 2rem;
-    letter-spacing: -0.08em;
-    line-height: 1;
+  .project-card__glyph {
+    display: grid;
+    width: 6.5rem;
+    height: 4.5rem;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.3rem;
+    align-items: end;
+  }
+
+  .project-card__glyph span {
+    min-height: 0.45rem;
+    background: var(--color-border-strong);
+  }
+
+  .project-card__glyph span:nth-child(4n + 1) {
+    height: 100%;
+    background: var(--color-pixel-mark);
+  }
+
+  .project-card__glyph span:nth-child(3n + 2) {
+    height: 55%;
+  }
+
+  .project-card__glyph span:nth-child(5n) {
+    height: 75%;
+    background: var(--color-accent);
   }
 
   .project-card__body {
@@ -190,7 +222,7 @@ const {
     padding: 0;
     flex-wrap: wrap;
     gap: 0.55rem;
-    color: var(--color-purple);
+    color: var(--color-accent);
     font-family: var(--font-mono);
     font-size: 0.65rem;
     list-style: none;
@@ -199,7 +231,7 @@ const {
   .project-card__action {
     margin-top: auto;
     padding-top: 1.3rem;
-    color: var(--color-purple);
+    color: var(--color-accent);
     font-family: var(--font-mono);
     font-size: 0.7rem;
     font-weight: 700;

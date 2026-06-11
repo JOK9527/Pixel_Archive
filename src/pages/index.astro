@@ -46,6 +46,12 @@ const saveSlots = [
 
 <BaseLayout>
   <div class="home">
+    <span class="home__coordinate home__coordinate--left" aria-hidden="true">
+      ARCHIVE / 00—08
+    </span>
+    <span class="home__coordinate home__coordinate--right" aria-hidden="true">
+      INDEX / QUIET
+    </span>
     <ArchiveTerminal
       title="Pixel Archive"
       statusText="archive online"
@@ -61,31 +67,80 @@ const saveSlots = [
 <style>
   .home {
     position: relative;
-  }
-
-  .home::before,
-  .home::after {
-    position: absolute;
-    z-index: -1;
-    width: 0.55rem;
-    height: 0.55rem;
-    background: var(--color-purple);
-    box-shadow:
-      0.8rem 0 var(--color-green),
-      0 0.8rem var(--color-border-strong);
-    content: "";
-    opacity: 0.65;
-    pointer-events: none;
+    isolation: isolate;
   }
 
   .home::before {
-    top: -1.2rem;
-    right: 1rem;
+    position: absolute;
+    z-index: -2;
+    top: -2rem;
+    right: -1rem;
+    bottom: 30%;
+    left: -1rem;
+    background-image:
+      linear-gradient(
+        color-mix(in srgb, var(--color-border) 28%, transparent) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        90deg,
+        color-mix(in srgb, var(--color-border) 28%, transparent) 1px,
+        transparent 1px
+      );
+    background-size: 24px 24px;
+    content: "";
+    mask-image: linear-gradient(to bottom, black, transparent 88%);
+    opacity: 0.5;
+    pointer-events: none;
   }
 
   .home::after {
-    bottom: -2rem;
+    position: absolute;
+    z-index: -1;
+    top: -0.75rem;
+    right: 0;
     left: 0;
+    height: 1px;
+    background:
+      repeating-linear-gradient(
+        90deg,
+        var(--color-border-strong) 0 12px,
+        transparent 12px 22px
+      );
+    content: "";
+    opacity: 0.45;
+    pointer-events: none;
+  }
+
+  .home__coordinate {
+    position: absolute;
+    z-index: -1;
+    top: 13rem;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.14em;
+    opacity: 0.45;
+    writing-mode: vertical-rl;
+  }
+
+  .home__coordinate--left {
+    left: -1.5rem;
     transform: rotate(180deg);
+  }
+
+  .home__coordinate--right {
+    right: -1.5rem;
+  }
+
+  @media (max-width: 74rem) {
+    .home::before {
+      right: 0;
+      left: 0;
+    }
+
+    .home__coordinate {
+      display: none;
+    }
   }
 </style>
