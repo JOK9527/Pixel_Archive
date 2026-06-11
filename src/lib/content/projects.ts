@@ -21,6 +21,7 @@ export type ProjectItem = {
   cover?: string;
   links?: ProjectLinksValue;
   startDate?: string;
+  updatedDate?: string;
   endDate?: string | null;
   relatedNotes: string[];
   relatedArchive: string[];
@@ -46,6 +47,7 @@ function toProjectItem(entry: CollectionEntry<"projects">): ProjectItem {
     cover: entry.data.cover,
     links: entry.data.links,
     startDate: entry.data.startDate,
+    updatedDate: entry.data.updatedDate,
     endDate: entry.data.endDate,
     relatedNotes: entry.data.relatedNotes ?? [],
     relatedArchive: entry.data.relatedArchive ?? [],

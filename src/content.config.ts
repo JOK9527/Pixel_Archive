@@ -19,6 +19,7 @@ const projects = defineCollection({
     techStack: z.array(z.string()),
     featured: z.boolean(),
     startDate: dateString.optional(),
+    updatedDate: dateString.optional(),
     endDate: dateString.nullable().optional(),
     cover: z.string().startsWith("/images/projects/").optional(),
     links: z

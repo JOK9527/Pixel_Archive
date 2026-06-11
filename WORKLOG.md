@@ -1,5 +1,14 @@
 # WORKLOG
 
+## 2026-06-12 / Phase 12-13 completion audit
+
+### Metadata corrections
+
+- Added optional `updatedDate` support to Project content and timeline output.
+- Added verified update dates to all three public Projects.
+- Added explicit highlights, current state, next checkpoint, and public-link status to every Project.
+- Added `updated` metadata to every published Note.
+
 ## 2026-06-12 / Phase 15
 
 ### Discovery and publishing readiness

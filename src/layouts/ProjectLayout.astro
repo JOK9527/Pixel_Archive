@@ -82,6 +82,14 @@ const relatedArchive = (
               )
             }
             {
+              project.updatedDate && (
+                <>
+                  <dt>Updated</dt>
+                  <dd>{project.updatedDate}</dd>
+                </>
+              )
+            }
+            {
               project.endDate && (
                 <>
                   <dt>End</dt>
