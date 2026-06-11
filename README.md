@@ -4,9 +4,9 @@ Pixel Archive 是一个以极简阅读体验为基础、以像素组件为识别
 
 ## 当前阶段
 
-Phase 8：部署准备。
+Phase 9：第一阶段基础版本已完成。
 
-当前已完成第一阶段的全部页面能力和静态部署准备，可推送到 GitHub 后连接 Cloudflare Pages。
+当前已完成第一阶段的全部页面能力、内容系统、响应式与主题基础、静态部署准备和整体验收，可推送到 GitHub 后连接 Cloudflare Pages。
 
 ## 技术栈
 
@@ -79,4 +79,4 @@ src/styles/              主题、全局和 Markdown 样式
 
 ## 下一步
 
-完成 Phase 8 验收后，进入 Phase 9：第一阶段整体验收与提交。
+第一阶段已验收完成。后续进入 Phase 10：迁移真实 Projects、Notes、Archive 与图片内容。

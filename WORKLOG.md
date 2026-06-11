@@ -451,3 +451,72 @@ Root directory: /
 ### 下一步建议
 
 - 进入 Phase 9，执行第一阶段全站构建、路由、主题、移动端、内容和模块边界整体验收。
+
+## 2026-06-11 / Phase 9
+
+### 阶段
+
+Phase 9：第一阶段整体验收与提交
+
+### 验收范围
+
+- Astro 构建与 Content Collections 同步
+- 首页与全部一级页面
+- Projects / Notes 动态详情页
+- Archive / Lab 内容展示
+- 404 与静态资源
+- 浅色 / 暗色主题
+- 390px 移动端基础布局
+- 内容命名、schema 与发布规则
+- 模块依赖和组件边界
+- README、WORKLOG、Git 忽略规则与依赖
+
+### 构建与路由结果
+
+- `npx astro sync`：通过。
+- `npm run build`：通过，生成 9 个静态页面。
+- 首页、5 个一级内容页、2 个详情页和 404：全部可访问。
+- 内容示意图：可访问。
+- 构建产物内检查 11 个内部链接与资源引用：0 失败。
+
+### 内容与架构结果
+
+- `src/content/` 仅包含 projects、notes、archive、lab 四个目录。
+- 四个 collection schema、枚举和 glob loader 正常。
+- Projects、Notes、Archive、Lab 均通过 `src/lib/content/` 读取和整理。
+- 业务组件未直接调用 `getCollection`。
+- UI 组件未依赖 Content Collections。
+- Notes 默认过滤 draft，正文使用普通阅读字体。
+- 图片路径、slug、tags、状态和类型字段符合规范。
+
+### 视觉与体验结果
+
+- 首页保持 Archive Terminal 入口，不是简历首页。
+- Projects、Notes、Archive、Lab、About 和 404 视觉方向一致。
+- 390px 首页、Projects、Notes、Archive、Lab、About 和 404 无横向溢出。
+- 暗色主题背景与文字变量正确。
+- 主题切换、导航、返回链接和主要卡片可用。
+- 浏览器控制台：0 错误，0 警告。
+
+### 依赖与部署结果
+
+- 运行依赖仅为 Astro 与 `@astrojs/mdx`。
+- 无 Tailwind、UI 框架、CMS、数据库或后端依赖。
+- `dist/`、`node_modules/`、`.astro/` 和 `.env*` 未被 Git 跟踪。
+- Cloudflare Pages 构建参数已记录在 README。
+
+### 最终问题清单
+
+- 阻塞问题：无。
+- 当前内容仍以规范占位内容为主，真实内容迁移属于 Phase 10。
+- Git remote 尚未配置，因此未执行 push。
+- Cloudflare Pages 尚未实际连接，线上环境需在推送 GitHub 后验证。
+- 正式域名、搜索、RSS、sitemap、Open Graph 和高级 SEO 属于后续增强阶段。
+
+### 第一阶段结论
+
+Pixel Archive 第一阶段基础版本满足构建、页面、内容、视觉、模块、移动端和部署准备要求，可以提交并进入真实内容迁移阶段。
+
+### 下一步建议
+
+- Phase 10：迁移真实 Projects、Notes、Archive 和图片内容。
