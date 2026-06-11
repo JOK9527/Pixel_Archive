@@ -1,0 +1,34 @@
+---
+import type { NoteItem } from "../../lib/content/notes";
+import NoteCard from "./NoteCard.astro";
+
+type Props = {
+  notes: NoteItem[];
+};
+
+const { notes } = Astro.props;
+---
+
+<div class="note-list">
+  {
+    notes.map((note) => (
+      <NoteCard
+        title={note.title}
+        description={note.description}
+        type={note.type}
+        category={note.category}
+        tags={note.tags}
+        date={note.date}
+        updated={note.updated}
+        href={note.href}
+        cover={note.cover}
+      />
+    ))
+  }
+</div>
+
+<style>
+  .note-list {
+    max-width: 54rem;
+  }
+</style>

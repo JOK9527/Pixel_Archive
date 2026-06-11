@@ -1,0 +1,89 @@
+---
+import MarkdownContent from "../components/notes/MarkdownContent.astro";
+import NoteMeta from "../components/notes/NoteMeta.astro";
+import type { NoteItem } from "../lib/content/notes";
+import BaseLayout from "./BaseLayout.astro";
+
+type Props = {
+  note: NoteItem;
+};
+
+const { note } = Astro.props;
+---
+
+<BaseLayout title={note.title} description={note.description}>
+  <article class="note-detail">
+    <a class="note-detail__back" href="/notes/">← Notes archive</a>
+    <header>
+      <NoteMeta
+        type={note.type}
+        category={note.category}
+        date={note.date}
+        updated={note.updated}
+      />
+      <h1>{note.title}</h1>
+      {note.description && <p>{note.description}</p>}
+      {
+        note.tags.length > 0 && (
+          <ul aria-label="Note tags">
+            {note.tags.map((tag) => <li>#{tag}</li>)}
+          </ul>
+        )
+      }
+    </header>
+
+    <MarkdownContent>
+      <slot />
+    </MarkdownContent>
+  </article>
+</BaseLayout>
+
+<style>
+  .note-detail {
+    max-width: var(--reading-width);
+    margin-inline: auto;
+  }
+
+  .note-detail__back {
+    display: inline-block;
+    margin-bottom: 2.5rem;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .note-detail > header {
+    margin-bottom: clamp(3rem, 8vw, 5rem);
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .note-detail h1 {
+    margin-block: 1rem;
+    font-size: clamp(2.5rem, 8vw, 5.2rem);
+    letter-spacing: -0.065em;
+    line-height: 0.98;
+  }
+
+  .note-detail > header > p {
+    max-width: 40rem;
+    color: var(--color-text-muted);
+    font-size: clamp(1rem, 2.5vw, 1.16rem);
+  }
+
+  .note-detail > header > ul {
+    display: flex;
+    margin: 1rem 0 0;
+    padding: 0;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    color: var(--color-purple);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    list-style: none;
+  }
+</style>

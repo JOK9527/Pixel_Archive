@@ -1,0 +1,31 @@
+---
+import { getEntry, render } from "astro:content";
+import NoteLayout from "../../layouts/NoteLayout.astro";
+import { getPublishedNotes, type NoteItem } from "../../lib/content/notes";
+
+export async function getStaticPaths() {
+  const notes = await getPublishedNotes();
+
+  return notes.map((note) => ({
+    params: { slug: note.slug },
+    props: { note },
+  }));
+}
+
+type Props = {
+  note: NoteItem;
+};
+
+const { note } = Astro.props;
+const entry = await getEntry("notes", note.slug);
+
+if (!entry || entry.data.draft) {
+  return Astro.redirect("/404");
+}
+
+const { Content } = await render(entry);
+---
+
+<NoteLayout note={note}>
+  <Content />
+</NoteLayout>

@@ -286,3 +286,60 @@ Phase 5：Projects 列表与详情
 ### 下一步建议
 
 - 进入 Phase 6，实现 Notes 内容 helper、列表、类型标识和文章详情页。
+
+## 2026-06-11 / Phase 6
+
+### 阶段
+
+Phase 6：Notes 列表与文章页
+
+### 修改文件
+
+- `src/lib/content/notes.ts`
+- `src/components/notes/NoteCard.astro`
+- `src/components/notes/NoteList.astro`
+- `src/components/notes/NoteMeta.astro`
+- `src/components/notes/NoteTypeBadge.astro`
+- `src/components/notes/MarkdownContent.astro`
+- `src/layouts/NoteLayout.astro`
+- `src/pages/notes/index.astro`
+- `src/pages/notes/[slug].astro`
+- `src/content/notes/2026-06-11-content-system-note.mdx`
+- `public/images/notes/2026-06-11-content-system-note/content-flow.svg`
+- `src/styles/markdown.css`
+- `README.md`
+- `WORKLOG.md`
+
+### 完成内容
+
+- 建立 Notes 内容 helper，统一生成 slug、href 并按日期降序排列。
+- `getPublishedNotes` 默认过滤 `draft: true` 内容。
+- 实现 NoteCard、NoteList、NoteMeta 和 NoteTypeBadge。
+- Notes 页面接入已发布内容，并保留无内容时的自然空状态。
+- 实现 `/notes/{slug}/` 静态文章路由和 NoteLayout。
+- 完善 Markdown 标题、列表、代码块、表格、图片和引用基础样式。
+- 补充一篇规范占位笔记及仓库内 SVG 示意图，用于验证完整阅读链路。
+
+### 新增 / 删除依赖
+
+- 无。
+
+### 构建与验收结果
+
+- `npx astro sync`：通过。
+- `npm run build`：通过，生成 9 个静态页面。
+- Notes 列表和 `/notes/2026-06-11-content-system-note/`：可访问。
+- 代码块与 SVG 图片：显示正常。
+- 正文使用系统无衬线字体，不使用像素字体。
+- 390px 窄屏：无横向溢出，代码块可滚动。
+- 浅色 / 暗色主题：正文、代码块和页面背景可读。
+- 浏览器控制台：0 错误，0 警告。
+
+### 已知问题
+
+- 当前只包含一篇规范占位笔记。
+- 全文搜索、复杂 TOC、评论、复杂公式和增强代码高亮不属于本阶段。
+
+### 下一步建议
+
+- 进入 Phase 7，完善 Archive、Lab、About 和 404 页面。

@@ -1,0 +1,49 @@
+---
+import type { NoteTypeValue } from "../../lib/content/notes";
+
+type Props = {
+  type: NoteTypeValue;
+};
+
+const { type } = Astro.props;
+
+const typeMeta = {
+  Article: { label: "Article", tone: "purple" },
+  Log: { label: "Log", tone: "green" },
+  Note: { label: "Note", tone: "neutral" },
+} as const;
+
+const meta = typeMeta[type];
+---
+
+<span class:list={["note-type", `note-type--${meta.tone}`]}>
+  {meta.label}
+</span>
+
+<style>
+  .note-type {
+    display: inline-flex;
+    width: fit-content;
+    padding: 0.28rem 0.48rem;
+    border: 1px solid currentColor;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: 0.63rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .note-type--purple {
+    color: var(--color-purple);
+  }
+
+  .note-type--green {
+    color: var(--color-green);
+  }
+
+  .note-type--neutral {
+    color: var(--color-text-muted);
+  }
+</style>

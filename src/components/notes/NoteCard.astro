@@ -1,0 +1,160 @@
+---
+import type { NoteTypeValue } from "../../lib/content/notes";
+import NoteMeta from "./NoteMeta.astro";
+
+type Props = {
+  title: string;
+  description?: string;
+  type: NoteTypeValue;
+  category: string;
+  tags?: string[];
+  date: string;
+  updated?: string;
+  href: string;
+  cover?: string;
+};
+
+const {
+  title,
+  description,
+  type,
+  category,
+  tags = [],
+  date,
+  updated,
+  href,
+  cover,
+} = Astro.props;
+---
+
+<article class="note-card">
+  <a href={href} aria-label={`Read note: ${title}`}>
+    {
+      cover && (
+        <div class="note-card__cover">
+          <img src={cover} alt="" loading="lazy" />
+        </div>
+      )
+    }
+    <div class="note-card__body">
+      <NoteMeta type={type} category={category} date={date} updated={updated} />
+      <h2>{title}</h2>
+      {description && <p>{description}</p>}
+      {
+        tags.length > 0 && (
+          <ul aria-label="Note tags">
+            {tags.map((tag) => <li>#{tag}</li>)}
+          </ul>
+        )
+      }
+      <span class="note-card__action">open note →</span>
+    </div>
+  </a>
+</article>
+
+<style>
+  .note-card {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .note-card:last-child {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .note-card > a {
+    display: grid;
+    padding-block: 1.5rem;
+    color: var(--color-text);
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 1rem 2rem;
+    text-decoration: none;
+    transition:
+      padding-inline var(--transition-fast),
+      background-color var(--transition-fast);
+  }
+
+  .note-card > a:hover,
+  .note-card > a:focus-visible {
+    padding-inline: 1rem;
+    background: var(--color-surface);
+  }
+
+  .note-card__cover {
+    width: 9rem;
+    min-height: 7rem;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .note-card__cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .note-card__body {
+    min-width: 0;
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .note-card h2 {
+    margin-block: 0.75rem 0.45rem;
+    font-size: clamp(1.35rem, 4vw, 1.8rem);
+    letter-spacing: -0.04em;
+    line-height: 1.15;
+  }
+
+  .note-card p {
+    max-width: 42rem;
+    margin-bottom: 0.9rem;
+    color: var(--color-text-muted);
+  }
+
+  .note-card ul {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    color: var(--color-purple);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    list-style: none;
+  }
+
+  .note-card__action {
+    display: inline-block;
+    margin-top: 1rem;
+    color: var(--color-purple);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 38rem) {
+    .note-card > a {
+      grid-template-columns: 1fr;
+    }
+
+    .note-card__cover,
+    .note-card__body {
+      grid-column: 1;
+    }
+
+    .note-card__cover {
+      width: 100%;
+      max-height: 10rem;
+      grid-row: 1;
+    }
+
+    .note-card__body {
+      grid-row: 2;
+    }
+  }
+</style>

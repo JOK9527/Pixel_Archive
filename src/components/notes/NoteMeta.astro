@@ -1,0 +1,38 @@
+---
+import type { NoteTypeValue } from "../../lib/content/notes";
+import NoteTypeBadge from "./NoteTypeBadge.astro";
+
+type Props = {
+  type: NoteTypeValue;
+  category: string;
+  date: string;
+  updated?: string;
+};
+
+const { type, category, date, updated } = Astro.props;
+---
+
+<div class="note-meta">
+  <NoteTypeBadge type={type} />
+  <span>{category}</span>
+  <time datetime={date}>{date}</time>
+  {updated && <span>updated {updated}</span>}
+</div>
+
+<style>
+  .note-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.55rem 0.75rem;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.67rem;
+  }
+
+  .note-meta > :not(:first-child)::before {
+    margin-inline-end: 0.75rem;
+    color: var(--color-border-strong);
+    content: "/";
+  }
+</style>

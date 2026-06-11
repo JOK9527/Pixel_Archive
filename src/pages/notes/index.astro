@@ -1,7 +1,11 @@
 ---
+import NoteList from "../../components/notes/NoteList.astro";
 import EmptyState from "../../components/ui/EmptyState.astro";
 import SectionHeader from "../../components/ui/SectionHeader.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getPublishedNotes } from "../../lib/content/notes";
+
+const notes = await getPublishedNotes();
 ---
 
 <BaseLayout title="Notes" description="文章、学习记录和开发日志。">
@@ -10,8 +14,43 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     title="Notes"
     description="文章、学习记录和开发日志。"
   />
-  <EmptyState
-    title="The first note is still being written."
-    description="这里会保持安静、清晰并适合长文阅读。"
-  />
+  {
+    notes.length > 0 ? (
+      <section class="notes-index" aria-labelledby="notes-index-title">
+        <header>
+          <h2 id="notes-index-title">Archived Notes</h2>
+          <span>{notes.length.toString().padStart(2, "0")} entries</span>
+        </header>
+        <NoteList notes={notes} />
+      </section>
+    ) : (
+      <EmptyState
+        title="The first note is still being written."
+        description="这里会保持安静、清晰并适合长文阅读。"
+      />
+    )
+  }
 </BaseLayout>
+
+<style>
+  .notes-index > header {
+    display: flex;
+    max-width: 54rem;
+    margin-bottom: 1rem;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .notes-index h2 {
+    margin-bottom: 0;
+    font-size: clamp(1.7rem, 5vw, 2.5rem);
+    letter-spacing: -0.05em;
+  }
+
+  .notes-index header span {
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+  }
+</style>

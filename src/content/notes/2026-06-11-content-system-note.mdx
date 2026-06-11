@@ -1,6 +1,6 @@
 ---
-title: "Content System Placeholder"
-description: "A placeholder note used to verify the Notes collection."
+title: "Content Collections 初步整理"
+description: "记录 Pixel Archive 四类内容集合的边界、读取路径和第一阶段约束。"
 type: "Note"
 category: "Web"
 tags:
@@ -8,9 +8,36 @@ tags:
   - content-collections
   - markdown
 date: "2026-06-11"
+updated: "2026-06-11"
+cover: "/images/notes/2026-06-11-content-system-note/content-flow.svg"
 draft: false
 relatedProjects:
   - "pixel-archive"
 ---
 
-This placeholder verifies the Notes collection and its frontmatter contract.
+## 为什么先整理内容边界
+
+Pixel Archive 的页面风格可以逐步调整，但内容字段、slug 和路由一旦被引用，就不适合频繁变化。
+因此第一阶段先固定 Projects、Notes、Archive 和 Lab 四类集合，再让页面通过 helper 读取稳定的数据结构。
+
+![Content Collections flow](/images/notes/2026-06-11-content-system-note/content-flow.svg)
+
+## 读取约定
+
+页面不直接重复筛选逻辑，统一由 `src/lib/content` 输出可展示的数据：
+
+```ts
+export async function getPublishedNotes() {
+  const notes = await getAllNotes();
+  return notes.filter((note) => !note.draft);
+}
+```
+
+这样列表页和静态详情路由使用同一份发布规则，`draft: true` 的内容不会进入公开页面。
+
+## 当前限制
+
+- 不加入全文搜索和评论
+- 不建立复杂目录系统
+- 不让像素字体进入长文正文
+- 图片统一使用 `/images/...` 绝对路径

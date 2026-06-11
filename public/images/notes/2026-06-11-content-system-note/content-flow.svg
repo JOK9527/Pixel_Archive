@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 480" role="img" aria-labelledby="title desc">
+  <title id="title">Pixel Archive content flow</title>
+  <desc id="desc">Content files flow through Astro collections and content helpers into pages.</desc>
+  <rect width="960" height="480" fill="#eee6d8"/>
+  <g fill="none" stroke="#a99cc4" stroke-width="4">
+    <rect x="70" y="130" width="220" height="220" rx="8"/>
+    <rect x="370" y="130" width="220" height="220" rx="8"/>
+    <rect x="670" y="130" width="220" height="220" rx="8"/>
+    <path d="M290 240h80m220 0h80"/>
+  </g>
+  <g fill="#8b79b7">
+    <path d="m354 224 16 16-16 16z"/>
+    <path d="m654 224 16 16-16 16z"/>
+  </g>
+  <g fill="#2d2a26" font-family="Consolas, monospace" text-anchor="middle">
+    <text x="180" y="205" font-size="24" font-weight="700">CONTENT</text>
+    <text x="180" y="245" font-size="16">MD / MDX</text>
+    <text x="180" y="275" font-size="16">FRONTMATTER</text>
+    <text x="480" y="205" font-size="24" font-weight="700">COLLECTIONS</text>
+    <text x="480" y="245" font-size="16">SCHEMA</text>
+    <text x="480" y="275" font-size="16">LOADERS</text>
+    <text x="780" y="205" font-size="24" font-weight="700">PAGES</text>
+    <text x="780" y="245" font-size="16">HELPERS</text>
+    <text x="780" y="275" font-size="16">COMPONENTS</text>
+  </g>
+  <g fill="#6f9f82">
+    <rect x="84" y="144" width="16" height="16"/>
+    <rect x="384" y="144" width="16" height="16"/>
+    <rect x="684" y="144" width="16" height="16"/>
+  </g>
+</svg>
