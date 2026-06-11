@@ -4,9 +4,9 @@ Pixel Archive 是一个以极简阅读体验为基础、以像素组件为识别
 
 ## 当前阶段
 
-Phase 7：Archive、Lab、About 与 404 完善。
+Phase 8：部署准备。
 
-当前已完成第一阶段的全部页面能力：Archive Terminal 首页、Projects、Notes、Archive 时间线、Lab 实验网格、About、404，以及四类 Content Collections。
+当前已完成第一阶段的全部页面能力和静态部署准备，可推送到 GitHub 后连接 Cloudflare Pages。
 
 ## 技术栈
 
@@ -31,6 +31,32 @@ npm run build
 npm run preview
 ```
 
+构建产物输出到 `dist/`。该目录由构建生成，不提交到 Git。
+
+## Cloudflare Pages
+
+推荐通过 Cloudflare Pages 连接 GitHub 仓库：
+
+| 配置项 | 值 |
+|---|---|
+| Framework preset | Astro |
+| Production branch | `main` |
+| Build command | `npm run build` |
+| Build output directory | `dist` |
+| Root directory | `/` |
+
+第一阶段不需要环境变量、后端服务、数据库或 Cloudflare Workers。正式站点 URL、域名、RSS、搜索和高级 SEO 留到后续阶段。
+
+部署前运行：
+
+```bash
+npm install
+npm run build
+git status
+```
+
+确认 `.env`、`node_modules/`、`.astro/` 和 `dist/` 未被 Git 跟踪后，再推送 `main` 分支。
+
 ## 目录
 
 ```txt
@@ -53,4 +79,4 @@ src/styles/              主题、全局和 Markdown 样式
 
 ## 下一步
 
-完成 Phase 7 验收后，进入 Phase 8：部署准备。
+完成 Phase 8 验收后，进入 Phase 9：第一阶段整体验收与提交。

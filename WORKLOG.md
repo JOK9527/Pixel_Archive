@@ -401,3 +401,53 @@ Phase 7：Archive / Lab / About / 404 Polish
 ### 下一步建议
 
 - 进入 Phase 8，补充部署说明并检查 GitHub / Cloudflare Pages 准备状态。
+
+## 2026-06-11 / Phase 8
+
+### 阶段
+
+Phase 8：部署准备
+
+### 修改文件
+
+- `README.md`
+- `WORKLOG.md`
+
+### 完成内容
+
+- 核对 `package.json`，确认存在 `dev`、`build` 和 `preview` 脚本。
+- 核对 `.gitignore`，确认忽略 `node_modules/`、`dist/`、`.astro/`、`.env*` 和本地缓存。
+- 确认 `package-lock.json` 保留在仓库中。
+- 在 README 中补充 Cloudflare Pages 构建参数和部署前检查命令。
+- 明确第一阶段无需环境变量、后端、数据库、Workers、统计或域名绑定。
+
+### Cloudflare Pages 建议配置
+
+```txt
+Framework preset: Astro
+Production branch: main
+Build command: npm run build
+Build output directory: dist
+Root directory: /
+```
+
+### 新增 / 删除依赖
+
+- 无。
+
+### 构建与验收结果
+
+- `npm run build`：通过，静态输出目录为 `dist/`。
+- `dist/`、`node_modules/`、`.astro/`：未被 Git 跟踪。
+- `.env` / `.env.local`：不存在且已被忽略。
+- `package-lock.json`：已被 Git 跟踪。
+- README：包含安装、开发、构建、预览和 Cloudflare Pages 配置。
+
+### 已知问题
+
+- 当前仓库尚未配置 Git remote，因此本阶段未执行 push。
+- 尚未创建 Cloudflare Pages 项目，也未进行线上部署或域名绑定。
+
+### 下一步建议
+
+- 进入 Phase 9，执行第一阶段全站构建、路由、主题、移动端、内容和模块边界整体验收。
