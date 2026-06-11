@@ -4,9 +4,9 @@ Pixel Archive 是一个以极简阅读体验为基础、以像素组件为识别
 
 ## 当前阶段
 
-Phase 6：Notes 列表与文章页。
+Phase 7：Archive、Lab、About 与 404 完善。
 
-当前已完成 Astro 项目骨架、基础布局、浅色 / 暗色主题、Archive Terminal 首页、四个 Content Collections、Projects 展示链路，以及 Notes 列表和 MDX 阅读页。
+当前已完成第一阶段的全部页面能力：Archive Terminal 首页、Projects、Notes、Archive 时间线、Lab 实验网格、About、404，以及四类 Content Collections。
 
 ## 技术栈
 
@@ -39,6 +39,8 @@ src/components/layout/   Header、Footer 与主题切换
 src/components/home/     首页终端、菜单、存档槽与状态栏
 src/components/project/  项目卡片、网格、状态、技术栈与链接
 src/components/notes/    笔记列表、元信息、类型标识与正文容器
+src/components/archive/  存档时间线与存档点
+src/components/lab/      实验卡片、网格与类型标识
 src/components/ui/       通用视觉组件
 src/content/             Markdown / MDX 内容文件
 src/content.config.ts    Content Collections schema 与 loaders
@@ -51,4 +53,4 @@ src/styles/              主题、全局和 Markdown 样式
 
 ## 下一步
 
-完成 Phase 6 验收后，进入 Phase 7：Archive、Lab、About 与 404 完善。
+完成 Phase 7 验收后，进入 Phase 8：部署准备。

@@ -1,7 +1,11 @@
 ---
+import LabGrid from "../components/lab/LabGrid.astro";
 import EmptyState from "../components/ui/EmptyState.astro";
 import SectionHeader from "../components/ui/SectionHeader.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { getAllLabItems } from "../lib/content/lab";
+
+const items = await getAllLabItems();
 ---
 
 <BaseLayout title="Lab" description="视觉、像素和小工具实验。">
@@ -10,9 +14,15 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     title="Lab"
     description="一些视觉、像素和小工具实验。"
   />
-  <EmptyState
-    title="This lab slot is still empty."
-    description="实验卡片将在内容系统准备完成后载入。"
-    variant="pixel"
-  />
+  {
+    items.length > 0 ? (
+      <LabGrid items={items} />
+    ) : (
+      <EmptyState
+        title="This lab slot is still empty."
+        description="下一次实验还没有载入。"
+        variant="pixel"
+      />
+    )
+  }
 </BaseLayout>

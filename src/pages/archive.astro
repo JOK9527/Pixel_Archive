@@ -1,7 +1,11 @@
 ---
+import ArchiveTimeline from "../components/archive/ArchiveTimeline.astro";
 import EmptyState from "../components/ui/EmptyState.astro";
 import SectionHeader from "../components/ui/SectionHeader.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { getArchiveGroups } from "../lib/content/archive";
+
+const groups = await getArchiveGroups();
 ---
 
 <BaseLayout title="Archive" description="重要节点和阶段存档。">
@@ -10,9 +14,15 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     title="Archive"
     description="重要节点和阶段存档。"
   />
-  <EmptyState
-    title="No save points yet."
-    description="下一条阶段记录还在路上。"
-    variant="terminal"
-  />
+  {
+    groups.length > 0 ? (
+      <ArchiveTimeline groups={groups} />
+    ) : (
+      <EmptyState
+        title="No save points yet."
+        description="下一条阶段记录还在路上。"
+        variant="terminal"
+      />
+    )
+  }
 </BaseLayout>

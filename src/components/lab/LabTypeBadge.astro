@@ -1,0 +1,27 @@
+---
+import type { LabTypeValue } from "../../lib/content/lab";
+
+type Props = {
+  type: LabTypeValue;
+};
+
+const { type } = Astro.props;
+---
+
+<span class="lab-type">{type}</span>
+
+<style>
+  .lab-type {
+    display: inline-flex;
+    padding: 0.28rem 0.48rem;
+    border: 1px solid var(--color-border-strong);
+    background: var(--color-purple-soft);
+    color: var(--color-text);
+    font-family: var(--font-mono);
+    font-size: 0.63rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+</style>

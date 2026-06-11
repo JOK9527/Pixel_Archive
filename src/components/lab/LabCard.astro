@@ -1,0 +1,166 @@
+---
+import type { LabStatusValue, LabTypeValue } from "../../lib/content/lab";
+import LabTypeBadge from "./LabTypeBadge.astro";
+
+type Props = {
+  title: string;
+  description: string;
+  type: LabTypeValue;
+  tags?: string[];
+  status?: LabStatusValue;
+  href?: string;
+  cover?: string;
+  date?: string;
+};
+
+const {
+  title,
+  description,
+  type,
+  tags = [],
+  status = "idea",
+  href,
+  cover,
+  date,
+} = Astro.props;
+
+const Element = href ? "a" : "article";
+---
+
+<Element
+  class:list={["lab-card", `lab-card--${status}`]}
+  href={href}
+  aria-label={href ? `Open experiment: ${title}` : undefined}
+>
+  <div class="lab-card__screen">
+    {
+      cover ? (
+        <img src={cover} alt="" loading="lazy" />
+      ) : (
+        <div class="lab-card__pixels" aria-hidden="true">
+          {Array.from({ length: 20 }, (_, index) => <span data-index={index}></span>)}
+        </div>
+      )
+    }
+  </div>
+  <div class="lab-card__meta">
+    <LabTypeBadge type={type} />
+    <span>{status}</span>
+  </div>
+  <h2>{title}</h2>
+  <p>{description}</p>
+  {
+    tags.length > 0 && (
+      <ul aria-label="Lab tags">
+        {tags.map((tag) => <li>#{tag}</li>)}
+      </ul>
+    )
+  }
+  {date && <time datetime={date}>{date}</time>}
+</Element>
+
+<style>
+  .lab-card {
+    display: flex;
+    min-width: 0;
+    padding: 1rem;
+    border: 2px solid var(--color-border-strong);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-pixel);
+    color: var(--color-text);
+    flex-direction: column;
+    text-decoration: none;
+  }
+
+  .lab-card--prototype {
+    border-color: var(--color-warning);
+  }
+
+  .lab-card--done {
+    border-color: var(--color-green);
+  }
+
+  .lab-card__screen {
+    min-height: 9rem;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface-muted);
+  }
+
+  .lab-card__screen img {
+    width: 100%;
+    height: 100%;
+    min-height: 9rem;
+    object-fit: cover;
+  }
+
+  .lab-card__pixels {
+    display: grid;
+    min-height: 9rem;
+    padding: 1rem;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.4rem;
+  }
+
+  .lab-card__pixels span {
+    background: var(--color-border);
+  }
+
+  .lab-card__pixels span:nth-child(3n) {
+    background: var(--color-purple);
+  }
+
+  .lab-card__pixels span:nth-child(5n + 1) {
+    background: var(--color-green);
+  }
+
+  .lab-card__meta {
+    display: flex;
+    margin-bottom: 0.85rem;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  .lab-card__meta > span {
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .lab-card h2 {
+    margin-bottom: 0.5rem;
+    font-size: 1.3rem;
+    letter-spacing: -0.035em;
+  }
+
+  .lab-card p {
+    margin-bottom: 1rem;
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+  }
+
+  .lab-card ul {
+    display: flex;
+    margin: auto 0 0;
+    padding: 0;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    color: var(--color-purple);
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    list-style: none;
+  }
+
+  .lab-card time {
+    margin-top: 0.85rem;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+  }
+</style>

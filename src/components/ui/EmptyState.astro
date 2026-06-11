@@ -45,6 +45,17 @@ const {
     box-shadow: var(--shadow-soft);
   }
 
+  .empty-state::after {
+    position: absolute;
+    right: 0.7rem;
+    bottom: 0.7rem;
+    width: 0.8rem;
+    height: 0.8rem;
+    border-right: 2px solid var(--color-border-strong);
+    border-bottom: 2px solid var(--color-border-strong);
+    content: "";
+  }
+
   .empty-state--pixel {
     border-width: 2px;
     border-color: var(--color-border-strong);

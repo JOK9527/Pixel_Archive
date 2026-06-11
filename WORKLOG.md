@@ -343,3 +343,61 @@ Phase 6：Notes 列表与文章页
 ### 下一步建议
 
 - 进入 Phase 7，完善 Archive、Lab、About 和 404 页面。
+
+## 2026-06-11 / Phase 7
+
+### 阶段
+
+Phase 7：Archive / Lab / About / 404 Polish
+
+### 修改文件
+
+- `src/lib/content/archive.ts`
+- `src/lib/content/lab.ts`
+- `src/components/archive/ArchiveTimeline.astro`
+- `src/components/archive/ArchiveEntry.astro`
+- `src/components/lab/LabCard.astro`
+- `src/components/lab/LabGrid.astro`
+- `src/components/lab/LabTypeBadge.astro`
+- `src/components/ui/EmptyState.astro`
+- `src/pages/archive.astro`
+- `src/pages/lab.astro`
+- `src/pages/about.astro`
+- `src/pages/404.astro`
+- Archive 与 Lab 占位内容
+- `README.md`
+- `WORKLOG.md`
+
+### 完成内容
+
+- 建立 Archive helper，按日期降序并按年份、月份输出时间线分组。
+- 实现 ArchiveTimeline 与 ArchiveEntry，并接入项目或笔记关联链接。
+- 建立 Lab helper，实现 LabCard、LabGrid 和 LabTypeBadge。
+- Lab 缺少 cover 时使用纯 CSS 像素屏幕占位。
+- About 页面改为极短站点说明，不展示虚构联系方式。
+- 404 增加失联信号视觉，保持 lost archive / save file not found 气质。
+- EmptyState 增加统一档案角标细节。
+
+### 新增 / 删除依赖
+
+- 无。
+
+### 构建与验收结果
+
+- `npx astro sync`：通过。
+- `npm run build`：通过，生成 9 个静态页面。
+- Archive：显示 1 个存档点，关联 `/projects/pixel-archive/` 正确。
+- Lab：显示 1 个实验槽位，缺少 cover 时不崩。
+- About：文案克制，无虚构联系入口。
+- 404：标题、说明和返回首页动作正常。
+- 四个页面 390px 窄屏：无横向溢出。
+- 浏览器控制台：0 错误，0 警告。
+
+### 已知问题
+
+- Archive 和 Lab 当前只含规范占位内容。
+- Archive 详情页、Lab 详情页、大量真实内容和复杂彩蛋不属于本阶段。
+
+### 下一步建议
+
+- 进入 Phase 8，补充部署说明并检查 GitHub / Cloudflare Pages 准备状态。

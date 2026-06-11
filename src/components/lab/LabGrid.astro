@@ -1,0 +1,35 @@
+---
+import type { LabItem } from "../../lib/content/lab";
+import LabCard from "./LabCard.astro";
+
+type Props = {
+  items: LabItem[];
+};
+
+const { items } = Astro.props;
+---
+
+<div class="lab-grid">
+  {
+    items.map((item) => (
+      <LabCard
+        title={item.title}
+        description={item.description}
+        type={item.type}
+        tags={item.tags}
+        status={item.status}
+        href={item.href}
+        cover={item.cover}
+        date={item.date}
+      />
+    ))
+  }
+</div>
+
+<style>
+  .lab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+    gap: 1.5rem;
+  }
+</style>
