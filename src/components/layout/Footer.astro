@@ -1,0 +1,65 @@
+---
+import { site } from "../../data/site";
+
+type Props = {
+  quote?: string;
+};
+
+const { quote = site.footerText } = Astro.props;
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <p>{site.name} / {currentYear}</p>
+    <p class="site-footer__status"><span aria-hidden="true"></span>{quote}</p>
+    <p>Built with {site.builtWith}</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+  }
+
+  .site-footer__inner {
+    display: flex;
+    width: min(100% - 2rem, var(--content-width));
+    min-height: 4.25rem;
+    margin-inline: auto;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .site-footer p {
+    margin: 0;
+  }
+
+  .site-footer__status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  .site-footer__status span {
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 50%;
+    background: var(--color-green);
+    box-shadow: 0 0 0 3px var(--color-green-soft);
+  }
+
+  @media (max-width: 42rem) {
+    .site-footer__inner {
+      width: min(100% - 1.25rem, var(--content-width));
+      padding-block: 1.25rem;
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+  }
+</style>

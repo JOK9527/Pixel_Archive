@@ -1,0 +1,66 @@
+<button
+  class="theme-toggle"
+  type="button"
+  aria-label="切换浅色或暗色主题"
+  aria-pressed="false"
+  data-theme-toggle
+>
+  <span aria-hidden="true" data-theme-icon>◐</span>
+  <span data-theme-label>Theme</span>
+</button>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>("[data-theme-toggle]");
+
+  const updateToggle = (theme: "light" | "dark") => {
+    if (!toggle) return;
+
+    const isDark = theme === "dark";
+    toggle.setAttribute("aria-pressed", String(isDark));
+
+    const label = toggle.querySelector("[data-theme-label]");
+    const icon = toggle.querySelector("[data-theme-icon]");
+
+    if (label) label.textContent = isDark ? "Light" : "Dark";
+    if (icon) icon.textContent = isDark ? "☼" : "◐";
+  };
+
+  const getTheme = (): "light" | "dark" =>
+    document.documentElement.dataset.theme === "dark" ? "dark" : "light";
+
+  updateToggle(getTheme());
+
+  toggle?.addEventListener("click", () => {
+    const nextTheme = getTheme() === "dark" ? "light" : "dark";
+    document.documentElement.dataset.theme = nextTheme;
+    localStorage.setItem("pixel-archive-theme", nextTheme);
+    updateToggle(nextTheme);
+  });
+</script>
+
+<style>
+  .theme-toggle {
+    display: inline-flex;
+    min-height: 2.25rem;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.35rem 0.65rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface);
+    color: var(--color-text);
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    transition:
+      border-color var(--transition-fast),
+      box-shadow var(--transition-fast),
+      transform var(--transition-fast);
+  }
+
+  .theme-toggle:hover {
+    border-color: var(--color-border-strong);
+    box-shadow: 2px 2px 0 var(--color-purple-soft);
+    transform: translate(-1px, -1px);
+  }
+</style>

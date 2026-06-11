@@ -1,22 +1,14 @@
 ---
-const pageTitle = "Pixel Archive";
+import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
-<!doctype html>
-<html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta
-      name="description"
-      content="Pixel Archive 项目初始化页面。"
-    />
-    <title>{pageTitle}</title>
-  </head>
-  <body>
-    <main>
-      <h1>{pageTitle}</h1>
-      <p>Archive system initialized.</p>
-    </main>
-  </body>
-</html>
+<BaseLayout>
+  <section class="phase-panel">
+    <p class="phase-panel__eyebrow">System / Phase 1</p>
+    <h1>Pixel Archive</h1>
+    <p>
+      The archive shell is online. The terminal interface will be loaded in the
+      next phase.
+    </p>
+  </section>
+</BaseLayout>
