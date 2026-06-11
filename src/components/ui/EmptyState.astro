@@ -1,0 +1,137 @@
+---
+type Props = {
+  title: string;
+  description?: string;
+  actionLabel?: string;
+  actionHref?: string;
+  variant?: "default" | "pixel" | "terminal";
+};
+
+const {
+  title,
+  description,
+  actionLabel,
+  actionHref,
+  variant = "default",
+} = Astro.props;
+---
+
+<section class:list={["empty-state", `empty-state--${variant}`]}>
+  <div class="empty-state__marker" aria-hidden="true">
+    <span></span><span></span><span></span>
+  </div>
+  <p class="empty-state__status">slot waiting</p>
+  <h2>{title}</h2>
+  {description && <p class="empty-state__description">{description}</p>}
+  {
+    actionLabel && actionHref && (
+      <a class="empty-state__action" href={actionHref}>
+        {actionLabel}
+      </a>
+    )
+  }
+</section>
+
+<style>
+  .empty-state {
+    position: relative;
+    max-width: 48rem;
+    min-height: 15rem;
+    padding: clamp(1.5rem, 5vw, 3rem);
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .empty-state--pixel {
+    border-width: 2px;
+    border-color: var(--color-border-strong);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-pixel);
+  }
+
+  .empty-state--terminal {
+    border-width: 2px;
+    border-color: var(--color-border-strong);
+    border-radius: 0;
+    background:
+      linear-gradient(
+        90deg,
+        transparent 0 96%,
+        color-mix(in srgb, var(--color-purple) 10%, transparent) 96%
+      ),
+      var(--color-surface);
+    background-size: 1rem 1rem;
+    box-shadow: var(--shadow-pixel);
+  }
+
+  .empty-state__marker {
+    display: flex;
+    margin-bottom: 2.4rem;
+    gap: 0.4rem;
+  }
+
+  .empty-state__marker span {
+    width: 0.55rem;
+    height: 0.55rem;
+    background: var(--color-border);
+  }
+
+  .empty-state__marker span:nth-child(2) {
+    background: var(--color-purple);
+  }
+
+  .empty-state__marker span:nth-child(3) {
+    background: var(--color-green);
+  }
+
+  .empty-state__status {
+    margin-bottom: 0.7rem;
+    color: var(--color-purple);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .empty-state h2 {
+    margin-bottom: 0.65rem;
+    font-size: clamp(1.45rem, 4vw, 2rem);
+    letter-spacing: -0.035em;
+  }
+
+  .empty-state__description {
+    max-width: 36rem;
+    margin-bottom: 1.5rem;
+    color: var(--color-text-muted);
+  }
+
+  .empty-state__action {
+    display: inline-flex;
+    min-height: 2.5rem;
+    padding: 0.45rem 0.8rem;
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-sm);
+    background: var(--color-purple-soft);
+    color: var(--color-text);
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition:
+      box-shadow var(--transition-fast),
+      transform var(--transition-fast);
+  }
+
+  .empty-state__action:hover,
+  .empty-state__action:focus-visible {
+    box-shadow: 3px 3px 0 var(--color-border-strong);
+    transform: translate(-1px, -1px);
+  }
+</style>

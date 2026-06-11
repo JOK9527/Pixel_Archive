@@ -1,0 +1,18 @@
+---
+import EmptyState from "../components/ui/EmptyState.astro";
+import SectionHeader from "../components/ui/SectionHeader.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Lab" description="视觉、像素和小工具实验。">
+  <SectionHeader
+    eyebrow="Experiment slot"
+    title="Lab"
+    description="一些视觉、像素和小工具实验。"
+  />
+  <EmptyState
+    title="This lab slot is still empty."
+    description="实验卡片将在内容系统准备完成后载入。"
+    variant="pixel"
+  />
+</BaseLayout>

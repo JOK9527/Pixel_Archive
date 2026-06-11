@@ -1,0 +1,18 @@
+---
+import EmptyState from "../components/ui/EmptyState.astro";
+import SectionHeader from "../components/ui/SectionHeader.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Archive" description="重要节点和阶段存档。">
+  <SectionHeader
+    eyebrow="Save point index"
+    title="Archive"
+    description="重要节点和阶段存档。"
+  />
+  <EmptyState
+    title="No save points yet."
+    description="下一条阶段记录还在路上。"
+    variant="terminal"
+  />
+</BaseLayout>

@@ -136,3 +136,50 @@ Phase 2：首页初版
 ### 下一步建议
 
 - 进入 Phase 3，建立全部一级页面空壳与 404 路由。
+
+## 2026-06-11 / Phase 3
+
+### 阶段
+
+Phase 3：页面空壳与路由
+
+### 修改文件
+
+- `src/components/ui/SectionHeader.astro`
+- `src/components/ui/EmptyState.astro`
+- `src/pages/projects/index.astro`
+- `src/pages/notes/index.astro`
+- `src/pages/archive.astro`
+- `src/pages/lab.astro`
+- `src/pages/about.astro`
+- `src/pages/404.astro`
+- `README.md`
+- `WORKLOG.md`
+
+### 完成内容
+
+- 创建 Projects、Notes、Archive、Lab 和 About 一级页面。
+- 创建自定义 404 页面并接入未知路径。
+- 建立可复用的 SectionHeader 和 EmptyState。
+- 为不同页面提供符合规范的标题、简介和空状态文案。
+- 保持页面空壳边界，不提前实现列表、详情、时间线或内容读取。
+
+### 新增 / 删除依赖
+
+- 无。
+
+### 构建与验收结果
+
+- `npm run build`：通过，生成 7 个静态页面。
+- `/projects/`、`/notes/`、`/archive/`、`/lab/`、`/about/`：返回 200。
+- 未知路径：返回 404 并显示自定义 lost archive 页面。
+- 390px 窄屏页面：通过，无横向溢出。
+- 页面标题和导航激活状态：通过。
+
+### 已知问题
+
+- 页面当前仅为规范空壳；真实列表和内容读取将在后续阶段实现。
+
+### 下一步建议
+
+- 进入 Phase 4，建立四个 Content Collections、schema 和规范占位内容。

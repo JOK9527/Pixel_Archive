@@ -1,0 +1,17 @@
+---
+import EmptyState from "../../components/ui/EmptyState.astro";
+import SectionHeader from "../../components/ui/SectionHeader.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Notes" description="文章、学习记录和开发日志。">
+  <SectionHeader
+    eyebrow="Archive drawer / 02"
+    title="Notes"
+    description="文章、学习记录和开发日志。"
+  />
+  <EmptyState
+    title="The first note is still being written."
+    description="这里会保持安静、清晰并适合长文阅读。"
+  />
+</BaseLayout>

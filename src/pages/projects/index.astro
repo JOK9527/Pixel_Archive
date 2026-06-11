@@ -1,0 +1,21 @@
+---
+import EmptyState from "../../components/ui/EmptyState.astro";
+import SectionHeader from "../../components/ui/SectionHeader.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Projects"
+  description="正在完成、已经完成和暂时搁置的项目。"
+>
+  <SectionHeader
+    eyebrow="Archive drawer / 01"
+    title="Projects"
+    description="一些正在完成、已经完成和暂时搁置的项目。"
+  />
+  <EmptyState
+    title="New project slots are waiting."
+    description="项目内容系统将在后续阶段接入。"
+    variant="pixel"
+  />
+</BaseLayout>

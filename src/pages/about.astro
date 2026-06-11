@@ -1,0 +1,38 @@
+---
+import SectionHeader from "../components/ui/SectionHeader.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="About" description="关于 Pixel Archive 的简短说明。">
+  <article class="about">
+    <SectionHeader
+      eyebrow="Archive note"
+      title="About"
+      description="Pixel Archive 是一个个人档案馆，用来存放项目、笔记、阶段存档和一些实验性内容。"
+    />
+
+    <div class="about__links" aria-label="Contact links">
+      <span>GitHub / waiting</span>
+      <span>Contact / waiting</span>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .about {
+    max-width: 48rem;
+  }
+
+  .about__links {
+    display: flex;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+</style>

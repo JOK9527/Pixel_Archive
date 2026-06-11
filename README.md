@@ -4,9 +4,9 @@ Pixel Archive 是一个以极简阅读体验为基础、以像素组件为识别
 
 ## 当前阶段
 
-Phase 2：首页初版。
+Phase 3：页面空壳与路由。
 
-当前已完成 Astro 项目骨架、基础布局、浅色 / 暗色主题、Archive Terminal 首页入口、游戏菜单式导航、三个 Save Slots 和 Status Bar。一级页面路由和 Content Collections 将按后续阶段继续实现。
+当前已完成 Astro 项目骨架、基础布局、浅色 / 暗色主题、Archive Terminal 首页，以及 Projects、Notes、Archive、Lab、About 和 404 页面空壳。Content Collections 和占位内容将在后续阶段接入。
 
 ## 技术栈
 
@@ -46,4 +46,4 @@ src/styles/              主题、全局和 Markdown 样式
 
 ## 下一步
 
-完成 Phase 2 验收后，进入 Phase 3：页面空壳与路由。
+完成 Phase 3 验收后，进入 Phase 4：Content Collections 与占位内容。
