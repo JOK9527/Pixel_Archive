@@ -1,0 +1,280 @@
+---
+import type { TaxonomyGroup } from "../../lib/content/taxonomy";
+
+type Props = {
+  title?: string;
+  groups: TaxonomyGroup[];
+  filterRoot: string;
+  total: number;
+};
+
+const {
+  title = "Archive Index",
+  groups,
+  filterRoot,
+  total,
+} = Astro.props;
+---
+
+<aside
+  class="section-index pixel-corner"
+  aria-label={title}
+  data-section-index={filterRoot}
+>
+  <div class="section-index__header">
+    <span>{title}</span>
+    <strong data-filter-count>{total.toString().padStart(2, "0")}</strong>
+  </div>
+
+  <button
+    class="section-index__all"
+    type="button"
+    data-filter-kind="all"
+    data-filter-value="all"
+    aria-pressed="true"
+  >
+    <span>All records</span>
+    <small>{total}</small>
+  </button>
+
+  {
+    groups.map((group) => (
+      <section class="section-index__group" aria-labelledby={`${filterRoot}-${group.kind}`}>
+        <h2 id={`${filterRoot}-${group.kind}`}>{group.label}</h2>
+        <div class="section-index__items">
+          {group.items.map((item) => (
+            <button
+              type="button"
+              data-filter-kind={group.kind}
+              data-filter-value={item.value}
+              aria-pressed="false"
+            >
+              <span>{item.label}</span>
+              <small>{item.count}</small>
+            </button>
+          ))}
+        </div>
+      </section>
+    ))
+  }
+
+  <p class="section-index__status" aria-live="polite" data-filter-status>
+    All records loaded.
+  </p>
+</aside>
+
+<script is:inline>
+  const initializeSectionIndexes = () => {
+    document.querySelectorAll("[data-section-index]").forEach((index) => {
+      if (!(index instanceof HTMLElement) || index.dataset.ready === "true") {
+        return;
+      }
+
+      index.dataset.ready = "true";
+      const root = index.dataset.sectionIndex;
+      const records = Array.from(
+        document.querySelectorAll(`[data-filter-root="${root}"]`),
+      );
+      const buttons = Array.from(index.querySelectorAll("[data-filter-kind]"));
+      const count = index.querySelector("[data-filter-count]");
+      const status = index.querySelector("[data-filter-status]");
+
+      const applyFilter = (kind, value) => {
+        let visible = 0;
+
+        records.forEach((record) => {
+          const recordValue = record.getAttribute(`data-${kind}`) ?? "";
+          const matches =
+            kind === "all" ||
+            recordValue.split("|").some((entry) => entry === value);
+          record.toggleAttribute("hidden", !matches);
+          visible += Number(matches);
+        });
+
+        document
+          .querySelectorAll(`[data-filter-section="${root}"]`)
+          .forEach((section) => {
+            const hasVisibleRecord = section.querySelector(
+              `[data-filter-root="${root}"]:not([hidden])`,
+            );
+            section.toggleAttribute("hidden", !hasVisibleRecord);
+          });
+
+        buttons.forEach((button) => {
+          button.setAttribute(
+            "aria-pressed",
+            String(
+              button.getAttribute("data-filter-kind") === kind &&
+                button.getAttribute("data-filter-value") === value,
+            ),
+          );
+        });
+
+        if (count) count.textContent = String(visible).padStart(2, "0");
+        if (status) {
+          status.textContent =
+            kind === "all"
+              ? "All records loaded."
+              : `${visible} record${visible === 1 ? "" : "s"} matched.`;
+        }
+      };
+
+      buttons.forEach((button) => {
+        button.addEventListener("click", () => {
+          applyFilter(
+            button.getAttribute("data-filter-kind") ?? "all",
+            button.getAttribute("data-filter-value") ?? "all",
+          );
+        });
+      });
+    });
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initializeSectionIndexes, {
+      once: true,
+    });
+  } else {
+    initializeSectionIndexes();
+  }
+</script>
+
+<style>
+  .section-index {
+    position: sticky;
+    top: 1.25rem;
+    min-width: 0;
+    padding: 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: color-mix(
+      in srgb,
+      var(--color-surface) 88%,
+      var(--section-soft)
+    );
+    box-shadow: var(--shadow-xs);
+    font-family: var(--font-mono);
+  }
+
+  .section-index__header {
+    display: flex;
+    padding-bottom: 0.7rem;
+    border-bottom: 1px dashed var(--color-border);
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    color: var(--color-text-muted);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .section-index__header strong {
+    color: var(--section-accent);
+    font-size: inherit;
+  }
+
+  .section-index button {
+    display: flex;
+    width: 100%;
+    padding: 0.38rem 0.45rem;
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--color-text-muted);
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.65rem;
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    line-height: 1.3;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .section-index button:hover {
+    color: var(--color-text);
+    background: var(--color-surface-raised);
+  }
+
+  .section-index button[aria-pressed="true"] {
+    color: var(--color-heading);
+    background: var(--section-soft);
+    box-shadow: inset var(--pixel-unit) 0 0 var(--section-accent);
+  }
+
+  .section-index button small {
+    color: var(--color-text-faint);
+    font-size: 0.58rem;
+  }
+
+  .section-index__all {
+    margin-top: 0.7rem;
+  }
+
+  .section-index__group {
+    margin-top: 1rem;
+  }
+
+  .section-index__group h2 {
+    margin-bottom: 0.35rem;
+    color: var(--color-text-faint);
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .section-index__items {
+    display: grid;
+    gap: 0.08rem;
+  }
+
+  .section-index__status {
+    margin: 1rem 0 0;
+    padding-top: 0.7rem;
+    border-top: 1px dashed var(--color-border);
+    color: var(--color-text-faint);
+    font-size: 0.58rem;
+  }
+
+  @media (max-width: 54rem) {
+    .section-index {
+      position: static;
+      margin-inline: calc(var(--pixel-unit) * 0.5);
+    }
+
+    .section-index__group {
+      display: grid;
+      grid-template-columns: 6.5rem minmax(0, 1fr);
+      align-items: start;
+      gap: 0.5rem;
+    }
+
+    .section-index__group h2 {
+      padding-top: 0.45rem;
+    }
+
+    .section-index__items {
+      display: flex;
+      overflow-x: auto;
+      padding: 0.1rem 0.15rem 0.4rem;
+      gap: 0.35rem;
+      scrollbar-width: thin;
+    }
+
+    .section-index__items button {
+      width: auto;
+      flex: 0 0 auto;
+      gap: 0.45rem;
+      white-space: nowrap;
+    }
+  }
+
+  @media (max-width: 32rem) {
+    .section-index__group {
+      grid-template-columns: 1fr;
+      gap: 0.1rem;
+    }
+  }
+</style>

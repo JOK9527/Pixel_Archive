@@ -2,10 +2,13 @@
 import NoteList from "../../components/notes/NoteList.astro";
 import EmptyState from "../../components/ui/EmptyState.astro";
 import SectionHeader from "../../components/ui/SectionHeader.astro";
+import SectionIndex from "../../components/ui/SectionIndex.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getPublishedNotes } from "../../lib/content/notes";
+import { getNoteTaxonomy } from "../../lib/content/taxonomy";
 
 const notes = await getPublishedNotes();
+const taxonomy = getNoteTaxonomy(notes);
 ---
 
 <BaseLayout title="Notes" description="文章、学习记录和开发日志。">
@@ -16,13 +19,25 @@ const notes = await getPublishedNotes();
   />
   {
     notes.length > 0 ? (
-      <section class="notes-index" aria-labelledby="notes-index-title">
-        <header>
-          <h2 id="notes-index-title">Archived Notes</h2>
-          <span>{notes.length.toString().padStart(2, "0")} entries</span>
-        </header>
-        <NoteList notes={notes} />
-      </section>
+      <div class="notes-layout">
+        <SectionIndex
+          title="Notes Index"
+          groups={taxonomy}
+          filterRoot="notes"
+          total={notes.length}
+        />
+        <section
+          class="notes-index"
+          aria-labelledby="notes-index-title"
+          data-filter-section="notes"
+        >
+          <header>
+            <h2 id="notes-index-title">Archived Notes</h2>
+            <span>{notes.length.toString().padStart(2, "0")} entries</span>
+          </header>
+          <NoteList notes={notes} filterRoot="notes" />
+        </section>
+      </div>
     ) : (
       <EmptyState
         title="The first note is still being written."
@@ -33,6 +48,17 @@ const notes = await getPublishedNotes();
 </BaseLayout>
 
 <style>
+  .notes-layout {
+    display: grid;
+    grid-template-columns: minmax(10rem, 12rem) minmax(0, 1fr);
+    align-items: start;
+    gap: clamp(1.5rem, 4vw, 3rem);
+  }
+
+  .notes-index {
+    min-width: 0;
+  }
+
   .notes-index > header {
     display: flex;
     max-width: 54rem;
@@ -52,5 +78,11 @@ const notes = await getPublishedNotes();
     color: var(--color-text-muted);
     font-family: var(--font-mono);
     font-size: 0.68rem;
+  }
+
+  @media (max-width: 54rem) {
+    .notes-layout {
+      grid-template-columns: 1fr;
+    }
   }
 </style>

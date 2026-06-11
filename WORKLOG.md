@@ -1,5 +1,30 @@
 # WORKLOG
 
+## 2026-06-12 / Phase 16
+
+### Projects / Notes taxonomy indexes
+
+- 为 Project schema 和输出模型增加稳定 `type` 枚举，并同步三条公开项目内容。
+- 新增 `getYearMonth()`、`getProjectTaxonomy()`、`getNoteTaxonomy()` 与 taxonomy value 归一化 helper。
+- 新增通用 `SectionIndex`，支持低干扰侧边索引、移动端横向 chips、计数和当前筛选状态。
+- Projects 支持 type / status / year.month / tech 单维筛选，Notes 支持 category / year.month 单维筛选。
+- 筛选使用原生 JS 与 `hidden`，无 JS 时静态内容仍全部可读。
+- 修复脚本在记录 DOM 解析前初始化的问题，并为移动端像素角标保留安全距。
+
+### Verification
+
+- `npm run build`：通过，生成 49 个静态页面。
+- Projects 1440px：索引布局正常，`ai-tool` 筛选显示 2 条并隐藏空的 Featured 区域。
+- Notes 390px：category 筛选显示正确，横向 chips 可内部滚动，实际页面不可横向滚动。
+- 暗色主题：Notes 移动端独立检查通过。
+- 浏览器控制台：0 error，0 warning。
+- 截图：`output/playwright/phase16-projects-desktop.png`、`phase16-notes-mobile-dark.png`，本地保留且不提交。
+- 未新增依赖、路由、后端、CMS 或数据库。
+
+### Next
+
+- Phase 17：Lab 详情路由、卡片链接化与实验正文结构。
+
 ## 2026-06-12 / Phase 12-13 completion audit
 
 ### Metadata corrections

@@ -1,28 +1,37 @@
 ---
 import type { NoteItem } from "../../lib/content/notes";
+import { getYearMonth, toTaxonomyValue } from "../../lib/content/taxonomy";
 import NoteCard from "./NoteCard.astro";
 
 type Props = {
   notes: NoteItem[];
+  filterRoot?: string;
 };
 
-const { notes } = Astro.props;
+const { notes, filterRoot } = Astro.props;
 ---
 
 <div class="note-list">
   {
     notes.map((note) => (
-      <NoteCard
-        title={note.title}
-        description={note.description}
-        type={note.type}
-        category={note.category}
-        tags={note.tags}
-        date={note.date}
-        updated={note.updated}
-        href={note.href}
-        cover={note.cover}
-      />
+      <div
+        class="note-list__item"
+        data-filter-root={filterRoot}
+        data-category={toTaxonomyValue(note.category)}
+        data-year={toTaxonomyValue(getYearMonth(note.updated ?? note.date))}
+      >
+        <NoteCard
+          title={note.title}
+          description={note.description}
+          type={note.type}
+          category={note.category}
+          tags={note.tags}
+          date={note.date}
+          updated={note.updated}
+          href={note.href}
+          cover={note.cover}
+        />
+      </div>
     ))
   }
 </div>
@@ -30,5 +39,9 @@ const { notes } = Astro.props;
 <style>
   .note-list {
     max-width: 54rem;
+  }
+
+  .note-list__item {
+    min-width: 0;
   }
 </style>

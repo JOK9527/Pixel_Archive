@@ -1,6 +1,13 @@
 import { getCollection, getEntry, type CollectionEntry } from "astro:content";
 
 export type ProjectStatusValue = "WIP" | "Done" | "Prototype" | "Paused";
+export type ProjectTypeValue =
+  | "web"
+  | "ai-tool"
+  | "research"
+  | "design"
+  | "hardware"
+  | "personal-site";
 
 export type ProjectLinksValue = {
   github?: string;
@@ -13,6 +20,7 @@ export type ProjectItem = {
   href: string;
   title: string;
   description: string;
+  type: ProjectTypeValue;
   status: ProjectStatusValue;
   category: string;
   tags: string[];
@@ -39,6 +47,7 @@ function toProjectItem(entry: CollectionEntry<"projects">): ProjectItem {
     href: `/projects/${slug}/`,
     title: entry.data.title,
     description: entry.data.description,
+    type: entry.data.type,
     status: entry.data.status,
     category: entry.data.category,
     tags: entry.data.tags,

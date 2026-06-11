@@ -1,32 +1,49 @@
 ---
 import type { ProjectItem } from "../../lib/content/projects";
+import { getYearMonth, toTaxonomyValue } from "../../lib/content/taxonomy";
 import ProjectCard from "./ProjectCard.astro";
 
 type Props = {
   projects: ProjectItem[];
   featured?: boolean;
+  filterRoot?: string;
 };
 
-const { projects, featured = false } = Astro.props;
+const { projects, featured = false, filterRoot } = Astro.props;
 ---
 
 <div class:list={["project-grid", { "project-grid--featured": featured }]}>
   {
-    projects.map((project) => (
-      <ProjectCard
-        title={project.title}
-        slug={project.slug}
-        description={project.description}
-        status={project.status}
-        category={project.category}
-        tags={project.tags}
-        techStack={project.techStack}
-        href={project.href}
-        cover={project.cover}
-        links={project.links}
-        featured={featured}
-      />
-    ))
+    projects.map((project) => {
+      const yearMonth = getYearMonth(
+        project.startDate ?? project.updatedDate ?? project.endDate ?? undefined,
+      );
+
+      return (
+        <div
+          class="project-grid__item"
+          data-filter-root={filterRoot}
+          data-type={toTaxonomyValue(project.type)}
+          data-status={toTaxonomyValue(project.status)}
+          data-year={toTaxonomyValue(yearMonth)}
+          data-tech={project.techStack.map(toTaxonomyValue).join("|")}
+        >
+          <ProjectCard
+            title={project.title}
+            slug={project.slug}
+            description={project.description}
+            status={project.status}
+            category={project.category}
+            tags={project.tags}
+            techStack={project.techStack}
+            href={project.href}
+            cover={project.cover}
+            links={project.links}
+            featured={featured}
+          />
+        </div>
+      );
+    })
   }
 </div>
 
@@ -39,5 +56,13 @@ const { projects, featured = false } = Astro.props;
 
   .project-grid--featured {
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr));
+  }
+
+  .project-grid__item {
+    min-width: 0;
+  }
+
+  .project-grid__item > :global(*) {
+    height: 100%;
   }
 </style>

@@ -4,18 +4,23 @@ import ProjectGrid from "./ProjectGrid.astro";
 
 type Props = {
   projects: ProjectItem[];
+  filterRoot?: string;
 };
 
-const { projects } = Astro.props;
+const { projects, filterRoot } = Astro.props;
 ---
 
 {
   projects.length > 0 && (
-    <section class="featured-projects" aria-labelledby="featured-projects-title">
+    <section
+      class="featured-projects"
+      aria-labelledby="featured-projects-title"
+      data-filter-section={filterRoot}
+    >
       <header>
         <h2 id="featured-projects-title">Featured Projects</h2>
       </header>
-      <ProjectGrid projects={projects} featured />
+      <ProjectGrid projects={projects} featured filterRoot={filterRoot} />
     </section>
   )
 }

@@ -13,6 +13,14 @@ const projects = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string(),
+    type: z.enum([
+      "web",
+      "ai-tool",
+      "research",
+      "design",
+      "hardware",
+      "personal-site",
+    ]),
     status: z.enum(["WIP", "Done", "Prototype", "Paused"]),
     category: z.string(),
     tags,

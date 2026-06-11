@@ -1,6 +1,7 @@
 ---
 import EmptyState from "../../components/ui/EmptyState.astro";
 import SectionHeader from "../../components/ui/SectionHeader.astro";
+import SectionIndex from "../../components/ui/SectionIndex.astro";
 import FeaturedProjects from "../../components/project/FeaturedProjects.astro";
 import ProjectGrid from "../../components/project/ProjectGrid.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
@@ -8,10 +9,12 @@ import {
   getAllProjects,
   getFeaturedProjects,
 } from "../../lib/content/projects";
+import { getProjectTaxonomy } from "../../lib/content/taxonomy";
 
 const projects = await getAllProjects();
 const featuredProjects = await getFeaturedProjects();
 const regularProjects = projects.filter((project) => !project.featured);
+const taxonomy = getProjectTaxonomy(projects);
 ---
 
 <BaseLayout
@@ -25,18 +28,30 @@ const regularProjects = projects.filter((project) => !project.featured);
   />
   {
     projects.length > 0 ? (
-      <>
-        <FeaturedProjects projects={featuredProjects} />
-        <section class="projects-index" aria-labelledby="all-projects-title">
-          <header>
-            <h2 id="all-projects-title">Project Archive</h2>
-            <span>
-              {regularProjects.length.toString().padStart(2, "0")} secondary files
-            </span>
-          </header>
-          <ProjectGrid projects={regularProjects} />
-        </section>
-      </>
+      <div class="projects-layout">
+        <SectionIndex
+          title="Project Index"
+          groups={taxonomy}
+          filterRoot="projects"
+          total={projects.length}
+        />
+        <div class="projects-layout__content">
+          <FeaturedProjects projects={featuredProjects} filterRoot="projects" />
+          <section
+            class="projects-index"
+            aria-labelledby="all-projects-title"
+            data-filter-section="projects"
+          >
+            <header>
+              <h2 id="all-projects-title">Project Archive</h2>
+              <span>
+                {regularProjects.length.toString().padStart(2, "0")} secondary files
+              </span>
+            </header>
+            <ProjectGrid projects={regularProjects} filterRoot="projects" />
+          </section>
+        </div>
+      </div>
     ) : (
       <EmptyState
         title="New project slots are waiting."
@@ -48,6 +63,17 @@ const regularProjects = projects.filter((project) => !project.featured);
 </BaseLayout>
 
 <style>
+  .projects-layout {
+    display: grid;
+    grid-template-columns: minmax(10rem, 12rem) minmax(0, 1fr);
+    align-items: start;
+    gap: clamp(1.5rem, 4vw, 3rem);
+  }
+
+  .projects-layout__content {
+    min-width: 0;
+  }
+
   .projects-index > header {
     display: grid;
     margin-bottom: 1.4rem;
@@ -78,6 +104,12 @@ const regularProjects = projects.filter((project) => !project.featured);
       margin-top: 0.35rem;
       grid-column: 1;
       grid-row: auto;
+    }
+  }
+
+  @media (max-width: 54rem) {
+    .projects-layout {
+      grid-template-columns: 1fr;
     }
   }
 </style>
