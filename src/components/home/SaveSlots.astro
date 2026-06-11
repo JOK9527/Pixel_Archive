@@ -1,0 +1,84 @@
+---
+import SaveSlot from "./SaveSlot.astro";
+
+type SaveSlotItem = {
+  slotNumber: string;
+  title: string;
+  status: string;
+  description?: string;
+  href?: string;
+  active?: boolean;
+};
+
+type Props = {
+  slots: SaveSlotItem[];
+};
+
+const { slots } = Astro.props;
+---
+
+<section class="save-slots" aria-labelledby="save-slots-title">
+  <div class="save-slots__heading">
+    <div>
+      <p>Archive memory</p>
+      <h2 id="save-slots-title">Save Slots</h2>
+    </div>
+    <p>{String(slots.length).padStart(2, "0")} slots detected</p>
+  </div>
+
+  <div class="save-slots__grid">
+    {slots.map((slot) => <SaveSlot {...slot} />)}
+  </div>
+</section>
+
+<style>
+  .save-slots {
+    margin-top: clamp(3rem, 7vw, 5.5rem);
+  }
+
+  .save-slots__heading {
+    display: flex;
+    margin-bottom: 1.25rem;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .save-slots__heading p {
+    margin-bottom: 0.35rem;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .save-slots__heading > p {
+    margin-bottom: 0.2rem;
+  }
+
+  .save-slots__heading h2 {
+    margin: 0;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    letter-spacing: -0.045em;
+  }
+
+  .save-slots__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  @media (max-width: 48rem) {
+    .save-slots__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 32rem) {
+    .save-slots__heading {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+</style>

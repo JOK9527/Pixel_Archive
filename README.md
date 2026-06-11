@@ -4,9 +4,9 @@ Pixel Archive 是一个以极简阅读体验为基础、以像素组件为识别
 
 ## 当前阶段
 
-Phase 1：基础架构与视觉系统。
+Phase 2：首页初版。
 
-当前已完成 Astro 项目骨架、基础布局、集中导航配置、浅色 / 暗色主题变量和主题切换。首页终端、页面路由和 Content Collections 将按后续阶段继续实现。
+当前已完成 Astro 项目骨架、基础布局、浅色 / 暗色主题、Archive Terminal 首页入口、游戏菜单式导航、三个 Save Slots 和 Status Bar。一级页面路由和 Content Collections 将按后续阶段继续实现。
 
 ## 技术栈
 
@@ -36,6 +36,8 @@ npm run preview
 ```txt
 docs/                    项目计划、规范与参考文档
 src/components/layout/   Header、Footer 与主题切换
+src/components/home/     首页终端、菜单、存档槽与状态栏
+src/components/ui/       通用视觉组件
 src/data/                站点和导航配置
 src/layouts/             页面基础布局
 src/pages/               Astro 页面路由
@@ -44,4 +46,4 @@ src/styles/              主题、全局和 Markdown 样式
 
 ## 下一步
 
-完成 Phase 1 验收后，进入 Phase 2：首页初版。
+完成 Phase 2 验收后，进入 Phase 3：页面空壳与路由。

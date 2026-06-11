@@ -1,0 +1,135 @@
+---
+import StatusPill from "../ui/StatusPill.astro";
+
+type Props = {
+  slotNumber: string;
+  title: string;
+  status: string;
+  description?: string;
+  href?: string;
+  active?: boolean;
+};
+
+const {
+  slotNumber,
+  title,
+  status,
+  description,
+  href,
+  active = false,
+} = Astro.props;
+
+const tone = active ? "green" : status === "locked" ? "warning" : "purple";
+const Element = href ? "a" : "article";
+---
+
+<Element
+  class:list={["save-slot", { "save-slot--active": active }]}
+  href={href}
+>
+  <div class="save-slot__header">
+    <span>SAVE SLOT {slotNumber}</span>
+    <StatusPill label={status} tone={tone} pulse={active} />
+  </div>
+  <div class="save-slot__screen" aria-hidden="true">
+    <span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span>
+  </div>
+  <h3>{title}</h3>
+  {description && <p>{description}</p>}
+  <span class="save-slot__action">{href ? "load slot →" : "slot waiting"}</span>
+</Element>
+
+<style>
+  .save-slot {
+    display: flex;
+    min-width: 0;
+    min-height: 16rem;
+    padding: 1.15rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface);
+    color: var(--color-text);
+    flex-direction: column;
+    text-decoration: none;
+    transition:
+      border-color var(--transition-fast),
+      box-shadow var(--transition-fast),
+      transform var(--transition-fast);
+  }
+
+  .save-slot:hover,
+  .save-slot:focus-visible {
+    border-color: var(--color-border-strong);
+    box-shadow: var(--shadow-pixel);
+    color: var(--color-text);
+    transform: translate(-2px, -2px);
+  }
+
+  .save-slot--active {
+    border-color: var(--color-green);
+  }
+
+  .save-slot__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+
+  .save-slot__screen {
+    display: grid;
+    height: 4.4rem;
+    margin-block: 1.2rem;
+    padding: 0.7rem;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface-muted);
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.35rem;
+  }
+
+  .save-slot__screen span {
+    align-self: end;
+    background: var(--color-border);
+  }
+
+  .save-slot__screen span:nth-child(3n + 1) {
+    height: 30%;
+    background: var(--color-green);
+  }
+
+  .save-slot__screen span:nth-child(3n + 2) {
+    height: 65%;
+    background: var(--color-purple);
+  }
+
+  .save-slot__screen span:nth-child(3n) {
+    height: 45%;
+  }
+
+  .save-slot h3 {
+    margin-bottom: 0.45rem;
+    font-size: 1.05rem;
+  }
+
+  .save-slot p {
+    margin-bottom: 1rem;
+    color: var(--color-text-muted);
+    font-size: 0.84rem;
+  }
+
+  .save-slot__action {
+    margin-top: auto;
+    color: var(--color-purple);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+</style>

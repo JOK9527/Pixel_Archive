@@ -88,3 +88,51 @@ Phase 1：基础架构与视觉系统
 ### 下一步建议
 
 - 进入 Phase 2，实现 ArchiveTerminal、HomeMenu、SaveSlots 和 StatusBar。
+
+## 2026-06-11 / Phase 2
+
+### 阶段
+
+Phase 2：首页初版
+
+### 修改文件
+
+- `src/components/home/ArchiveTerminal.astro`
+- `src/components/home/HomeMenu.astro`
+- `src/components/home/SaveSlots.astro`
+- `src/components/home/SaveSlot.astro`
+- `src/components/home/StatusBar.astro`
+- `src/components/ui/StatusPill.astro`
+- `src/pages/index.astro`
+- `src/styles/global.css`
+- `README.md`
+- `WORKLOG.md`
+
+### 完成内容
+
+- 实现首页 Archive Terminal 核心入口。
+- 实现游戏菜单式 HomeMenu。
+- 实现三个 Save Slots 和轻微 hover 反馈。
+- 实现首页 Status Bar 和低频状态动画。
+- 使用页面静态数据向首页组件传递菜单、槽位和状态信息。
+- 保持首页无真实图片、无个人简历文案、无 Content Collections 读取。
+
+### 新增 / 删除依赖
+
+- 无。
+
+### 构建与验收结果
+
+- `npm run build`：通过，生成 1 个静态页面。
+- 桌面端首页视觉：通过。
+- 390px 窄屏：通过，无横向溢出。
+- 浅色 / 暗色主题：通过。
+- 浏览器控制台：0 错误，0 警告。
+
+### 已知问题
+
+- Projects、Notes、Archive、Lab、About 页面将在 Phase 3 创建；当前首页入口会指向尚未实现的阶段目标路由。
+
+### 下一步建议
+
+- 进入 Phase 3，建立全部一级页面空壳与 404 路由。

@@ -1,0 +1,65 @@
+---
+type Props = {
+  label: string;
+  tone?: "neutral" | "green" | "purple" | "warning";
+  pulse?: boolean;
+};
+
+const {
+  label,
+  tone = "neutral",
+  pulse = false,
+} = Astro.props;
+---
+
+<span class:list={["status-pill", `status-pill--${tone}`]}>
+  {pulse && <span class="status-pill__dot" aria-hidden="true"></span>}
+  {label}
+</span>
+
+<style>
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .status-pill--green {
+    color: var(--color-green);
+  }
+
+  .status-pill--purple {
+    color: var(--color-purple);
+  }
+
+  .status-pill--warning {
+    color: var(--color-warning);
+  }
+
+  .status-pill__dot {
+    width: 0.45rem;
+    height: 0.45rem;
+    flex: 0 0 auto;
+    background: currentColor;
+    box-shadow: 0 0 0 3px color-mix(in srgb, currentColor 18%, transparent);
+    animation: status-pulse 2.4s ease-in-out infinite;
+  }
+
+  @keyframes status-pulse {
+    0%,
+    100% {
+      opacity: 0.55;
+    }
+
+    50% {
+      opacity: 1;
+    }
+  }
+</style>

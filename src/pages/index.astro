@@ -1,14 +1,91 @@
 ---
+import ArchiveTerminal from "../components/home/ArchiveTerminal.astro";
+import SaveSlots from "../components/home/SaveSlots.astro";
+import StatusBar from "../components/home/StatusBar.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { navigation } from "../data/navigation";
+
+const menuItems = navigation
+  .filter((item) => item.href !== "/")
+  .map((item) => ({
+    ...item,
+    description: {
+      Projects: "Builds, tools and works in progress.",
+      Notes: "Articles, logs and learning records.",
+      Archive: "Milestones and saved moments.",
+      Lab: "Pixel, UI and visual experiments.",
+      About: "A short note about this archive.",
+    }[item.label],
+  }));
+
+const saveSlots = [
+  {
+    slotNumber: "01",
+    title: "Project Slot",
+    status: "building",
+    description: "Structures are ready. Project files will be loaded later.",
+    href: "/projects/",
+    active: true,
+  },
+  {
+    slotNumber: "02",
+    title: "Research Slot",
+    status: "locked",
+    description: "Notes and reading records are waiting for the next phase.",
+    href: "/notes/",
+  },
+  {
+    slotNumber: "03",
+    title: "Lab Slot",
+    status: "empty",
+    description: "A reserved space for small visual and interface experiments.",
+    href: "/lab/",
+  },
+];
 ---
 
 <BaseLayout>
-  <section class="phase-panel">
-    <p class="phase-panel__eyebrow">System / Phase 1</p>
-    <h1>Pixel Archive</h1>
-    <p>
-      The archive shell is online. The terminal interface will be loaded in the
-      next phase.
-    </p>
-  </section>
+  <div class="home">
+    <ArchiveTerminal
+      title="Pixel Archive"
+      statusText="archive online"
+      menuItems={menuItems}
+    />
+    <StatusBar
+      items={["building personal website", "mode quiet", "index ready"]}
+    />
+    <SaveSlots slots={saveSlots} />
+  </div>
 </BaseLayout>
+
+<style>
+  .home {
+    position: relative;
+  }
+
+  .home::before,
+  .home::after {
+    position: absolute;
+    z-index: -1;
+    width: 0.55rem;
+    height: 0.55rem;
+    background: var(--color-purple);
+    box-shadow:
+      0.8rem 0 var(--color-green),
+      0 0.8rem var(--color-border-strong);
+    content: "";
+    opacity: 0.65;
+    pointer-events: none;
+  }
+
+  .home::before {
+    top: -1.2rem;
+    right: 1rem;
+  }
+
+  .home::after {
+    bottom: -2rem;
+    left: 0;
+    transform: rotate(180deg);
+  }
+</style>

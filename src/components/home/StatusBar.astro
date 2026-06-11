@@ -1,0 +1,73 @@
+---
+import StatusPill from "../ui/StatusPill.astro";
+
+type Props = {
+  items: string[];
+};
+
+const { items } = Astro.props;
+
+const tones = ["green", "purple", "neutral"] as const;
+---
+
+<aside class="status-bar" aria-label="Archive status">
+  <p>SYS.STATUS</p>
+  <div class="status-bar__items">
+    {
+      items.map((item, index) => (
+        <StatusPill
+          label={item}
+          tone={tones[index % tones.length]}
+          pulse={index === 0}
+        />
+      ))
+    }
+  </div>
+  <p class="status-bar__version">v0.2</p>
+</aside>
+
+<style>
+  .status-bar {
+    display: flex;
+    margin-top: 1.25rem;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface-muted);
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    font-family: var(--font-mono);
+  }
+
+  .status-bar p {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+  }
+
+  .status-bar__items {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(0.8rem, 3vw, 2rem);
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 42rem) {
+    .status-bar {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .status-bar__items {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+
+    .status-bar__version {
+      align-self: flex-end;
+    }
+  }
+</style>
