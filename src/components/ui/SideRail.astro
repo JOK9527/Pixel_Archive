@@ -1,0 +1,136 @@
+---
+type RailItem = {
+  label: string;
+  value: string;
+};
+
+type Props = {
+  title: string;
+  code?: string;
+  items: RailItem[];
+};
+
+const {
+  title,
+  code = "PA",
+  items,
+} = Astro.props;
+---
+
+<aside class="side-rail pixel-corner" aria-label={title}>
+  <header>
+    <span>{title}</span>
+    <strong>{code}</strong>
+  </header>
+  <dl>
+    {
+      items.map((item) => (
+        <div>
+          <dt>{item.label}</dt>
+          <dd>{item.value}</dd>
+        </div>
+      ))
+    }
+  </dl>
+  <footer>
+    <i></i><i></i><i></i>
+    <span>record stable</span>
+  </footer>
+</aside>
+
+<style>
+  .side-rail {
+    position: sticky;
+    top: 1.25rem;
+    min-width: 0;
+    padding: 1rem;
+    border: 1px solid var(--color-border);
+    background: color-mix(
+      in srgb,
+      var(--color-surface) 90%,
+      var(--section-soft)
+    );
+    box-shadow: var(--shadow-xs);
+    font-family: var(--font-mono);
+  }
+
+  .side-rail header {
+    display: flex;
+    padding-bottom: 0.7rem;
+    border-bottom: 1px dashed var(--color-border);
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    color: var(--color-text-muted);
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .side-rail header strong {
+    color: var(--section-accent);
+    font-size: inherit;
+  }
+
+  .side-rail dl {
+    display: grid;
+    margin: 0;
+  }
+
+  .side-rail dl div {
+    display: grid;
+    padding-block: 0.7rem;
+    border-bottom: 1px dashed var(--color-border-subtle);
+    gap: 0.2rem;
+  }
+
+  .side-rail dt {
+    color: var(--color-text-faint);
+    font-size: 0.55rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .side-rail dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+    color: var(--color-text-muted);
+    font-size: 0.65rem;
+    line-height: 1.45;
+  }
+
+  .side-rail footer {
+    display: flex;
+    padding-top: 0.75rem;
+    align-items: end;
+    gap: 2px;
+    color: var(--color-text-faint);
+    font-size: 0.55rem;
+  }
+
+  .side-rail footer i {
+    width: var(--pixel-unit);
+    height: var(--pixel-unit);
+    background: var(--color-border-strong);
+  }
+
+  .side-rail footer i:nth-child(2) {
+    height: calc(var(--pixel-unit) * 2);
+    background: var(--section-accent);
+  }
+
+  .side-rail footer i:nth-child(3) {
+    height: calc(var(--pixel-unit) * 3);
+  }
+
+  .side-rail footer span {
+    margin-left: auto;
+  }
+
+  @media (max-width: 52rem) {
+    .side-rail {
+      display: none;
+    }
+  }
+</style>

@@ -1,5 +1,6 @@
 ---
 import SectionHeader from "../components/ui/SectionHeader.astro";
+import SideRail from "../components/ui/SideRail.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
@@ -11,55 +12,80 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       description="Pixel Archive 是一个个人档案馆，用来存放项目、笔记、阶段存档和一些实验性内容。"
     />
 
-    <div class="about__note">
-      <p>
-        这里保留正在完成的 Web 工具、阅读与知识整理实践、开发笔记、
-        阶段保存点和小型界面实验。内容以可核验、可公开和可长期维护为前提。
-      </p>
-      <dl>
-        <div>
-          <dt>Mode</dt>
-          <dd>quiet archive</dd>
+    <div class="about__layout">
+      <SideRail
+        title="Archive Profile"
+        code="V20"
+        items={[
+          { label: "Coordinate", value: "PA / ABOUT / 06" },
+          { label: "Version", value: "Phase 20" },
+          { label: "Built with", value: "Astro / MDX / CSS" },
+          { label: "Mode", value: "quiet archive" },
+        ]}
+      />
+      <div class="about__content">
+        <div class="about__note">
+          <p>
+            这里保留正在完成的 Web 工具、阅读与知识整理实践、开发笔记、
+            阶段保存点和小型界面实验。内容以可核验、可公开和可长期维护为前提。
+          </p>
+          <dl>
+            <div>
+              <dt>Mode</dt>
+              <dd>quiet archive</dd>
+            </div>
+            <div>
+              <dt>Built with</dt>
+              <dd>Astro / MDX</dd>
+            </div>
+            <div>
+              <dt>Focus</dt>
+              <dd>web tools / reading systems / interface studies</dd>
+            </div>
+            <div>
+              <dt>Privacy</dt>
+              <dd>public facts only / screenshots reviewed before release</dd>
+            </div>
+          </dl>
         </div>
-        <div>
-          <dt>Built with</dt>
-          <dd>Astro / MDX</dd>
-        </div>
-        <div>
-          <dt>Focus</dt>
-          <dd>web tools / reading systems / interface studies</dd>
-        </div>
-        <div>
-          <dt>Privacy</dt>
-          <dd>public facts only / screenshots reviewed before release</dd>
-        </div>
-      </dl>
-    </div>
 
-    <nav class="about__map" aria-label="Archive content map">
-      <a href="/projects/">
-        <span>01 / PROJECTS</span>
-        <strong>长期项目与当前状态</strong>
-      </a>
-      <a href="/notes/">
-        <span>02 / NOTES</span>
-        <strong>文章、日志与技术记录</strong>
-      </a>
-      <a href="/archive/">
-        <span>03 / ARCHIVE</span>
-        <strong>可按时间回看的阶段保存点</strong>
-      </a>
-      <a href="/lab/">
-        <span>04 / LAB</span>
-        <strong>尚在验证的界面与像素实验</strong>
-      </a>
-    </nav>
+        <nav class="about__map" aria-label="Archive content map">
+          <a href="/projects/">
+            <span>01 / PROJECTS</span>
+            <strong>长期项目与当前状态</strong>
+          </a>
+          <a href="/notes/">
+            <span>02 / NOTES</span>
+            <strong>文章、日志与技术记录</strong>
+          </a>
+          <a href="/archive/">
+            <span>03 / ARCHIVE</span>
+            <strong>可按时间回看的阶段保存点</strong>
+          </a>
+          <a href="/lab/">
+            <span>04 / LAB</span>
+            <strong>尚在验证的界面与像素实验</strong>
+          </a>
+        </nav>
+      </div>
+    </div>
   </article>
 </BaseLayout>
 
 <style>
   .about {
-    max-width: 48rem;
+    max-width: 62rem;
+  }
+
+  .about__layout {
+    display: grid;
+    grid-template-columns: minmax(10rem, 12rem) minmax(0, 1fr);
+    align-items: start;
+    gap: clamp(1.5rem, 5vw, 3.5rem);
+  }
+
+  .about__content {
+    min-width: 0;
   }
 
   .about__note {
@@ -157,6 +183,12 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     }
 
     .about__map {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 52rem) {
+    .about__layout {
       grid-template-columns: 1fr;
     }
   }

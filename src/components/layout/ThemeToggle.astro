@@ -32,9 +32,13 @@
 
   toggle?.addEventListener("click", () => {
     const nextTheme = getTheme() === "dark" ? "light" : "dark";
+    document.documentElement.dataset.themeChanging = "true";
     document.documentElement.dataset.theme = nextTheme;
     localStorage.setItem("pixel-archive-theme", nextTheme);
     updateToggle(nextTheme);
+    window.setTimeout(() => {
+      delete document.documentElement.dataset.themeChanging;
+    }, 220);
   });
 </script>
 

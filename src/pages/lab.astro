@@ -2,10 +2,13 @@
 import LabGrid from "../components/lab/LabGrid.astro";
 import EmptyState from "../components/ui/EmptyState.astro";
 import SectionHeader from "../components/ui/SectionHeader.astro";
+import SectionIndex from "../components/ui/SectionIndex.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { getAllLabItems } from "../lib/content/lab";
+import { getLabTaxonomy } from "../lib/content/taxonomy";
 
 const items = await getAllLabItems();
+const taxonomy = getLabTaxonomy(items);
 ---
 
 <BaseLayout title="Lab" description="视觉、像素和小工具实验。">
@@ -16,7 +19,15 @@ const items = await getAllLabItems();
   />
   {
     items.length > 0 ? (
-      <LabGrid items={items} />
+      <div class="lab-layout">
+        <SectionIndex
+          title="Lab Index"
+          groups={taxonomy}
+          filterRoot="lab"
+          total={items.length}
+        />
+        <LabGrid items={items} filterRoot="lab" />
+      </div>
     ) : (
       <EmptyState
         title="This lab slot is still empty."
@@ -26,3 +37,18 @@ const items = await getAllLabItems();
     )
   }
 </BaseLayout>
+
+<style>
+  .lab-layout {
+    display: grid;
+    grid-template-columns: minmax(10rem, 12rem) minmax(0, 1fr);
+    align-items: start;
+    gap: clamp(1.5rem, 4vw, 3rem);
+  }
+
+  @media (max-width: 54rem) {
+    .lab-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

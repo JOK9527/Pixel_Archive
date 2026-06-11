@@ -1,0 +1,108 @@
+---
+type Props = {
+  target?: string;
+};
+
+const { target = "[data-reading-content]" } = Astro.props;
+---
+
+<div
+  class="reading-progress"
+  data-reading-progress
+  data-reading-target={target}
+  role="progressbar"
+  aria-label="Reading progress"
+  aria-valuemin="0"
+  aria-valuemax="100"
+  aria-valuenow="0"
+>
+  <div>
+    <i data-reading-progress-bar></i>
+  </div>
+  <span data-reading-progress-label>00%</span>
+</div>
+
+<script is:inline>
+  const initializeReadingProgress = () => {
+    document.querySelectorAll("[data-reading-progress]").forEach((progress) => {
+      if (!(progress instanceof HTMLElement) || progress.dataset.ready === "true") {
+        return;
+      }
+
+      const selector = progress.dataset.readingTarget;
+      const target = selector ? document.querySelector(selector) : null;
+      const bar = progress.querySelector("[data-reading-progress-bar]");
+      const label = progress.querySelector("[data-reading-progress-label]");
+
+      if (!(target instanceof HTMLElement) || !(bar instanceof HTMLElement)) {
+        return;
+      }
+
+      progress.dataset.ready = "true";
+      let scheduled = false;
+
+      const update = () => {
+        scheduled = false;
+        const start = target.getBoundingClientRect().top + window.scrollY;
+        const pageEnd =
+          document.documentElement.scrollHeight - window.innerHeight;
+        const targetEnd = start + target.offsetHeight - window.innerHeight;
+        const end = Math.min(pageEnd, targetEnd);
+        const distance = Math.max(end - start, 1);
+        const value = Math.max(
+          0,
+          Math.min(100, ((window.scrollY - start) / distance) * 100),
+        );
+        const rounded = Math.round(value);
+
+        bar.style.width = `${value}%`;
+        progress.setAttribute("aria-valuenow", String(rounded));
+        if (label) label.textContent = `${String(rounded).padStart(2, "0")}%`;
+      };
+
+      const scheduleUpdate = () => {
+        if (scheduled) return;
+        scheduled = true;
+        requestAnimationFrame(update);
+      };
+
+      update();
+      addEventListener("scroll", scheduleUpdate, { passive: true });
+      addEventListener("resize", scheduleUpdate, { passive: true });
+    });
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initializeReadingProgress, {
+      once: true,
+    });
+  } else {
+    initializeReadingProgress();
+  }
+</script>
+
+<style>
+  .reading-progress {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.55rem;
+    color: var(--color-text-faint);
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+  }
+
+  .reading-progress > div {
+    height: var(--pixel-unit);
+    overflow: hidden;
+    background: var(--color-border);
+  }
+
+  .reading-progress i {
+    display: block;
+    width: 0;
+    height: 100%;
+    background: var(--section-accent);
+    transition: width var(--transition-fast);
+  }
+</style>

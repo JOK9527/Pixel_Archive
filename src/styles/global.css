@@ -47,6 +47,13 @@ body {
     color var(--transition-fast);
 }
 
+[data-theme-changing="true"] body,
+[data-theme-changing="true"] :where(header, footer, main, article, section, aside, nav, button, a, div) {
+  transition-property: background-color, border-color, color, box-shadow;
+  transition-duration: 180ms;
+  transition-timing-function: ease;
+}
+
 body,
 button,
 input,

@@ -1,5 +1,33 @@
 # WORKLOG
 
+## 2026-06-12 / Phase 20
+
+### Side assistance and restrained motion
+
+- Added reusable `SideRail`, `OnThisPage`, and `ReadingProgress` components.
+- Replaced the NoteLayout inline TOC with an active section index and native scroll-based reading progress.
+- Added Lab type/status taxonomy indexing through the existing `SectionIndex` behavior.
+- Added a low-contrast About archive profile rail; it hides below 52rem to protect mobile reading width.
+- Added a 1–2px slow Home grid drift and a short theme-surface transition window.
+- Kept existing Project, Notes, and Archive indexes unchanged because they already satisfy the page mapping.
+- Extended the existing global `prefers-reduced-motion` rule to cover all new motion.
+
+### Verification
+
+- `npm run build`: passed; 51 static pages generated.
+- Notes detail: 5 heading links detected; reading progress reaches 100% at page end and the last section becomes current.
+- Lab index: type/status groups match current content; `done` reports 2 matched records.
+- Desktop: Notes detail, Lab, and About inspected at 1440px.
+- Mobile dark theme: Notes detail inspected at 390px; actual horizontal scroll remained `0`.
+- Reduced motion: cursor blink, status pulse, and Home grid drift all resolve to `0.01ms`.
+- Browser console: 0 errors, 0 warnings.
+- Screenshots: `output/playwright/phase20-note-desktop.png`, `phase20-lab-desktop.png`, `phase20-about-desktop.png`, and `phase20-note-mobile-dark.png`; retained locally and not committed.
+- No dependency, route, Content Collections schema, backend, CMS, or database changes.
+
+### Next
+
+- Configure the Git remote, Cloudflare Pages project, and production origin when deployment details are available.
+
 ## 2026-06-12 / Phase 19
 
 ### Semantic pixel cover system

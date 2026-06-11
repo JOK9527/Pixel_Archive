@@ -1,6 +1,7 @@
 import type { ArchiveItem } from "./archive";
 import type { NoteItem } from "./notes";
 import type { ProjectItem } from "./projects";
+import type { LabItem } from "./lab";
 
 export type TaxonomyItem = {
   label: string;
@@ -115,6 +116,21 @@ export function getArchiveTaxonomy(entries: ArchiveItem[]): TaxonomyGroup[] {
       label: "Type",
       kind: "type",
       items: buildTaxonomyItems(entries.map((entry) => entry.type)),
+    },
+  ].filter((group) => group.items.length > 0);
+}
+
+export function getLabTaxonomy(items: LabItem[]): TaxonomyGroup[] {
+  return [
+    {
+      label: "Experiment Type",
+      kind: "type",
+      items: buildTaxonomyItems(items.map((item) => item.type)),
+    },
+    {
+      label: "Status",
+      kind: "status",
+      items: buildTaxonomyItems(items.map((item) => item.status)),
     },
   ].filter((group) => group.items.length > 0);
 }

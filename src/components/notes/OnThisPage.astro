@@ -1,0 +1,185 @@
+---
+import ReadingProgress from "./ReadingProgress.astro";
+
+type Heading = {
+  depth: number;
+  slug: string;
+  text: string;
+};
+
+type Props = {
+  headings: Heading[];
+};
+
+const { headings } = Astro.props;
+---
+
+<aside class="on-this-page pixel-corner" aria-labelledby="on-this-page-title" data-on-this-page>
+  <header>
+    <h2 id="on-this-page-title">On this page</h2>
+    <span>{headings.length.toString().padStart(2, "0")}</span>
+  </header>
+  <ReadingProgress />
+  <ol>
+    {
+      headings.map((heading) => (
+        <li class:list={{ "is-nested": heading.depth === 3 }}>
+          <a href={`#${heading.slug}`} data-heading-link={heading.slug}>
+            {heading.text}
+          </a>
+        </li>
+      ))
+    }
+  </ol>
+</aside>
+
+<script is:inline>
+  const initializeOnThisPage = () => {
+    document.querySelectorAll("[data-on-this-page]").forEach((toc) => {
+      if (!(toc instanceof HTMLElement) || toc.dataset.ready === "true") return;
+
+      const links = Array.from(toc.querySelectorAll("[data-heading-link]"));
+      const sections = links
+        .map((link) => {
+          const slug = link.getAttribute("data-heading-link");
+          const section = slug ? document.getElementById(slug) : null;
+          return section ? { link, section } : null;
+        })
+        .filter(Boolean);
+
+      if (sections.length === 0) return;
+      toc.dataset.ready = "true";
+
+      const setCurrent = (id) => {
+        links.forEach((link) => {
+          if (link.getAttribute("data-heading-link") === id) {
+            link.setAttribute("aria-current", "location");
+          } else {
+            link.removeAttribute("aria-current");
+          }
+        });
+      };
+
+      let scheduled = false;
+      const update = () => {
+        scheduled = false;
+        const atPageEnd =
+          window.scrollY + window.innerHeight >=
+          document.documentElement.scrollHeight - 2;
+        if (atPageEnd) {
+          setCurrent(sections[sections.length - 1].section.id);
+          return;
+        }
+        const threshold = window.innerHeight * 0.24;
+        const current = sections.reduce((active, item) => {
+          return item.section.getBoundingClientRect().top <= threshold
+            ? item
+            : active;
+        }, sections[0]);
+        setCurrent(current.section.id);
+      };
+      const scheduleUpdate = () => {
+        if (scheduled) return;
+        scheduled = true;
+        requestAnimationFrame(update);
+      };
+
+      update();
+      addEventListener("scroll", scheduleUpdate, { passive: true });
+      addEventListener("resize", scheduleUpdate, { passive: true });
+    });
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initializeOnThisPage, {
+      once: true,
+    });
+  } else {
+    initializeOnThisPage();
+  }
+</script>
+
+<style>
+  .on-this-page {
+    position: sticky;
+    top: 1.25rem;
+    padding: 0.85rem;
+    border: 1px solid var(--color-border);
+    background: color-mix(
+      in srgb,
+      var(--color-surface) 90%,
+      var(--section-soft)
+    );
+    box-shadow: var(--shadow-xs);
+  }
+
+  .on-this-page header {
+    display: flex;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.65rem;
+    border-bottom: 1px dashed var(--color-border);
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  .on-this-page h2,
+  .on-this-page header span {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .on-this-page header span {
+    color: var(--section-accent);
+    font-weight: 700;
+  }
+
+  .on-this-page ol {
+    display: grid;
+    margin: 0.85rem 0 0;
+    padding: 0;
+    gap: 0.5rem;
+    list-style: none;
+  }
+
+  .on-this-page li.is-nested {
+    padding-left: 0.7rem;
+  }
+
+  .on-this-page a {
+    display: block;
+    padding-left: 0.55rem;
+    border-left: var(--pixel-unit) solid transparent;
+    color: var(--color-text-muted);
+    font-size: 0.7rem;
+    line-height: 1.45;
+    text-decoration: none;
+  }
+
+  .on-this-page a:hover,
+  .on-this-page a:focus-visible,
+  .on-this-page a[aria-current="location"] {
+    color: var(--color-heading);
+    border-left-color: var(--section-accent);
+  }
+
+  @media (max-width: 52rem) {
+    .on-this-page {
+      position: static;
+    }
+
+    .on-this-page ol {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 34rem) {
+    .on-this-page ol {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -90,6 +90,7 @@ const saveSlots = [
     mask-composite: intersect;
     opacity: 0.7;
     pointer-events: none;
+    animation: archive-grid-drift 18s ease-in-out infinite alternate;
   }
 
   .home::after {
@@ -153,6 +154,20 @@ const saveSlots = [
 
   .home__rail--right {
     right: -3.25rem;
+  }
+
+  @keyframes archive-grid-drift {
+    from {
+      background-position:
+        0 0,
+        center;
+    }
+
+    to {
+      background-position:
+        2px 1px,
+        calc(50% + 1px) center;
+    }
   }
 
   @media (max-width: 74rem) {

@@ -2,6 +2,7 @@
 import { getEntry } from "astro:content";
 import MarkdownContent from "../components/notes/MarkdownContent.astro";
 import NoteMeta from "../components/notes/NoteMeta.astro";
+import OnThisPage from "../components/notes/OnThisPage.astro";
 import type { NoteItem } from "../lib/content/notes";
 import BaseLayout from "./BaseLayout.astro";
 
@@ -75,20 +76,11 @@ const relatedArchive = (
     <div class="note-detail__reading">
       {
         tocHeadings.length > 0 && (
-          <aside class="note-detail__toc" aria-labelledby="note-toc-title">
-            <h2 id="note-toc-title">On this page</h2>
-            <ol>
-              {tocHeadings.map((heading) => (
-                <li class:list={{ "is-nested": heading.depth === 3 }}>
-                  <a href={`#${heading.slug}`}>{heading.text}</a>
-                </li>
-              ))}
-            </ol>
-          </aside>
+          <OnThisPage headings={tocHeadings} />
         )
       }
 
-      <div class="note-detail__body">
+      <div class="note-detail__body" data-reading-content>
         <MarkdownContent>
           <slot />
         </MarkdownContent>
@@ -199,46 +191,6 @@ const relatedArchive = (
     align-items: start;
   }
 
-  .note-detail__toc {
-    position: sticky;
-    top: 2rem;
-    padding-top: 0.8rem;
-    border-top: 1px solid var(--color-border);
-  }
-
-  .note-detail__toc h2 {
-    margin-bottom: 0.8rem;
-    color: var(--color-text-muted);
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .note-detail__toc ol {
-    display: grid;
-    margin: 0;
-    padding: 0;
-    gap: 0.6rem;
-    list-style: none;
-  }
-
-  .note-detail__toc li.is-nested {
-    padding-left: 0.75rem;
-  }
-
-  .note-detail__toc a {
-    color: var(--color-text-muted);
-    font-size: 0.72rem;
-    line-height: 1.45;
-    text-decoration: none;
-  }
-
-  .note-detail__toc a:hover,
-  .note-detail__toc a:focus-visible {
-    color: var(--section-accent);
-  }
-
   .note-detail__body {
     min-width: 0;
   }
@@ -330,17 +282,9 @@ const relatedArchive = (
       grid-template-columns: minmax(0, var(--reading-width));
     }
 
-    .note-detail__toc {
-      position: static;
-    }
-
-    .note-detail__toc ol {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
   }
 
   @media (max-width: 34rem) {
-    .note-detail__toc ol,
     .note-detail__pager,
     .note-detail__related > div {
       grid-template-columns: 1fr;
