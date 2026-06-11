@@ -1,3 +1,4 @@
+import type { ArchiveItem } from "./archive";
 import type { NoteItem } from "./notes";
 import type { ProjectItem } from "./projects";
 
@@ -96,6 +97,24 @@ export function getNoteTaxonomy(notes: NoteItem[]): TaxonomyGroup[] {
         notes.map((note) => getYearMonth(note.updated ?? note.date)),
         "date",
       ),
+    },
+  ].filter((group) => group.items.length > 0);
+}
+
+export function getArchiveTaxonomy(entries: ArchiveItem[]): TaxonomyGroup[] {
+  return [
+    {
+      label: "Year.Month",
+      kind: "year",
+      items: buildTaxonomyItems(
+        entries.map((entry) => getYearMonth(entry.date)),
+        "date",
+      ),
+    },
+    {
+      label: "Type",
+      kind: "type",
+      items: buildTaxonomyItems(entries.map((entry) => entry.type)),
     },
   ].filter((group) => group.items.length > 0);
 }

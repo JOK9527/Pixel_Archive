@@ -53,8 +53,9 @@ export async function getAllArchiveEntries(): Promise<ArchiveItem[]> {
     .toSorted((a, b) => b.date.localeCompare(a.date));
 }
 
-export async function getArchiveGroups(): Promise<ArchiveYearGroup[]> {
-  const entries = await getAllArchiveEntries();
+export function groupArchiveEntries(
+  entries: ArchiveItem[],
+): ArchiveYearGroup[] {
   const years = new Map<string, Map<string, ArchiveItem[]>>();
 
   for (const entry of entries) {
@@ -73,4 +74,9 @@ export async function getArchiveGroups(): Promise<ArchiveYearGroup[]> {
       entries: monthEntries,
     })),
   }));
+}
+
+export async function getArchiveGroups(): Promise<ArchiveYearGroup[]> {
+  const entries = await getAllArchiveEntries();
+  return groupArchiveEntries(entries);
 }

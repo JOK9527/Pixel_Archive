@@ -2,10 +2,17 @@
 import ArchiveTimeline from "../components/archive/ArchiveTimeline.astro";
 import EmptyState from "../components/ui/EmptyState.astro";
 import SectionHeader from "../components/ui/SectionHeader.astro";
+import SectionIndex from "../components/ui/SectionIndex.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { getArchiveGroups } from "../lib/content/archive";
+import {
+  getAllArchiveEntries,
+  groupArchiveEntries,
+} from "../lib/content/archive";
+import { getArchiveTaxonomy } from "../lib/content/taxonomy";
 
-const groups = await getArchiveGroups();
+const entries = await getAllArchiveEntries();
+const groups = groupArchiveEntries(entries);
+const taxonomy = getArchiveTaxonomy(entries);
 ---
 
 <BaseLayout title="Archive" description="重要节点和阶段存档。">
@@ -16,7 +23,15 @@ const groups = await getArchiveGroups();
   />
   {
     groups.length > 0 ? (
-      <ArchiveTimeline groups={groups} />
+      <div class="archive-layout">
+        <SectionIndex
+          title="Archive Index"
+          groups={taxonomy}
+          filterRoot="archive"
+          total={entries.length}
+        />
+        <ArchiveTimeline groups={groups} filterRoot="archive" />
+      </div>
     ) : (
       <EmptyState
         title="No save points yet."
@@ -26,3 +41,18 @@ const groups = await getArchiveGroups();
     )
   }
 </BaseLayout>
+
+<style>
+  .archive-layout {
+    display: grid;
+    grid-template-columns: minmax(10rem, 12rem) minmax(0, 1fr);
+    align-items: start;
+    gap: clamp(1.5rem, 4vw, 3rem);
+  }
+
+  @media (max-width: 54rem) {
+    .archive-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

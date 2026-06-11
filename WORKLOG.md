@@ -1,5 +1,31 @@
 # WORKLOG
 
+## 2026-06-12 / Phase 18
+
+### Archive indexing
+
+- 新增 `groupArchiveEntries()` 纯分组函数，页面只读取一次 Archive collection。
+- 新增 `getArchiveTaxonomy()`，按 year.month 与固定 type 生成索引。
+- ArchiveTimeline 为每个节点输出可筛选 metadata，原有年份、月份、断续时间线和存档卡片结构保持不变。
+- Archive 页面接入通用 `SectionIndex`，显示总数、当前匹配数和筛选状态。
+- 未扩展 Archive type 枚举，继续遵守 `save-point / milestone / project-log` 稳定接口。
+
+### Verification
+
+- `npm run build`：通过，生成 51 个静态页面。
+- `milestone` 筛选：正确显示 3 条记录。
+- 时间顺序：`2026-06-12` 在前，`2026-06-11` 节点保持原顺序。
+- 桌面 1440px：侧边索引与时间线并列正常。
+- 移动端 390px：索引折叠到顶部，实际不可横向滚动。
+- 暗色主题：独立检查通过。
+- 浏览器控制台：0 error，0 warning。
+- 截图：`output/playwright/phase18-archive-desktop.png`、`phase18-archive-mobile-dark.png`，本地保留且不提交。
+- 未新增依赖；Content Collections schema 未修改。
+
+### Next
+
+- Phase 19：确定性的语义化像素封面组件族。
+
 ## 2026-06-12 / Phase 17
 
 ### Lab experiment detail pages
