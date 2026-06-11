@@ -1,0 +1,46 @@
+---
+type Props = {
+  items: string[];
+  compact?: boolean;
+};
+
+const { items, compact = false } = Astro.props;
+---
+
+{
+  items.length > 0 && (
+    <ul
+      class:list={["project-tech-stack", { "project-tech-stack--compact": compact }]}
+      aria-label="Tech stack"
+    >
+      {items.map((item) => <li>{item}</li>)}
+    </ul>
+  )
+}
+
+<style>
+  .project-tech-stack {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+  }
+
+  .project-tech-stack li {
+    padding: 0.32rem 0.55rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface-muted);
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    line-height: 1.2;
+  }
+
+  .project-tech-stack--compact li {
+    padding: 0.24rem 0.42rem;
+    font-size: 0.64rem;
+  }
+</style>

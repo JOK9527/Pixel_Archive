@@ -1,0 +1,48 @@
+---
+import type { ProjectItem } from "../../lib/content/projects";
+import ProjectGrid from "./ProjectGrid.astro";
+
+type Props = {
+  projects: ProjectItem[];
+};
+
+const { projects } = Astro.props;
+---
+
+{
+  projects.length > 0 && (
+    <section class="featured-projects" aria-labelledby="featured-projects-title">
+      <header>
+        <p>Priority files</p>
+        <h2 id="featured-projects-title">Featured Projects</h2>
+      </header>
+      <ProjectGrid projects={projects} featured />
+    </section>
+  )
+}
+
+<style>
+  .featured-projects {
+    margin-bottom: clamp(3.5rem, 8vw, 6rem);
+  }
+
+  .featured-projects header {
+    margin-bottom: 1.4rem;
+  }
+
+  .featured-projects header p {
+    margin-bottom: 0.35rem;
+    color: var(--color-green);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+  }
+
+  .featured-projects h2 {
+    margin-bottom: 0;
+    font-size: clamp(1.8rem, 5vw, 2.7rem);
+    letter-spacing: -0.05em;
+  }
+</style>

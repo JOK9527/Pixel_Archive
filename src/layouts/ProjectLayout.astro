@@ -1,0 +1,203 @@
+---
+import ProjectLinks from "../components/project/ProjectLinks.astro";
+import ProjectStatus from "../components/project/ProjectStatus.astro";
+import ProjectTechStack from "../components/project/ProjectTechStack.astro";
+import type { ProjectItem } from "../lib/content/projects";
+import BaseLayout from "./BaseLayout.astro";
+
+type Props = {
+  project: ProjectItem;
+};
+
+const { project } = Astro.props;
+---
+
+<BaseLayout title={project.title} description={project.description}>
+  <article class="project-detail">
+    <a class="project-detail__back" href="/projects/">← Projects archive</a>
+
+    <header class="project-detail__header">
+      <div class="project-detail__meta">
+        <span>{project.category}</span>
+        <ProjectStatus status={project.status} />
+      </div>
+      <h1>{project.title}</h1>
+      <p class="project-detail__description">{project.description}</p>
+      <ProjectLinks links={project.links} />
+    </header>
+
+    <div class="project-detail__grid">
+      <aside class="project-detail__sidebar" aria-label="Project metadata">
+        <section>
+          <h2>Tech stack</h2>
+          <ProjectTechStack items={project.techStack} />
+        </section>
+
+        {
+          project.tags.length > 0 && (
+            <section>
+              <h2>Tags</h2>
+              <ul class="project-detail__tags">
+                {project.tags.map((tag) => <li>#{tag}</li>)}
+              </ul>
+            </section>
+          )
+        }
+
+        {
+          (project.startDate || project.endDate) && (
+            <section>
+              <h2>Timeline</h2>
+              <dl class="project-detail__timeline">
+                {project.startDate && (
+                  <>
+                    <dt>Start</dt>
+                    <dd>{project.startDate}</dd>
+                  </>
+                )}
+                {project.endDate && (
+                  <>
+                    <dt>End</dt>
+                    <dd>{project.endDate}</dd>
+                  </>
+                )}
+              </dl>
+            </section>
+          )
+        }
+      </aside>
+
+      <div class="project-detail__content markdown-content">
+        <slot />
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .project-detail {
+    max-width: 64rem;
+    margin-inline: auto;
+  }
+
+  .project-detail__back {
+    display: inline-block;
+    margin-bottom: 2.5rem;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .project-detail__back:hover {
+    color: var(--color-purple);
+  }
+
+  .project-detail__header {
+    max-width: 50rem;
+    margin-bottom: clamp(3rem, 8vw, 5.5rem);
+  }
+
+  .project-detail__meta {
+    display: flex;
+    margin-bottom: 1rem;
+    align-items: center;
+    gap: 0.85rem;
+  }
+
+  .project-detail__meta > span {
+    color: var(--color-green);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .project-detail h1 {
+    margin-bottom: 1rem;
+    font-size: clamp(2.8rem, 9vw, 6rem);
+    letter-spacing: -0.07em;
+    line-height: 0.92;
+  }
+
+  .project-detail__description {
+    max-width: 42rem;
+    margin-bottom: 1.5rem;
+    color: var(--color-text-muted);
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+  }
+
+  .project-detail__grid {
+    display: grid;
+    grid-template-columns: minmax(12rem, 16rem) minmax(0, 1fr);
+    gap: clamp(2rem, 7vw, 5rem);
+    align-items: start;
+  }
+
+  .project-detail__sidebar {
+    display: grid;
+    gap: 1.7rem;
+  }
+
+  .project-detail__sidebar section {
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .project-detail__sidebar h2 {
+    margin-bottom: 0.75rem;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.67rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .project-detail__tags {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    color: var(--color-purple);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    list-style: none;
+  }
+
+  .project-detail__timeline {
+    display: grid;
+    margin: 0;
+    grid-template-columns: auto 1fr;
+    gap: 0.3rem 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+  }
+
+  .project-detail__timeline dt {
+    color: var(--color-text-muted);
+  }
+
+  .project-detail__timeline dd {
+    margin: 0;
+    color: var(--color-text);
+  }
+
+  .project-detail__content {
+    min-width: 0;
+  }
+
+  .project-detail__content :global(> :first-child) {
+    margin-top: 0;
+  }
+
+  @media (max-width: 44rem) {
+    .project-detail__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

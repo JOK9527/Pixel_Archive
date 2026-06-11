@@ -232,3 +232,57 @@ Phase 4：Content Collections 与占位内容
 ### 下一步建议
 
 - 进入 Phase 5，实现 Projects 内容 helper、列表、卡片和详情页。
+
+## 2026-06-11 / Phase 5
+
+### 阶段
+
+Phase 5：Projects 列表与详情
+
+### 修改文件
+
+- `src/lib/content/projects.ts`
+- `src/components/project/ProjectCard.astro`
+- `src/components/project/ProjectGrid.astro`
+- `src/components/project/FeaturedProjects.astro`
+- `src/components/project/ProjectStatus.astro`
+- `src/components/project/ProjectTechStack.astro`
+- `src/components/project/ProjectLinks.astro`
+- `src/layouts/ProjectLayout.astro`
+- `src/pages/projects/index.astro`
+- `src/pages/projects/[slug].astro`
+- `src/content/projects/pixel-archive.mdx`
+- `README.md`
+- `WORKLOG.md`
+
+### 完成内容
+
+- 建立 Projects 内容 helper，统一输出 slug、href、状态、技术栈和链接字段。
+- 实现全部项目与 Featured Projects 读取、筛选和稳定排序。
+- 实现项目卡片、项目网格、状态映射、技术栈和外部链接组件。
+- Projects 页面接入 collection 内容，并保留无内容时的档案空状态。
+- 实现 `/projects/{slug}/` 静态详情路由和 ProjectLayout。
+- 缺少 cover 时使用纯 CSS 档案占位，不依赖虚构图片。
+- 更新 Pixel Archive 占位项目正文，用于验收 MDX 渲染链路。
+
+### 新增 / 删除依赖
+
+- 无。
+
+### 构建与验收结果
+
+- `npx astro sync`：通过。
+- `npm run build`：通过，生成 8 个静态页面。
+- `/projects/` 与 `/projects/pixel-archive/`：可访问。
+- Featured、status、techStack、tags 和 MDX 正文：显示正常。
+- 390px 窄屏：列表与详情均无横向溢出。
+- 浏览器控制台：0 错误，0 警告。
+
+### 已知问题
+
+- 当前仅有一个规范占位项目，尚未接入真实项目内容和封面。
+- Projects 暂不包含搜索、复杂筛选、GitHub API 或截图画廊，符合 Phase 5 边界。
+
+### 下一步建议
+
+- 进入 Phase 6，实现 Notes 内容 helper、列表、类型标识和文章详情页。

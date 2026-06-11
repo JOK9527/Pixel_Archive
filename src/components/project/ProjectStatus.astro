@@ -1,0 +1,64 @@
+---
+import type { ProjectStatusValue } from "../../lib/content/projects";
+
+type Props = {
+  status: ProjectStatusValue;
+};
+
+const { status } = Astro.props;
+
+const statusMeta = {
+  WIP: { label: "WIP", tone: "purple" },
+  Done: { label: "Done", tone: "green" },
+  Prototype: { label: "Prototype", tone: "warning" },
+  Paused: { label: "Paused", tone: "muted" },
+} as const;
+
+const meta = statusMeta[status];
+---
+
+<span class:list={["project-status", `project-status--${meta.tone}`]}>
+  <span aria-hidden="true"></span>
+  {meta.label}
+</span>
+
+<style>
+  .project-status {
+    display: inline-flex;
+    width: fit-content;
+    min-height: 1.65rem;
+    padding: 0.3rem 0.5rem;
+    border: 1px solid currentColor;
+    border-radius: var(--radius-sm);
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .project-status > span {
+    width: 0.4rem;
+    height: 0.4rem;
+    background: currentColor;
+  }
+
+  .project-status--purple {
+    color: var(--color-purple);
+  }
+
+  .project-status--green {
+    color: var(--color-green);
+  }
+
+  .project-status--warning {
+    color: var(--color-warning);
+  }
+
+  .project-status--muted {
+    color: var(--color-text-muted);
+  }
+</style>

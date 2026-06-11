@@ -1,0 +1,63 @@
+---
+import type { ProjectLinksValue } from "../../lib/content/projects";
+
+type Props = {
+  links?: ProjectLinksValue;
+};
+
+const { links } = Astro.props;
+
+const linkItems = [
+  { label: "GitHub", href: links?.github },
+  { label: "Live Demo", href: links?.demo },
+  { label: "Docs", href: links?.docs },
+].filter((item): item is { label: string; href: string } => Boolean(item.href));
+---
+
+{
+  linkItems.length > 0 && (
+    <nav class="project-links" aria-label="Project links">
+      {linkItems.map((item) => (
+        <a href={item.href} target="_blank" rel="noreferrer">
+          {item.label}
+          <span aria-hidden="true">↗</span>
+        </a>
+      ))}
+    </nav>
+  )
+}
+
+<style>
+  .project-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+  }
+
+  .project-links a {
+    display: inline-flex;
+    min-height: 2.5rem;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-sm);
+    background: var(--color-purple-soft);
+    color: var(--color-text);
+    align-items: center;
+    gap: 0.55rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition:
+      box-shadow var(--transition-fast),
+      transform var(--transition-fast);
+  }
+
+  .project-links a:hover,
+  .project-links a:focus-visible {
+    box-shadow: 3px 3px 0 var(--color-border-strong);
+    transform: translate(-1px, -1px);
+  }
+</style>
