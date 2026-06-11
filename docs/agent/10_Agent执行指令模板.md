@@ -382,7 +382,7 @@ Agent 执行任务前，应根据模板要求读取对应规范文件。
 - docs/standards/09_验收与测试规范.md
 
 任务目标：
-1. 建立 src/content/config.ts
+1. 建立 src/content.config.ts
 2. 定义 projects collection
 3. 定义 notes collection
 4. 定义 archive collection

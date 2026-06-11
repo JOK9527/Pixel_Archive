@@ -183,3 +183,52 @@ Phase 3：页面空壳与路由
 ### 下一步建议
 
 - 进入 Phase 4，建立四个 Content Collections、schema 和规范占位内容。
+
+## 2026-06-11 / Phase 4
+
+### 阶段
+
+Phase 4：Content Collections 与占位内容
+
+### 修改文件
+
+- `src/content.config.ts`
+- `src/content/projects/pixel-archive.mdx`
+- `src/content/notes/2026-06-11-content-system-note.mdx`
+- `src/content/archive/2026-06-started-pixel-archive.md`
+- `src/content/lab/pixel-ui-placeholder.mdx`
+- Content Collections 路径相关规范文档
+- `README.md`
+- `WORKLOG.md`
+
+### 完成内容
+
+- 定义 projects、notes、archive 和 lab 四个 collection。
+- 使用固定枚举校验 Project status、Note type、Archive type、Lab type / status。
+- 校验日期格式、标签命名和可选图片路径前缀。
+- 为每个 collection 添加一条明确标注用途的占位内容。
+- 使用 slug 形式填写关联字段，不编造真实成果或个人信息。
+
+### 技术兼容性调整
+
+- Astro 6 已移除 legacy `src/content/config.ts`。
+- 项目改用 `src/content.config.ts` 和 `astro/loaders` 的 glob loader。
+- 已同步更新规范文档中的旧配置路径引用。
+
+### 新增 / 删除依赖
+
+- 无。
+
+### 构建与验收结果
+
+- `npx astro sync`：通过，四个 collection 完成同步。
+- `npm run build`：通过，Content Collections schema 校验成功。
+- 内容文件命名、日期、tags、status / type 枚举：通过。
+
+### 已知问题
+
+- 页面尚未读取和展示 collection 内容；Projects 展示将在 Phase 5 实现。
+
+### 下一步建议
+
+- 进入 Phase 5，实现 Projects 内容 helper、列表、卡片和详情页。
