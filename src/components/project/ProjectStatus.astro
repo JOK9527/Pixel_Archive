@@ -24,7 +24,9 @@ const meta = statusMeta[status];
     `project-status--${meta.tone}`,
   ]}
 >
-  <span aria-hidden="true"></span>
+  <span class="project-status__signal" aria-hidden="true">
+    <i></i><i></i><i></i>
+  </span>
   {meta.label}
 </span>
 
@@ -32,8 +34,8 @@ const meta = statusMeta[status];
   .project-status {
     display: inline-flex;
     width: fit-content;
-    min-height: 1.65rem;
-    padding: 0.3rem 0.5rem;
+    min-height: 1.75rem;
+    padding: 0.3rem 0.55rem 0.3rem 0.35rem;
     border: 1px solid var(--color-border);
     border-radius: var(--radius-sm);
     align-items: center;
@@ -44,15 +46,46 @@ const meta = statusMeta[status];
     letter-spacing: 0.08em;
     line-height: 1;
     text-transform: uppercase;
-    background: var(--color-surface-muted);
+    background: var(--color-surface);
   }
 
-  .project-status > span {
+  .project-status::before {
     display: none;
   }
 
+  .project-status__signal {
+    display: grid;
+    width: calc(var(--pixel-unit) * 3);
+    height: calc(var(--pixel-unit) * 3);
+    grid-template-columns: repeat(3, var(--pixel-unit));
+    grid-template-rows: repeat(3, var(--pixel-unit));
+  }
+
+  .project-status__signal i {
+    width: var(--pixel-unit);
+    height: var(--pixel-unit);
+    align-self: end;
+    background: currentColor;
+  }
+
+  .project-status__signal i:nth-child(1) {
+    grid-row: 3;
+  }
+
+  .project-status__signal i:nth-child(2) {
+    grid-row: 2 / 4;
+    height: calc(var(--pixel-unit) * 2);
+  }
+
+  .project-status__signal i:nth-child(3) {
+    grid-row: 1 / 4;
+    height: calc(var(--pixel-unit) * 3);
+  }
+
   .project-status--purple {
-    color: var(--color-purple);
+    border-color: color-mix(in srgb, var(--color-warning) 45%, var(--color-border));
+    background: var(--color-warning-soft);
+    color: var(--color-warning);
   }
 
   .project-status--green {

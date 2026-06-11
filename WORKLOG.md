@@ -563,3 +563,60 @@ Phase 10：视觉系统再校准
 ### 下一步建议
 
 - 进入 Phase 11：小规模迁移真实 Projects、Notes、Archive 与图片内容。
+
+## 2026-06-11 / Phase 10 视觉返工
+
+### 返工原因
+
+第一次 Phase 10 虽通过构建与路由验收，但视觉变化不够明显：色彩仍接近普通米色网页，像素语言主要停留在小方块，首页场域与 ProjectCard 封面完成度不足。因此撤销“视觉验收完成”结论，重新执行视觉系统返工。
+
+### 色彩重建
+
+- 浅色重建为旧纸背景、纸面表层、石灰中性色、茶灰边界、苔绿状态和少量灰紫强调。
+- 暗色重建为墨黑背景、炭黑面板、暗石灰边界、暗苔绿状态和低亮度灰紫强调。
+- 新增 `surface-deep`、`text-faint`、`stone`、`tea`、warning / danger soft、grid 等语义 token。
+- 紫色不再承担普通边框和 WIP 状态；仅保留导航 active、focus、链接和少量数据标记。
+
+### 像素系统重建
+
+- 重写 `pixel-corner`：使用块状阶梯角标，不再使用完整强调色 L 形边框。
+- 建立 `pixel-mark`、`pixel-grid`、`pixel-divider`、`pixel-dots` 和块状 `status-block` 语法。
+- StatusPill 与 ProjectStatus 改为三段像素信号，不再仅靠文字或单个小方块表达状态。
+- Save Slot 改为存档芯片、端口网格和数据轨组合。
+- Archive 时间线改为断续像素轴，ArchiveEntry 与 LabCard 接入统一角标和网格。
+
+### 首页返工
+
+- 首页增加左右 archive ruler、坐标段、顶部数据刻度和局部点阵背景。
+- ArchiveTerminal 增加左侧索引轨、底部 memory map 数据条、内部网格和低调块状角标。
+- 右下角紫色几何 L 形线框替换为石灰 / 苔绿块状坐标标记。
+- 保持原有信息量和路由，不增加个人介绍、复杂插图或功能。
+
+### Projects 重点返工
+
+- 无图封面重建为存档芯片、端口、文件栈、终端数据轨和坐标索引组成的抽象像素封面。
+- Featured Project 使用更高封面、更强纸面反差和独立芯片层级；普通 Project 保持较紧凑结构。
+- WIP 改用茶橙 soft 背景和三段像素信号，不再使用紫色状态框。
+- 封面由完整结构承担视觉，不再依赖几个随机色块。
+
+### Before / After
+
+- Before：浅色接近普通米白网页；After：旧纸底、石灰面、茶灰边界层级可直接辨识。
+- Before：暗色像浅色反相；After：墨黑 / 炭黑 / 暗石灰形成独立低亮度档案终端。
+- Before：像素感来自角落小方块；After：角标、网格、分隔、状态信号、芯片和文件栈形成统一语法。
+- Before：首页留白主要是空白与普通网格；After：archive ruler、索引轨、坐标和 memory map 建立空间秩序。
+- Before：Project 封面像临时占位；After：具备完整抽象像素档案设备结构。
+
+### 验收结果
+
+- `npm run build`：通过，生成 9 个静态页面。
+- 桌面 1280 × 900 与移动端 390 × 844：9 个路由均无横向滚动。
+- 暗色主题：独立检查通过，刷新后保持 `dark`。
+- 浏览器控制台：0 error，0 warning。
+- 人工检查：首页、Projects、Notes、Archive、Lab、About、暗色首页和移动端首页视觉通过。
+- 验收截图：`output/playwright/01_home_light_full.png` 等 8 张，保留在本地且不提交。
+- 未新增依赖、功能、路由或 Content Collections schema。
+
+### 下一步建议
+
+- Phase 10 返工验收通过后，再进入 Phase 11 真实内容小规模填充。

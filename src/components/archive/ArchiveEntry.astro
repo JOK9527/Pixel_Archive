@@ -18,7 +18,7 @@ const typeLabels = {
 } as const;
 ---
 
-<article class:list={["archive-entry", `archive-entry--${type}`]}>
+<article class:list={["archive-entry", "pixel-corner", `archive-entry--${type}`]}>
   <span class="archive-entry__node" aria-hidden="true"></span>
   <div class="archive-entry__header">
     <time datetime={date}>{date}</time>
@@ -52,10 +52,10 @@ const typeLabels = {
     width: 0.7rem;
     height: 0.7rem;
     border: 2px solid var(--color-bg);
-    background: var(--color-accent);
+    background: var(--color-tea);
     box-shadow:
       0 0 0 2px var(--color-border),
-      4px 4px 0 color-mix(in srgb, var(--color-accent) 30%, transparent);
+      4px 4px 0 color-mix(in srgb, var(--color-tea) 30%, transparent);
   }
 
   .archive-entry--milestone .archive-entry__node {

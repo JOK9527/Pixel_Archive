@@ -28,14 +28,16 @@ const {
 
   .section-header::after {
     display: block;
-    width: min(9rem, 35%);
-    height: 1px;
+    width: min(12rem, 45%);
+    height: var(--pixel-unit);
     margin-top: 1.35rem;
     background:
       repeating-linear-gradient(
         90deg,
-        var(--color-border-strong) 0 7px,
-        transparent 7px 12px
+        var(--color-border-strong) 0 16px,
+        transparent 16px 24px,
+        var(--color-pixel-mark) 24px 28px,
+        transparent 28px 40px
       );
     content: "";
     opacity: 0.6;

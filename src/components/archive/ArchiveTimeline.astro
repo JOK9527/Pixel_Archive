@@ -73,7 +73,7 @@ const monthLabels = [
     top: 1rem;
     height: fit-content;
     margin-bottom: 0;
-    color: var(--color-purple);
+    color: var(--color-tea);
     font-family: var(--font-mono);
     font-size: 1.1rem;
   }
@@ -109,8 +109,13 @@ const monthLabels = [
     top: 0.3rem;
     bottom: 0.3rem;
     left: 0;
-    width: 1px;
-    background: var(--color-border-strong);
+    width: var(--pixel-unit);
+    background:
+      repeating-linear-gradient(
+        to bottom,
+        var(--color-border-strong) 0 calc(var(--pixel-unit) * 3),
+        transparent calc(var(--pixel-unit) * 3) calc(var(--pixel-unit) * 5)
+      );
     content: "";
   }
 

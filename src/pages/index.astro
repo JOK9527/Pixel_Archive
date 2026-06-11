@@ -46,12 +46,12 @@ const saveSlots = [
 
 <BaseLayout>
   <div class="home">
-    <span class="home__coordinate home__coordinate--left" aria-hidden="true">
-      ARCHIVE / 00—08
-    </span>
-    <span class="home__coordinate home__coordinate--right" aria-hidden="true">
-      INDEX / QUIET
-    </span>
+    <div class="home__rail home__rail--left" aria-hidden="true">
+      <span>PA</span><i></i><i></i><i></i><span>08</span>
+    </div>
+    <div class="home__rail home__rail--right" aria-hidden="true">
+      <span>IDX</span><i></i><i></i><i></i><span>Q</span>
+    </div>
     <ArchiveTerminal
       title="Pixel Archive"
       statusText="archive online"
@@ -78,19 +78,17 @@ const saveSlots = [
     bottom: 30%;
     left: -1rem;
     background-image:
-      linear-gradient(
-        color-mix(in srgb, var(--color-border) 28%, transparent) 1px,
-        transparent 1px
-      ),
-      linear-gradient(
-        90deg,
-        color-mix(in srgb, var(--color-border) 28%, transparent) 1px,
-        transparent 1px
-      );
-    background-size: 24px 24px;
+      radial-gradient(var(--color-grid-strong) 1px, transparent 1px),
+      linear-gradient(90deg, transparent 49.8%, var(--color-grid) 50%);
+    background-size:
+      16px 16px,
+      100% 100%;
     content: "";
-    mask-image: linear-gradient(to bottom, black, transparent 88%);
-    opacity: 0.5;
+    mask-image:
+      linear-gradient(to bottom, black 0 68%, transparent 94%),
+      linear-gradient(to right, transparent, black 8% 92%, transparent);
+    mask-composite: intersect;
+    opacity: 0.7;
     pointer-events: none;
   }
 
@@ -100,37 +98,61 @@ const saveSlots = [
     top: -0.75rem;
     right: 0;
     left: 0;
-    height: 1px;
+    height: var(--pixel-unit);
     background:
       repeating-linear-gradient(
         90deg,
-        var(--color-border-strong) 0 12px,
-        transparent 12px 22px
+        var(--color-border-strong) 0 16px,
+        transparent 16px 24px,
+        var(--color-pixel-mark) 24px 28px,
+        transparent 28px 44px
       );
     content: "";
     opacity: 0.45;
     pointer-events: none;
   }
 
-  .home__coordinate {
+  .home__rail {
     position: absolute;
-    z-index: -1;
-    top: 13rem;
+    z-index: 0;
+    top: 5.5rem;
+    display: grid;
+    width: 1.5rem;
+    height: 20rem;
+    grid-template-rows: auto repeat(3, 1fr) auto;
+    justify-items: center;
+    align-items: center;
     color: var(--color-text-muted);
     font-family: var(--font-mono);
-    font-size: 0.58rem;
-    letter-spacing: 0.14em;
-    opacity: 0.45;
+    font-size: 0.52rem;
+    letter-spacing: 0.08em;
+    opacity: 0.62;
+    pointer-events: none;
+  }
+
+  .home__rail i {
+    width: 1px;
+    height: 100%;
+    background:
+      repeating-linear-gradient(
+        to bottom,
+        var(--color-border-strong) 0 8px,
+        transparent 8px 14px
+      );
+  }
+
+  .home__rail span {
+    padding-block: 0.35rem;
+    background: var(--color-bg);
     writing-mode: vertical-rl;
   }
 
-  .home__coordinate--left {
-    left: -1.5rem;
-    transform: rotate(180deg);
+  .home__rail--left {
+    left: -3.25rem;
   }
 
-  .home__coordinate--right {
-    right: -1.5rem;
+  .home__rail--right {
+    right: -3.25rem;
   }
 
   @media (max-width: 74rem) {
@@ -139,7 +161,7 @@ const saveSlots = [
       left: 0;
     }
 
-    .home__coordinate {
+    .home__rail {
       display: none;
     }
   }

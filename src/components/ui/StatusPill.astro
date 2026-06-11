@@ -13,7 +13,9 @@ const {
 ---
 
 <span class:list={["status-pill", `status-pill--${tone}`]}>
-  {pulse && <span class="status-pill__dot" aria-hidden="true"></span>}
+  <span class:list={["status-pill__signal", { "status-pill__signal--pulse": pulse }]} aria-hidden="true">
+    <i></i><i></i><i></i>
+  </span>
   {label}
 </span>
 
@@ -43,12 +45,35 @@ const {
     color: var(--color-warning);
   }
 
-  .status-pill__dot {
-    width: 0.45rem;
-    height: 0.45rem;
+  .status-pill__signal {
+    display: flex;
+    width: calc(var(--pixel-unit) * 3);
+    height: calc(var(--pixel-unit) * 2);
     flex: 0 0 auto;
+    align-items: flex-end;
+    gap: 1px;
+  }
+
+  .status-pill__signal i {
+    width: var(--pixel-unit);
     background: currentColor;
-    box-shadow: 3px 3px 0 color-mix(in srgb, currentColor 22%, transparent);
+  }
+
+  .status-pill__signal i:nth-child(1) {
+    height: var(--pixel-unit);
+    opacity: 0.55;
+  }
+
+  .status-pill__signal i:nth-child(2) {
+    height: calc(var(--pixel-unit) * 2);
+  }
+
+  .status-pill__signal i:nth-child(3) {
+    height: var(--pixel-unit);
+    opacity: 0.75;
+  }
+
+  .status-pill__signal--pulse {
     animation: status-pulse 2.4s ease-in-out infinite;
   }
 

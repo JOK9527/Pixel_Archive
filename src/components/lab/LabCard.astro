@@ -28,7 +28,7 @@ const Element = href ? "a" : "article";
 ---
 
 <Element
-  class:list={["lab-card", "pixel-corners", `lab-card--${status}`]}
+  class:list={["lab-card", "pixel-corner", `lab-card--${status}`]}
   href={href}
   aria-label={href ? `Open experiment: ${title}` : undefined}
 >
@@ -90,7 +90,11 @@ const Element = href ? "a" : "article";
     margin-bottom: 1rem;
     overflow: hidden;
     border: 1px solid var(--color-border);
-    background: var(--color-surface-muted);
+    background-color: var(--color-surface-muted);
+    background-image:
+      linear-gradient(var(--color-grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-grid) 1px, transparent 1px);
+    background-size: 20px 20px;
   }
 
   .lab-card__screen img {

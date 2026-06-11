@@ -19,12 +19,12 @@ const {
   active = false,
 } = Astro.props;
 
-const tone = active ? "green" : status === "locked" ? "warning" : "purple";
+const tone = active ? "green" : status === "locked" ? "warning" : "neutral";
 const Element = href ? "a" : "article";
 ---
 
 <Element
-  class:list={["save-slot", "pixel-corners", { "save-slot--active": active }]}
+  class:list={["save-slot", "pixel-corner", { "save-slot--active": active }]}
   href={href}
 >
   <div class="save-slot__header">
@@ -32,8 +32,14 @@ const Element = href ? "a" : "article";
     <StatusPill label={status} tone={tone} pulse={active} />
   </div>
   <div class="save-slot__screen" aria-hidden="true">
-    <span></span><span></span><span></span><span></span>
-    <span></span><span></span><span></span><span></span>
+    <div class="save-slot__chip">
+      <span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span>
+    </div>
+    <div class="save-slot__tracks">
+      <i></i><i></i><i></i>
+    </div>
   </div>
   <h3>{title}</h3>
   {description && <p>{description}</p>}
@@ -86,40 +92,65 @@ const Element = href ? "a" : "article";
 
   .save-slot__screen {
     display: grid;
-    height: 4.4rem;
+    height: 5.2rem;
     margin-block: 1.2rem;
     padding: 0.7rem;
     border: 1px solid var(--color-border);
-    background:
-      linear-gradient(
-        90deg,
-        transparent 0 calc(100% - 1px),
-        color-mix(in srgb, var(--color-border) 45%, transparent)
-          calc(100% - 1px)
-      ),
-      var(--color-surface-muted);
-    background-size: 25% 100%;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.35rem;
+    background-color: var(--color-surface-muted);
+    background-image:
+      linear-gradient(var(--color-grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-grid) 1px, transparent 1px);
+    background-size: 16px 16px;
+    grid-template-columns: 1fr 1.4fr;
+    align-items: center;
+    gap: 0.8rem;
   }
 
-  .save-slot__screen span {
-    align-self: end;
+  .save-slot__chip {
+    display: grid;
+    padding: 0.35rem;
+    border: 1px solid var(--color-border-strong);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-pixel-soft);
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+  }
+
+  .save-slot__chip span {
+    aspect-ratio: 1;
     background: var(--color-border);
   }
 
-  .save-slot__screen span:nth-child(3n + 1) {
-    height: 30%;
-    background: var(--color-green);
+  .save-slot__chip span:nth-child(3n + 1) {
+    background: var(--color-status);
   }
 
-  .save-slot__screen span:nth-child(3n + 2) {
-    height: 65%;
+  .save-slot__chip span:nth-child(5n) {
     background: var(--color-accent);
   }
 
-  .save-slot__screen span:nth-child(3n) {
-    height: 45%;
+  .save-slot__tracks {
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  .save-slot__tracks i {
+    height: var(--pixel-unit);
+    background: var(--color-border-strong);
+  }
+
+  .save-slot__tracks i:nth-child(1) {
+    width: 100%;
+  }
+
+  .save-slot__tracks i:nth-child(2) {
+    width: 72%;
+    background: var(--color-pixel-mark);
+  }
+
+  .save-slot__tracks i:nth-child(3) {
+    width: 42%;
+    background: var(--color-tea);
   }
 
   .save-slot h3 {
