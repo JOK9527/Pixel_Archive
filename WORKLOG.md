@@ -1,5 +1,15 @@
 # WORKLOG
 
+## 2026-06-12 / Phase 14
+
+### Archive, Lab, and About expansion
+
+- Expanded Archive from one save point to five verified milestones and project logs.
+- Converted the pixel UI placeholder into a completed component study.
+- Added the completed abstract Project Cover System experiment.
+- Rewrote About as a minimal public introduction with focus, privacy boundary, and internal content map.
+- Added no identity, contact, private repository, or unreviewed external links.
+
 ## 2026-06-12 / Phase 13
 
 ### Notes and long-form reading
