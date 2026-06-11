@@ -1,5 +1,15 @@
 # WORKLOG
 
+## 2026-06-12 / Phase 11
+
+### Real content inventory and public boundaries
+
+- Audited existing Projects, Notes, Archive, Lab, and About material.
+- Approved Pixel Archive, ScholarLens AI, and GLM-OCR Tool for limited public project entries.
+- Defined redaction rules for secrets, local paths, private links, identity details, screenshots, and unverified metrics.
+- Planned truthful initial Notes, Archive save points, Lab experiments, and About scope for Phases 12-14.
+- Recorded the decisions in `docs/phases/21_Phase11_真实内容清点与公开边界.md`.
+
 ## 2026-06-11
 
 ### 阶段

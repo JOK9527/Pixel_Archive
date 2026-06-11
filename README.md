@@ -1,5 +1,7 @@
 # Pixel Archive
 
+> Phase 11 completed on 2026-06-12: verified public content boundaries are now documented, and Phase 12 project content work is in progress.
+
 Pixel Archive 是一个以极简阅读体验为基础、以像素组件为识别符号、以复古终端和存档隐喻为氛围的个人档案馆。
 
 ## 当前阶段
