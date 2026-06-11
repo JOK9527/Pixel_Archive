@@ -28,18 +28,14 @@ body {
       transparent 34rem
     ),
     linear-gradient(
-      90deg,
-      transparent 0 calc(100% - 1px),
-      var(--color-border-subtle) calc(100% - 1px)
-    ),
-    linear-gradient(
       180deg,
       var(--color-bg) 0%,
       color-mix(in srgb, var(--color-bg) 88%, var(--color-surface-soft)) 100%
     );
   background-size:
     100% 100%,
-    min(100%, 80rem) 100%;
+    100% 100%,
+    100% 100%;
   background-position: center;
   background-repeat: no-repeat;
   color: var(--color-text);
