@@ -1,18 +1,20 @@
 # Pixel Archive
 
-> Phase 16 local development completed on 2026-06-12. Public deployment is waiting for a Git remote, Cloudflare Pages project, and confirmed production URL.
+> Phase 17 local development completed on 2026-06-12. Public deployment is waiting for a Git remote, Cloudflare Pages project, and confirmed production URL.
 
 Pixel Archive 是一个以极简阅读体验为基础、以像素组件为识别符号、以复古终端和存档隐喻为氛围的个人档案馆。
 
 ## 当前阶段
 
-Phase 16：Projects / Notes 分类体系、year.month 索引与轻量前端筛选已完成本地验收。
+Phase 17：Lab 卡片交互入口与两条静态实验详情路由已完成本地验收。
 
 当前已在第一阶段结构基线上完成纸白 / 黛蓝 / 亚丁绿 / 朱红 / 琥珀 / 藕荷紫语义色阶，并完成像素语法、首页档案终端、Project 抽象封面、状态系统和栏目识别。页面能力、内容系统、路由与技术栈保持不变。
 
 当前内容基线为 3 个 Projects、5 篇 Notes、5 个 Archive 节点和 2 个 Lab 实验。`/topics/`、`/rss.xml`、`/sitemap.xml` 与 `/robots.txt` 已生成。
 
 Projects 可按 type / status / year.month / tech 浏览，Notes 可按 category / year.month 浏览。筛选使用原生客户端脚本，静态 HTML 默认保留全部内容。
+
+Lab 卡片均为明确的详情入口，当前提供 `/lab/pixel-ui-component-study/` 与 `/lab/project-cover-system/` 两条静态实验记录。
 
 正式部署前复制 `.env.example` 的配置方式，在 Cloudflare Pages 中设置：
 
@@ -93,4 +95,4 @@ src/styles/              主题、全局和 Markdown 样式
 
 ## 下一步
 
-进入 Phase 17：补齐 `/lab/[slug]` 实验详情页与明确的卡片交互入口。
+进入 Phase 18：为 Archive 增加 year.month、类型索引和轻量筛选，同时保留时间线结构。

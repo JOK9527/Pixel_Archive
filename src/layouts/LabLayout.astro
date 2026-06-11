@@ -1,0 +1,239 @@
+---
+import LabTypeBadge from "../components/lab/LabTypeBadge.astro";
+import MarkdownContent from "../components/notes/MarkdownContent.astro";
+import type { LabItem } from "../lib/content/lab";
+import BaseLayout from "./BaseLayout.astro";
+
+type Props = {
+  item: LabItem;
+};
+
+const { item } = Astro.props;
+---
+
+<BaseLayout title={item.title} description={item.description}>
+  <article class="lab-detail">
+    <a class="lab-detail__back" href="/lab/">← Lab archive</a>
+
+    <header class="lab-detail__header">
+      <div class="lab-detail__meta">
+        <LabTypeBadge type={item.type} />
+        <span class:list={["lab-detail__status", `lab-detail__status--${item.status}`]}>
+          {item.status}
+        </span>
+        {item.date && <time datetime={item.date}>{item.date}</time>}
+      </div>
+      <h1>{item.title}</h1>
+      <p>{item.description}</p>
+      {
+        item.tags.length > 0 && (
+          <ul aria-label="Lab tags">
+            {item.tags.map((tag) => <li>#{tag}</li>)}
+          </ul>
+        )
+      }
+    </header>
+
+    <div class="lab-detail__frame pixel-corner pixel-grid" aria-hidden="true">
+      <span>EXPERIMENT FILE</span>
+      <strong>{item.slug.toUpperCase()}</strong>
+      <i></i><i></i><i></i><i></i>
+    </div>
+
+    <div class="lab-detail__body">
+      <aside aria-label="Experiment metadata">
+        <h2>Record</h2>
+        <dl>
+          <dt>Type</dt>
+          <dd>{item.type}</dd>
+          <dt>Status</dt>
+          <dd>{item.status}</dd>
+          {item.date && <><dt>Date</dt><dd>{item.date}</dd></>}
+        </dl>
+      </aside>
+      <MarkdownContent>
+        <slot />
+      </MarkdownContent>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .lab-detail {
+    max-width: 62rem;
+    margin-inline: auto;
+  }
+
+  .lab-detail__back {
+    display: inline-block;
+    margin-bottom: 2.5rem;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .lab-detail__back:hover {
+    color: var(--section-accent);
+  }
+
+  .lab-detail__header {
+    max-width: 50rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .lab-detail__meta {
+    display: flex;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.65rem;
+  }
+
+  .lab-detail__meta time,
+  .lab-detail__status {
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+  }
+
+  .lab-detail__status {
+    padding: 0.28rem 0.48rem;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface-soft);
+  }
+
+  .lab-detail__status--done {
+    border-color: color-mix(in srgb, var(--color-status) 38%, var(--color-border));
+    background: var(--color-status-soft);
+    color: var(--color-status);
+  }
+
+  .lab-detail h1 {
+    margin-bottom: 1rem;
+    font-size: clamp(2.7rem, 9vw, 5.8rem);
+    letter-spacing: -0.07em;
+    line-height: 0.94;
+  }
+
+  .lab-detail__header > p {
+    max-width: 42rem;
+    color: var(--color-text-muted);
+    font-size: clamp(1rem, 2.5vw, 1.18rem);
+  }
+
+  .lab-detail__header ul {
+    display: flex;
+    margin: 1rem 0 0;
+    padding: 0;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    color: var(--color-violet);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    list-style: none;
+  }
+
+  .lab-detail__frame {
+    position: relative;
+    display: grid;
+    min-height: 10rem;
+    margin-bottom: clamp(2.5rem, 7vw, 4.5rem);
+    padding: 1.25rem;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-surface-deep);
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto 1fr auto;
+    gap: var(--pixel-unit);
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+  }
+
+  .lab-detail__frame span {
+    grid-column: 1 / -1;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+  }
+
+  .lab-detail__frame strong {
+    align-self: center;
+    overflow-wrap: anywhere;
+    grid-column: 1 / -1;
+    color: var(--color-heading);
+    font-size: clamp(1rem, 4vw, 1.6rem);
+  }
+
+  .lab-detail__frame i {
+    height: calc(var(--pixel-unit) * 2);
+    background: var(--color-border-strong);
+  }
+
+  .lab-detail__frame i:nth-of-type(2) {
+    background: var(--color-violet);
+  }
+
+  .lab-detail__frame i:nth-of-type(3) {
+    background: var(--color-pixel-mark);
+  }
+
+  .lab-detail__frame i:nth-of-type(4) {
+    background: var(--color-accent);
+  }
+
+  .lab-detail__body {
+    display: grid;
+    grid-template-columns: minmax(9rem, 12rem) minmax(0, var(--reading-width));
+    align-items: start;
+    justify-content: center;
+    gap: clamp(2rem, 7vw, 5rem);
+  }
+
+  .lab-detail__body > aside {
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .lab-detail__body > aside h2 {
+    margin-bottom: 0.75rem;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .lab-detail__body dl {
+    display: grid;
+    margin: 0;
+    grid-template-columns: auto 1fr;
+    gap: 0.35rem 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+  }
+
+  .lab-detail__body dt {
+    color: var(--color-text-muted);
+  }
+
+  .lab-detail__body dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+
+  @media (max-width: 44rem) {
+    .lab-detail__body {
+      grid-template-columns: 1fr;
+    }
+
+    .lab-detail__frame {
+      margin-inline: calc(var(--pixel-unit) * 0.5);
+    }
+  }
+</style>

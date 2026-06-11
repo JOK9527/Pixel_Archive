@@ -12,7 +12,7 @@ export type LabStatusValue = "idea" | "prototype" | "done";
 
 export type LabItem = {
   slug: string;
-  href?: string;
+  href: string;
   title: string;
   description: string;
   type: LabTypeValue;
@@ -27,8 +27,11 @@ function getLabSlug(entry: CollectionEntry<"lab">) {
 }
 
 function toLabItem(entry: CollectionEntry<"lab">): LabItem {
+  const slug = getLabSlug(entry);
+
   return {
-    slug: getLabSlug(entry),
+    slug,
+    href: `/lab/${slug}/`,
     title: entry.data.title,
     description: entry.data.description,
     type: entry.data.type,

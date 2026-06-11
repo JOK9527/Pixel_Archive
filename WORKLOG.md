@@ -1,5 +1,30 @@
 # WORKLOG
 
+## 2026-06-12 / Phase 17
+
+### Lab experiment detail pages
+
+- `LabItem.href` 改为 helper 统一生成的稳定字段，LabCard 自动成为整卡链接。
+- 新增 `/lab/[slug]` 静态详情路由与 `LabLayout`。
+- 将 `pixel-ui-placeholder` 重命名为 `pixel-ui-component-study`，避免占位语义继续进入公开 URL。
+- 两份实验正文补齐目的、当前方案、图形说明、结论与下一步。
+- LabCard 增加明确的 `OPEN EXPERIMENT` 文本入口，并保留键盘 focus。
+
+### Verification
+
+- `npm run build`：通过，生成 51 个静态页面。
+- `/lab/pixel-ui-component-study/` 与 `/lab/project-cover-system/`：均可访问。
+- Lab 列表整卡链接、详情返回 `/lab/`：正常。
+- 桌面 1440px 与移动端 390px：布局正常，移动端不可横向滚动。
+- 暗色主题：第二个详情页独立检查通过。
+- 浏览器控制台：0 error，0 warning。
+- 截图：`output/playwright/phase17-lab-detail-desktop.png`、`phase17-lab-detail-mobile-dark.png`，本地保留且不提交。
+- 未新增依赖；Content Collections schema 未修改。
+
+### Next
+
+- Phase 18：Archive 年月索引、类型筛选与时间线管理增强。
+
 ## 2026-06-12 / Phase 16
 
 ### Projects / Notes taxonomy indexes

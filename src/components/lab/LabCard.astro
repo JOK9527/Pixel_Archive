@@ -57,6 +57,7 @@ const Element = href ? "a" : "article";
     )
   }
   {date && <time datetime={date}>{date}</time>}
+  {href && <span class="lab-card__action">open experiment →</span>}
 </Element>
 
 <style>
@@ -191,5 +192,16 @@ const Element = href ? "a" : "article";
     color: var(--color-text-muted);
     font-family: var(--font-mono);
     font-size: 0.64rem;
+  }
+
+  .lab-card__action {
+    display: inline-block;
+    margin-top: 1rem;
+    color: var(--color-accent-text);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
   }
 </style>
