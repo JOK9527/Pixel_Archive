@@ -18,16 +18,25 @@ body {
   margin: 0;
   background:
     radial-gradient(
-      circle at 15% 12%,
-      color-mix(in srgb, var(--color-surface-raised) 38%, transparent),
-      transparent 28rem
+      circle at 12% 8%,
+      color-mix(in srgb, var(--color-bg-soft) 72%, transparent),
+      transparent 32rem
+    ),
+    radial-gradient(
+      circle at 85% 18%,
+      color-mix(in srgb, var(--color-warm-soft) 44%, transparent),
+      transparent 34rem
     ),
     linear-gradient(
       90deg,
       transparent 0 calc(100% - 1px),
-      color-mix(in srgb, var(--color-border) 18%, transparent) calc(100% - 1px)
+      var(--color-border-subtle) calc(100% - 1px)
     ),
-    var(--color-bg);
+    linear-gradient(
+      180deg,
+      var(--color-bg) 0%,
+      color-mix(in srgb, var(--color-bg) 88%, var(--color-surface-soft)) 100%
+    );
   background-size:
     100% 100%,
     min(100%, 80rem) 100%;
@@ -56,17 +65,17 @@ a {
 }
 
 a {
-  color: var(--color-accent);
+  color: var(--color-link);
   text-decoration-thickness: 0.08em;
   text-underline-offset: 0.2em;
 }
 
 a:hover {
-  color: var(--color-text);
+  color: var(--color-link-hover);
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--color-focus);
   outline-offset: 3px;
 }
 
@@ -79,6 +88,13 @@ img,
 svg {
   display: block;
   max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  color: var(--color-heading);
 }
 
 h1,

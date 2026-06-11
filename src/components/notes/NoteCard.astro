@@ -76,7 +76,11 @@ const {
   .note-card > a:hover,
   .note-card > a:focus-visible {
     padding-inline: 1rem;
-    background: var(--color-surface-raised);
+    background: color-mix(
+      in srgb,
+      var(--color-surface-raised) 82%,
+      var(--section-soft)
+    );
   }
 
   .note-card__cover {
@@ -106,6 +110,7 @@ const {
     font-size: clamp(1.35rem, 4vw, 1.8rem);
     letter-spacing: -0.04em;
     line-height: 1.15;
+    color: var(--color-heading);
   }
 
   .note-card p {
@@ -120,7 +125,7 @@ const {
     padding: 0;
     flex-wrap: wrap;
     gap: 0.55rem;
-    color: var(--color-accent);
+    color: var(--color-primary);
     font-family: var(--font-mono);
     font-size: 0.65rem;
     list-style: none;
@@ -129,7 +134,7 @@ const {
   .note-card__action {
     display: inline-block;
     margin-top: 1rem;
-    color: var(--color-accent);
+    color: var(--color-link);
     font-family: var(--font-mono);
     font-size: 0.68rem;
     font-weight: 700;

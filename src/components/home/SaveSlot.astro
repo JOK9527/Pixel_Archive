@@ -19,13 +19,20 @@ const {
   active = false,
 } = Astro.props;
 
-const tone = active ? "green" : status === "locked" ? "warning" : "neutral";
+const tone = active
+  ? "green"
+  : status === "locked"
+    ? "warning"
+    : status === "empty"
+      ? "purple"
+      : "neutral";
 const Element = href ? "a" : "article";
 ---
 
 <Element
   class:list={["save-slot", "pixel-corner", { "save-slot--active": active }]}
   href={href}
+  data-status={status}
 >
   <div class="save-slot__header">
     <span>SAVE SLOT {slotNumber}</span>
@@ -48,13 +55,17 @@ const Element = href ? "a" : "article";
 
 <style>
   .save-slot {
+    --card-accent: var(--color-violet);
+    --card-pixel-shadow: var(--shadow-pixel-violet);
+
     display: flex;
     min-width: 0;
     min-height: 16rem;
     padding: 1.15rem;
-    border: 1px solid var(--color-border);
+    border: 1px solid var(--color-border-subtle);
     border-radius: var(--radius-sm);
     background: var(--color-surface-raised);
+    box-shadow: var(--shadow-sm);
     color: var(--color-text);
     flex-direction: column;
     text-decoration: none;
@@ -67,15 +78,28 @@ const Element = href ? "a" : "article";
   .save-slot:hover,
   .save-slot:focus-visible {
     border-color: var(--color-border-strong);
-    box-shadow: var(--shadow-pixel);
+    box-shadow: var(--shadow-md), var(--card-pixel-shadow);
     color: var(--color-text);
     transform: translate(-1px, -1px);
   }
 
   .save-slot--active {
+    --card-accent: var(--color-primary);
+    --card-pixel-shadow: var(--shadow-pixel-green);
+
     box-shadow:
-      inset 0 3px 0 var(--color-status),
-      var(--shadow-soft);
+      inset 0 3px 0 var(--card-accent),
+      var(--shadow-sm);
+  }
+
+  .save-slot[data-status="locked"] {
+    --card-accent: var(--color-warm);
+    --card-pixel-shadow: var(--shadow-pixel-amber);
+  }
+
+  .save-slot[data-status="empty"] {
+    --card-accent: var(--color-violet);
+    --card-pixel-shadow: var(--shadow-pixel-violet);
   }
 
   .save-slot__header {
@@ -156,6 +180,7 @@ const Element = href ? "a" : "article";
   .save-slot h3 {
     margin-bottom: 0.45rem;
     font-size: 1.05rem;
+    color: var(--color-heading);
   }
 
   .save-slot p {
@@ -166,7 +191,7 @@ const Element = href ? "a" : "article";
 
   .save-slot__action {
     margin-top: auto;
-    color: var(--color-accent);
+    color: var(--color-accent-text);
     font-family: var(--font-mono);
     font-size: 0.7rem;
     font-weight: 700;

@@ -620,3 +620,45 @@ Phase 10：视觉系统再校准
 ### 下一步建议
 
 - Phase 10 返工验收通过后，再进入 Phase 11 真实内容小规模填充。
+
+## 2026-06-11 / Phase 19 全站配色与视觉层级
+
+### 阶段
+
+Phase 19 文档执行：在不改变页面结构、路由、内容模型和组件功能的前提下，落地全站配色 token、栏目识别与表面层级。
+
+### 颜色替换
+
+- 页面主背景由灰黄 `#ddd5c4` 改为梨花白 `#f8f5f0`，加入月白与浅琥珀的极淡冷暖纸面变化。
+- 标题从近黑统一改为黛蓝 `#2a3c5c`；正文改为墨蓝 `#243747`。
+- 亚丁绿负责品牌、online、building、Done；朱红负责 active、箭头、LOAD 动作和标题像素点。
+- 琥珀负责 locked、index ready、Archive 年份和时间节点；藕荷紫仅负责 Lab、Mode Quiet 与空槽。
+- 暗色重建为墨青黑背景、蓝灰卡片和暖纸白标题，不使用纯黑或亮紫边框。
+
+### Token 与组件
+
+- `theme.css` 新增 primitive、surface、heading、primary、accent、warm、violet、栏目和四类 pixel shadow token。
+- `BaseLayout` 按当前路径输出 `data-section`，为 Home / Projects / Notes / Archive / Lab / About / Error 提供栏目变量。
+- Header、ArchiveTerminal、StatusBar、SaveSlot、ProjectCard、NoteCard、ArchiveEntry、LabCard、SectionHeader 和 About 完成语义色映射。
+- `03_视觉风格规范.md` 与 `06_组件设计规范.md` 已同步稳定 token 和组件颜色职责。
+
+### Before / After
+
+- Before：整页灰黄、标题近黑、卡片与背景层级接近；After：明亮纸白背景、黛蓝标题、白色卡片和柔和阴影形成清晰层级。
+- Before：绿、紫、茶橙整体偏灰；After：绿 / 朱红 / 琥珀 / 紫各有明确且小面积的职责。
+- Before：暗色偏橄榄黑，组件层级较平；After：墨青黑背景与蓝灰 surface 形成独立暗色系统。
+- Before：各栏目主要依赖相同绿色小标签；After：Notes 黛蓝、Archive 琥珀、Lab 紫、About 蓝绿形成轻微栏目识别。
+
+### 验收结果
+
+- `npm run build`：通过，生成 9 个静态页面。
+- Playwright 检查 9 个路由，1440px 与 390px 均无横向溢出。
+- 浏览器控制台：0 error，0 warning。
+- 暗色主题：切换正常，刷新后保持 `dark`。
+- 人工检查 Home、Projects、Notes、Archive、Lab、About、暗色首页和移动端明暗截图通过。
+- 截图位于 `output/playwright/phase19-*.png`，本地保留且不提交。
+- 未新增依赖、路由、Content Collections schema、功能或复杂视觉资产。
+
+### 下一步建议
+
+- 视觉基线稳定后进入 Phase 11，开始小规模迁移真实内容。

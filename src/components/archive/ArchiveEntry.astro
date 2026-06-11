@@ -39,10 +39,10 @@ const typeLabels = {
   .archive-entry {
     position: relative;
     padding: 1.25rem 1.25rem 1.4rem;
-    border: 1px solid var(--color-border);
+    border: 1px solid var(--color-border-subtle);
     border-radius: var(--radius-sm);
     background: var(--color-surface-raised);
-    box-shadow: var(--shadow-soft);
+    box-shadow: var(--shadow-sm);
   }
 
   .archive-entry__node {
@@ -52,10 +52,10 @@ const typeLabels = {
     width: 0.7rem;
     height: 0.7rem;
     border: 2px solid var(--color-bg);
-    background: var(--color-tea);
+    background: var(--color-warm);
     box-shadow:
       0 0 0 2px var(--color-border),
-      4px 4px 0 color-mix(in srgb, var(--color-tea) 30%, transparent);
+      4px 4px 0 color-mix(in srgb, var(--color-warm) 30%, transparent);
   }
 
   .archive-entry--milestone .archive-entry__node {
@@ -63,7 +63,7 @@ const typeLabels = {
   }
 
   .archive-entry--project-log .archive-entry__node {
-    background: var(--color-warning);
+    background: var(--color-accent);
   }
 
   .archive-entry__header {
@@ -83,6 +83,7 @@ const typeLabels = {
     margin-bottom: 0.45rem;
     font-size: 1.2rem;
     letter-spacing: -0.03em;
+    color: var(--color-heading);
   }
 
   .archive-entry p {
@@ -92,6 +93,7 @@ const typeLabels = {
   }
 
   .archive-entry a {
+    color: var(--color-accent-text);
     font-family: var(--font-mono);
     font-size: 0.68rem;
     font-weight: 700;

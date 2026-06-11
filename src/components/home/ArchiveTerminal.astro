@@ -64,13 +64,13 @@ const {
   .archive-terminal {
     position: relative;
     overflow: hidden;
-    border: 1px solid var(--color-border-strong);
+    border: 1px solid var(--color-border);
     border-radius: var(--radius-sm);
     background:
       linear-gradient(90deg, var(--color-surface-deep) 0 3rem, transparent 3rem),
       var(--color-surface-raised);
     box-shadow:
-      var(--shadow-soft),
+      var(--shadow-md),
       var(--shadow-inset),
       var(--shadow-pixel-soft);
   }
@@ -206,11 +206,25 @@ const {
   }
 
   .archive-terminal h1 {
+    position: relative;
+    width: fit-content;
     max-width: 8ch;
     margin-bottom: 1.25rem;
     font-size: clamp(3rem, 8vw, 6.85rem);
     letter-spacing: -0.075em;
     line-height: 0.82;
+    color: var(--color-heading);
+  }
+
+  .archive-terminal h1::after {
+    position: absolute;
+    top: 0.08em;
+    right: -0.22em;
+    width: 0.12em;
+    height: 0.12em;
+    background: var(--color-accent);
+    box-shadow: 0.08em 0.08em 0 var(--color-warm);
+    content: "";
   }
 
   .archive-terminal__message {
@@ -224,7 +238,7 @@ const {
     display: flex;
     align-items: center;
     margin-bottom: 0;
-    color: var(--color-accent);
+    color: var(--color-violet);
   }
 
   .archive-terminal__footer {

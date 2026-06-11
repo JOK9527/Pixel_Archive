@@ -36,7 +36,7 @@ const isActive = (href: string) =>
 
 <style>
   .site-header {
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border-subtle);
     background: color-mix(in srgb, var(--color-bg) 94%, transparent);
   }
 
@@ -50,7 +50,7 @@ const isActive = (href: string) =>
   }
 
   .site-header__brand {
-    color: var(--color-text);
+    color: var(--color-heading);
     font-family: var(--font-mono);
     font-size: 0.9rem;
     font-weight: 700;
@@ -60,7 +60,7 @@ const isActive = (href: string) =>
   }
 
   .site-header__brand::before {
-    color: var(--color-green);
+    color: var(--color-primary);
     content: "■";
     margin-inline-end: 0.55rem;
     font-size: 0.65em;
@@ -77,7 +77,7 @@ const isActive = (href: string) =>
     position: relative;
     padding: 0.35rem 0.55rem;
     border-radius: var(--radius-sm);
-    color: var(--color-text-muted);
+    color: var(--color-text);
     font-family: var(--font-mono);
     font-size: 0.78rem;
     text-decoration: none;
@@ -92,7 +92,7 @@ const isActive = (href: string) =>
   }
 
   .site-header__nav a[aria-current="page"] {
-    color: var(--color-text);
+    color: var(--color-accent-text);
   }
 
   .site-header__nav a[aria-current="page"]::after {
