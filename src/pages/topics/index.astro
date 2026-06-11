@@ -1,0 +1,125 @@
+---
+import SectionHeader from "../../components/ui/SectionHeader.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getTopicSummaries } from "../../lib/content/topics";
+
+const topics = await getTopicSummaries();
+const categories = topics.filter((topic) => topic.kind === "category");
+const tags = topics.filter((topic) => topic.kind === "tag");
+---
+
+<BaseLayout
+  title="Topics"
+  description="按分类和标签浏览 Pixel Archive 的公开内容。"
+>
+  <SectionHeader
+    eyebrow="Discovery index"
+    title="Topics"
+    description="按分类和标签浏览 Projects、Notes 与 Lab。"
+  />
+
+  <div class="topics-index">
+    <section aria-labelledby="topic-categories">
+      <header>
+        <h2 id="topic-categories">Categories</h2>
+        <span>{categories.length.toString().padStart(2, "0")} groups</span>
+      </header>
+      <div class="topics-index__grid">
+        {
+          categories.map((topic) => (
+            <a href={topic.href}>
+              <span>{topic.label}</span>
+              <strong>{topic.count.toString().padStart(2, "0")}</strong>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+
+    <section aria-labelledby="topic-tags">
+      <header>
+        <h2 id="topic-tags">Tags</h2>
+        <span>{tags.length.toString().padStart(2, "0")} labels</span>
+      </header>
+      <div class="topics-index__grid topics-index__grid--tags">
+        {
+          tags.map((topic) => (
+            <a href={topic.href}>
+              <span>#{topic.label}</span>
+              <strong>{topic.count.toString().padStart(2, "0")}</strong>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .topics-index {
+    display: grid;
+    max-width: 58rem;
+    gap: 3rem;
+  }
+
+  .topics-index section > header {
+    display: flex;
+    margin-bottom: 1rem;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .topics-index h2 {
+    margin: 0;
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+  }
+
+  .topics-index header > span {
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+  }
+
+  .topics-index__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+    gap: 0.65rem;
+  }
+
+  .topics-index__grid a {
+    display: flex;
+    min-width: 0;
+    padding: 0.85rem;
+    border: 1px solid var(--color-border-subtle);
+    background: var(--color-surface-raised);
+    color: var(--color-text);
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    text-decoration: none;
+  }
+
+  .topics-index__grid a:hover,
+  .topics-index__grid a:focus-visible {
+    border-color: var(--color-border-strong);
+    box-shadow: var(--shadow-pixel-green);
+  }
+
+  .topics-index__grid span {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .topics-index__grid strong {
+    color: var(--section-accent);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+  }
+
+  .topics-index__grid--tags a {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+  }
+</style>
+

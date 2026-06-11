@@ -14,6 +14,8 @@ export type NoteItem = {
   updated?: string;
   cover?: string;
   draft: boolean;
+  relatedProjects: string[];
+  relatedArchive: string[];
 };
 
 function getNoteSlug(entry: CollectionEntry<"notes">) {
@@ -35,6 +37,8 @@ function toNoteItem(entry: CollectionEntry<"notes">): NoteItem {
     updated: entry.data.updated,
     cover: entry.data.cover,
     draft: entry.data.draft,
+    relatedProjects: entry.data.relatedProjects ?? [],
+    relatedArchive: entry.data.relatedArchive ?? [],
   };
 }
 

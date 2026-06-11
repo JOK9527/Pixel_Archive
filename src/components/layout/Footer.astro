@@ -13,7 +13,11 @@ const currentYear = new Date().getFullYear();
   <div class="site-footer__inner">
     <p>{site.name} / {currentYear}</p>
     <p class="site-footer__status"><span aria-hidden="true"></span>{quote}</p>
-    <p>Built with {site.builtWith}</p>
+    <nav aria-label="Publishing links">
+      <a href="/topics/">Topics</a>
+      <a href="/rss.xml">RSS</a>
+      <span>Built with {site.builtWith}</span>
+    </nav>
   </div>
 </footer>
 
@@ -39,6 +43,22 @@ const currentYear = new Date().getFullYear();
     margin: 0;
   }
 
+  .site-footer nav {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .site-footer nav a {
+    color: var(--color-text-muted);
+    text-decoration-color: var(--color-border-strong);
+    text-underline-offset: 0.2em;
+  }
+
+  .site-footer nav a:hover {
+    color: var(--color-link-hover);
+  }
+
   .site-footer__status {
     display: inline-flex;
     align-items: center;
@@ -59,6 +79,11 @@ const currentYear = new Date().getFullYear();
       align-items: flex-start;
       flex-direction: column;
       gap: 0.35rem;
+    }
+
+    .site-footer nav {
+      align-items: flex-start;
+      flex-wrap: wrap;
     }
   }
 </style>

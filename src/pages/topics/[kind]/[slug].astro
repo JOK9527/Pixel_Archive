@@ -1,0 +1,62 @@
+---
+import DiscoveryList from "../../../components/topics/DiscoveryList.astro";
+import SectionHeader from "../../../components/ui/SectionHeader.astro";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import {
+  getTopicItems,
+  getTopicSummaries,
+  type DiscoveryItem,
+  type TopicKind,
+} from "../../../lib/content/topics";
+
+export async function getStaticPaths() {
+  const topics = await getTopicSummaries();
+
+  return Promise.all(
+    topics.map(async (topic) => ({
+      params: { kind: topic.kind, slug: topic.slug },
+      props: {
+        kind: topic.kind,
+        label: topic.label,
+        items: await getTopicItems(topic.kind, topic.slug),
+      },
+    })),
+  );
+}
+
+type Props = {
+  kind: TopicKind;
+  label: string;
+  items: DiscoveryItem[];
+};
+
+const { kind, label, items } = Astro.props;
+---
+
+<BaseLayout
+  title={kind === "tag" ? `#${label}` : label}
+  description={`浏览与 ${label} 相关的公开内容。`}
+>
+  <a class="topic-detail__back" href="/topics/">← Topics index</a>
+  <SectionHeader
+    eyebrow={`${kind} / ${items.length.toString().padStart(2, "0")} records`}
+    title={kind === "tag" ? `#${label}` : label}
+    description="Projects、Notes 与 Lab 中使用同一内容标记的记录。"
+  />
+  <DiscoveryList items={items} />
+</BaseLayout>
+
+<style>
+  .topic-detail__back {
+    display: inline-block;
+    margin-bottom: 2rem;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+</style>
+

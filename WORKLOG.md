@@ -1,5 +1,17 @@
 # WORKLOG
 
+## 2026-06-12 / Phase 15
+
+### Discovery and publishing readiness
+
+- Added category and tag aggregation pages for Projects, Notes, and Lab records.
+- Added bidirectional related-record discovery between Notes, Projects, and Archive.
+- Added dependency-free RSS, sitemap, and robots endpoints.
+- Added canonical-ready Open Graph and Twitter metadata with a default social preview.
+- Added `PUBLIC_SITE_URL` as the single production-origin setting.
+- Deferred Pagefind to avoid adding a dependency at the current content scale.
+- Documented Cloudflare Pages settings and the missing remote / production URL blocker.
+
 ## 2026-06-12 / Phase 14
 
 ### Archive, Lab, and About expansion

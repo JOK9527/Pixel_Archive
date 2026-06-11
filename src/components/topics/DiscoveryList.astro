@@ -1,0 +1,94 @@
+---
+import type { DiscoveryItem } from "../../lib/content/topics";
+
+type Props = {
+  items: DiscoveryItem[];
+};
+
+const { items } = Astro.props;
+---
+
+<div class="discovery-list">
+  {
+    items.map((item) => (
+      <article>
+        <a href={item.href}>
+          <div class="discovery-list__meta">
+            <span>{item.kind}</span>
+            <span>{item.category}</span>
+            {item.date && <time datetime={item.date}>{item.date}</time>}
+          </div>
+          <h2>{item.title}</h2>
+          <p>{item.description}</p>
+          <span class="discovery-list__action">open record →</span>
+        </a>
+      </article>
+    ))
+  }
+</div>
+
+<style>
+  .discovery-list {
+    display: grid;
+    max-width: 54rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .discovery-list article {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .discovery-list a {
+    display: block;
+    padding-block: 1.35rem;
+    color: var(--color-text);
+    text-decoration: none;
+    transition:
+      padding-inline var(--transition-fast),
+      background-color var(--transition-fast);
+  }
+
+  .discovery-list a:hover,
+  .discovery-list a:focus-visible {
+    padding-inline: 1rem;
+    background: var(--color-surface-raised);
+  }
+
+  .discovery-list__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem 0.75rem;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .discovery-list__meta span:first-child {
+    color: var(--section-accent);
+    font-weight: 700;
+  }
+
+  .discovery-list h2 {
+    margin-block: 0.65rem 0.35rem;
+    font-size: clamp(1.25rem, 4vw, 1.7rem);
+    letter-spacing: -0.04em;
+  }
+
+  .discovery-list p {
+    max-width: 42rem;
+    margin-bottom: 0.8rem;
+    color: var(--color-text-muted);
+  }
+
+  .discovery-list__action {
+    color: var(--color-link);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+</style>
+

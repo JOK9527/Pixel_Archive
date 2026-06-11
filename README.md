@@ -1,14 +1,24 @@
 # Pixel Archive
 
-> Phase 11 completed on 2026-06-12: verified public content boundaries are now documented, and Phase 12 project content work is in progress.
+> Phase 11-15 local development completed on 2026-06-12. Public deployment is waiting for a Git remote, Cloudflare Pages project, and confirmed production URL.
 
 Pixel Archive 是一个以极简阅读体验为基础、以像素组件为识别符号、以复古终端和存档隐喻为氛围的个人档案馆。
 
 ## 当前阶段
 
-Phase 10 / Phase 19：视觉系统再校准与全站配色层级方案已验收完成。
+Phase 15：真实内容、站内发现、RSS、sitemap 与基础 SEO 已完成本地验收。
 
 当前已在第一阶段结构基线上完成纸白 / 黛蓝 / 亚丁绿 / 朱红 / 琥珀 / 藕荷紫语义色阶，并完成像素语法、首页档案终端、Project 抽象封面、状态系统和栏目识别。页面能力、内容系统、路由与技术栈保持不变。
+
+当前内容基线为 3 个 Projects、5 篇 Notes、5 个 Archive 节点和 2 个 Lab 实验。`/topics/`、`/rss.xml`、`/sitemap.xml` 与 `/robots.txt` 已生成。
+
+正式部署前复制 `.env.example` 的配置方式，在 Cloudflare Pages 中设置：
+
+```bash
+PUBLIC_SITE_URL=https://your-production-origin.example
+```
+
+该变量用于 canonical、Open Graph、RSS 和 sitemap 的绝对 URL。不要提交本地 `.env`。
 
 ## 技术栈
 

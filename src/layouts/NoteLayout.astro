@@ -1,4 +1,5 @@
 ---
+import { getEntry } from "astro:content";
 import MarkdownContent from "../components/notes/MarkdownContent.astro";
 import NoteMeta from "../components/notes/NoteMeta.astro";
 import type { NoteItem } from "../lib/content/notes";
@@ -22,9 +23,35 @@ const {
   olderNote,
 } = Astro.props;
 const tocHeadings = headings.filter((heading) => heading.depth === 2 || heading.depth === 3);
+const relatedProjects = (
+  await Promise.all(
+    note.relatedProjects.map(async (slug) => {
+      const entry = await getEntry("projects", slug);
+      return entry
+        ? { href: `/projects/${slug}/`, title: entry.data.title }
+        : undefined;
+    }),
+  )
+).filter((item) => item !== undefined);
+const relatedArchive = (
+  await Promise.all(
+    note.relatedArchive.map(async (slug) => {
+      const entry = await getEntry("archive", slug);
+      return entry
+        ? { href: `/archive/#${slug}`, title: entry.data.title }
+        : undefined;
+    }),
+  )
+).filter((item) => item !== undefined);
 ---
 
-<BaseLayout title={note.title} description={note.description}>
+<BaseLayout
+  title={note.title}
+  description={note.description}
+  type="article"
+  publishedTime={`${note.date}T00:00:00Z`}
+  image={note.cover}
+>
   <article class="note-detail">
     <a class="note-detail__back" href="/notes/">← Notes archive</a>
     <header>
@@ -65,6 +92,28 @@ const tocHeadings = headings.filter((heading) => heading.depth === 2 || heading.
         <MarkdownContent>
           <slot />
         </MarkdownContent>
+
+        {
+          (relatedProjects.length > 0 || relatedArchive.length > 0) && (
+            <aside class="note-detail__related" aria-labelledby="related-records-title">
+              <h2 id="related-records-title">Related records</h2>
+              <div>
+                {relatedProjects.map((item) => (
+                  <a href={item.href}>
+                    <span>PROJECT</span>
+                    <strong>{item.title}</strong>
+                  </a>
+                ))}
+                {relatedArchive.map((item) => (
+                  <a href={item.href}>
+                    <span>SAVE POINT</span>
+                    <strong>{item.title}</strong>
+                  </a>
+                ))}
+              </div>
+            </aside>
+          )
+        }
 
         {
           (newerNote || olderNote) && (
@@ -203,6 +252,51 @@ const tocHeadings = headings.filter((heading) => heading.depth === 2 || heading.
     gap: 1rem;
   }
 
+  .note-detail__related {
+    margin-top: 3.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .note-detail__related h2 {
+    margin-bottom: 0.8rem;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .note-detail__related > div {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.65rem;
+  }
+
+  .note-detail__related a {
+    display: grid;
+    min-width: 0;
+    padding: 0.8rem;
+    border: 1px solid var(--color-border-subtle);
+    background: var(--color-surface-raised);
+    color: var(--color-text);
+    gap: 0.35rem;
+    text-decoration: none;
+  }
+
+  .note-detail__related span {
+    color: var(--section-accent);
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+  }
+
+  .note-detail__related strong {
+    overflow-wrap: anywhere;
+    font-size: 0.82rem;
+  }
+
   .note-detail__pager a {
     display: grid;
     min-width: 0;
@@ -247,7 +341,8 @@ const tocHeadings = headings.filter((heading) => heading.depth === 2 || heading.
 
   @media (max-width: 34rem) {
     .note-detail__toc ol,
-    .note-detail__pager {
+    .note-detail__pager,
+    .note-detail__related > div {
       grid-template-columns: 1fr;
     }
 
