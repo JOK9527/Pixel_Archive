@@ -1,5 +1,15 @@
 # WORKLOG
 
+## 2026-06-12 / Phase 12
+
+### Initial real project entries
+
+- Added verified public entries for Pixel Archive, ScholarLens AI, and GLM-OCR Tool.
+- Kept Pixel Archive as the single featured project and removed its duplicate from the regular grid.
+- Added project-specific abstract cover variants instead of a shared `PA` placeholder.
+- Added a project visual record, explicit timeline state, and resolved related Notes / Archive links to project details.
+- Kept screenshots behind a documented privacy-review placeholder.
+
 ## 2026-06-12 / Phase 11
 
 ### Real content inventory and public boundaries

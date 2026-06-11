@@ -1,0 +1,41 @@
+---
+title: "GLM-OCR Tool"
+description: "用于 PDF 与常见图片格式的本地命令行 OCR 工具，输出可继续处理的 Markdown 和 JSON。"
+status: "Prototype"
+category: "Tools / OCR"
+tags:
+  - cli
+  - document-tools
+  - ocr
+techStack:
+  - PowerShell
+  - GLM-OCR
+  - Markdown
+  - JSON
+featured: false
+---
+
+## Project brief
+
+GLM-OCR Tool 将文档识别封装为本地命令行流程，支持 PDF、JPG、PNG 和 JPEG。识别完成后生成 Markdown 与 JSON，便于继续清理文本、检查公式和表格，或接入后续文档流程。
+
+## Supported workflow
+
+```powershell
+glm-ocr "<file-path>"
+glm-ocr "<file-path>" -StartPage 1 -EndPage 3
+glm-ocr "<file-path>" -OutputDir "<output-dir>"
+```
+
+输出文件与输入文件同名，并分别使用 `.glm_ocr.md` 和 `.glm_ocr.json` 后缀。
+
+## Current boundary
+
+- API Key 只通过环境变量提供，不写入命令、日志或内容文件
+- 本机绝对路径和用户目录不进入公开示例
+- OCR 结果在发布前继续检查公式、表格、版面和敏感文本
+
+## Screenshot status
+
+该工具以命令行为主要界面，详情页当前保留抽象解析记录。后续只展示经过路径与文档内容脱敏的终端样例。
+

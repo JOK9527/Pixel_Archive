@@ -8,6 +8,7 @@ import ProjectTechStack from "./ProjectTechStack.astro";
 
 type Props = {
   title: string;
+  slug: string;
   description: string;
   status: ProjectStatusValue;
   category: string;
@@ -21,6 +22,7 @@ type Props = {
 
 const {
   title,
+  slug,
   description,
   status,
   category,
@@ -30,6 +32,17 @@ const {
   cover,
   featured = false,
 } = Astro.props;
+const code = title
+  .split(/[\s-]+/)
+  .map((part) => part[0])
+  .join("")
+  .slice(0, 3)
+  .toUpperCase();
+const visual = slug.includes("scholarlens")
+  ? "reader"
+  : slug.includes("ocr")
+    ? "parser"
+    : "archive";
 ---
 
 <article
@@ -45,7 +58,13 @@ const {
         cover ? (
           <img src={cover} alt="" loading="lazy" />
         ) : (
-          <div class="project-card__placeholder" aria-hidden="true">
+          <div
+            class:list={[
+              "project-card__placeholder",
+              `project-card__placeholder--${visual}`,
+            ]}
+            aria-hidden="true"
+          >
             <div class="project-card__cover-index">
               <span>PX</span>
               <span>{featured ? "FEATURED" : "ARCHIVE"}</span>
@@ -53,7 +72,7 @@ const {
             </div>
             <div class="project-card__chip">
               <div class="project-card__chip-head">
-                <span>PA</span>
+                <span>{code}</span>
                 <i></i>
               </div>
               <div class="project-card__chip-grid">
@@ -69,7 +88,7 @@ const {
             <div class="project-card__data">
               <span></span><span></span><span></span><span></span>
             </div>
-            <p>PROJECT FILE / NO IMAGE DATA</p>
+            <p>{visual.toUpperCase()} SYSTEM / ABSTRACT RECORD</p>
           </div>
         )
       }
@@ -252,6 +271,14 @@ const {
 
   .project-card__chip-grid i:nth-child(11n) {
     background: var(--color-accent);
+  }
+
+  .project-card__placeholder--reader .project-card__chip-grid i:nth-child(3n) {
+    background: var(--color-info);
+  }
+
+  .project-card__placeholder--parser .project-card__chip-grid i:nth-child(5n) {
+    background: var(--color-warm);
   }
 
   .project-card__chip-ports {

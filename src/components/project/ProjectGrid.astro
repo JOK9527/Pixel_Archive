@@ -15,6 +15,7 @@ const { projects, featured = false } = Astro.props;
     projects.map((project) => (
       <ProjectCard
         title={project.title}
+        slug={project.slug}
         description={project.description}
         status={project.status}
         category={project.category}

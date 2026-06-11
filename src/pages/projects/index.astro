@@ -11,6 +11,7 @@ import {
 
 const projects = await getAllProjects();
 const featuredProjects = await getFeaturedProjects();
+const regularProjects = projects.filter((project) => !project.featured);
 ---
 
 <BaseLayout
@@ -29,9 +30,11 @@ const featuredProjects = await getFeaturedProjects();
         <section class="projects-index" aria-labelledby="all-projects-title">
           <header>
             <h2 id="all-projects-title">Project Archive</h2>
-            <span>{projects.length.toString().padStart(2, "0")} files indexed</span>
+            <span>
+              {regularProjects.length.toString().padStart(2, "0")} secondary files
+            </span>
           </header>
-          <ProjectGrid projects={projects} />
+          <ProjectGrid projects={regularProjects} />
         </section>
       </>
     ) : (

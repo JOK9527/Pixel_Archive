@@ -22,6 +22,8 @@ export type ProjectItem = {
   links?: ProjectLinksValue;
   startDate?: string;
   endDate?: string | null;
+  relatedNotes: string[];
+  relatedArchive: string[];
 };
 
 function getProjectSlug(entry: CollectionEntry<"projects">) {
@@ -45,6 +47,8 @@ function toProjectItem(entry: CollectionEntry<"projects">): ProjectItem {
     links: entry.data.links,
     startDate: entry.data.startDate,
     endDate: entry.data.endDate,
+    relatedNotes: entry.data.relatedNotes ?? [],
+    relatedArchive: entry.data.relatedArchive ?? [],
   };
 }
 

@@ -2,6 +2,7 @@
 import type { ArchiveTypeValue } from "../../lib/content/archive";
 
 type Props = {
+  slug: string;
   title: string;
   date: string;
   type: ArchiveTypeValue;
@@ -9,7 +10,7 @@ type Props = {
   relatedHref?: string;
 };
 
-const { title, date, type, description, relatedHref } = Astro.props;
+const { slug, title, date, type, description, relatedHref } = Astro.props;
 
 const typeLabels = {
   "save-point": "SAVE POINT",
@@ -18,7 +19,10 @@ const typeLabels = {
 } as const;
 ---
 
-<article class:list={["archive-entry", "pixel-corner", `archive-entry--${type}`]}>
+<article
+  id={slug}
+  class:list={["archive-entry", "pixel-corner", `archive-entry--${type}`]}
+>
   <span class="archive-entry__node" aria-hidden="true"></span>
   <div class="archive-entry__header">
     <time datetime={date}>{date}</time>
@@ -38,6 +42,7 @@ const typeLabels = {
 <style>
   .archive-entry {
     position: relative;
+    scroll-margin-top: 2rem;
     padding: 1.25rem 1.25rem 1.4rem;
     border: 1px solid var(--color-border-subtle);
     border-radius: var(--radius-sm);

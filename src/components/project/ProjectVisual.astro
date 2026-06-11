@@ -1,0 +1,263 @@
+---
+import type { ProjectItem } from "../../lib/content/projects";
+
+type Props = {
+  project: ProjectItem;
+};
+
+const { project } = Astro.props;
+const code = project.title
+  .split(/[\s-]+/)
+  .map((part) => part[0])
+  .join("")
+  .slice(0, 3)
+  .toUpperCase();
+const variant = project.slug.includes("scholarlens")
+  ? "reader"
+  : project.slug.includes("ocr")
+    ? "parser"
+    : "archive";
+---
+
+<figure class:list={["project-visual", `project-visual--${variant}`]}>
+  <div class="project-visual__frame" aria-hidden="true">
+    <header>
+      <span>{code} / SYSTEM RECORD</span>
+      <span>{project.status}</span>
+    </header>
+    <div class="project-visual__canvas">
+      <div class="project-visual__rail">
+        {Array.from({ length: 7 }, (_, index) => <i class:list={{ active: index < 3 }}></i>)}
+      </div>
+      <div class="project-visual__window">
+        <div class="project-visual__window-bar">
+          <i></i><i></i><i></i>
+          <span>{variant}.record</span>
+        </div>
+        <div class="project-visual__window-body">
+          <div class="project-visual__blocks">
+            <span></span><span></span><span></span><span></span>
+          </div>
+          <div class="project-visual__lines">
+            <i></i><i></i><i></i><i></i><i></i>
+          </div>
+        </div>
+      </div>
+      <div class="project-visual__map">
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+    </div>
+    <footer>
+      <span>CAPTURE SLOT 01</span>
+      <span>PRIVACY REVIEW REQUIRED</span>
+    </footer>
+  </div>
+  <figcaption>
+    Abstract system record. Product screenshots remain withheld until content and
+    identity details pass the public-release review.
+  </figcaption>
+</figure>
+
+<style>
+  .project-visual {
+    margin: 0 0 clamp(3rem, 7vw, 5rem);
+  }
+
+  .project-visual__frame {
+    overflow: hidden;
+    border: 1px solid var(--color-border-strong);
+    background:
+      linear-gradient(var(--color-grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-grid) 1px, transparent 1px),
+      var(--color-surface-deep);
+    background-size: 24px 24px;
+    box-shadow: var(--shadow-pixel-green), var(--shadow-md);
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+  }
+
+  .project-visual__frame > :is(header, footer) {
+    display: flex;
+    min-height: 2.2rem;
+    padding: 0.65rem 0.85rem;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    background: var(--color-surface-raised);
+  }
+
+  .project-visual__frame > header {
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-heading);
+    font-weight: 700;
+  }
+
+  .project-visual__frame > footer {
+    border-top: 1px solid var(--color-border);
+    color: var(--color-text-faint);
+  }
+
+  .project-visual__canvas {
+    display: grid;
+    min-height: clamp(15rem, 34vw, 23rem);
+    padding: clamp(1rem, 4vw, 2.5rem);
+    grid-template-columns: 2.5rem minmax(12rem, 2fr) minmax(6rem, 1fr);
+    gap: clamp(0.8rem, 3vw, 2rem);
+    align-items: center;
+  }
+
+  .project-visual__rail {
+    display: grid;
+    align-self: stretch;
+    padding-block: 0.5rem;
+    border-right: 1px dashed var(--color-border-strong);
+    align-content: space-between;
+  }
+
+  .project-visual__rail i {
+    width: calc(var(--pixel-unit) * 2);
+    height: calc(var(--pixel-unit) * 2);
+    background: var(--color-border-strong);
+  }
+
+  .project-visual__rail i.active {
+    background: var(--section-accent);
+    box-shadow: var(--pixel-unit) 0 0 var(--color-surface-deep);
+  }
+
+  .project-visual__window {
+    min-width: 0;
+    border: 1px solid var(--color-border-strong);
+    background: var(--color-surface-raised);
+    box-shadow: var(--shadow-pixel-soft);
+  }
+
+  .project-visual__window-bar {
+    display: flex;
+    min-height: 2rem;
+    padding-inline: 0.65rem;
+    border-bottom: 1px solid var(--color-border);
+    align-items: center;
+    gap: var(--pixel-unit);
+  }
+
+  .project-visual__window-bar i {
+    width: calc(var(--pixel-unit) * 2);
+    height: calc(var(--pixel-unit) * 2);
+    background: var(--color-border-strong);
+  }
+
+  .project-visual__window-bar i:first-child {
+    background: var(--section-hot);
+  }
+
+  .project-visual__window-bar span {
+    margin-left: auto;
+    color: var(--color-text-faint);
+  }
+
+  .project-visual__window-body {
+    display: grid;
+    min-height: 11rem;
+    padding: 1rem;
+    grid-template-columns: minmax(5rem, 0.8fr) minmax(7rem, 1.2fr);
+    gap: 1rem;
+  }
+
+  .project-visual__blocks {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--pixel-unit);
+  }
+
+  .project-visual__blocks span {
+    border: 1px solid var(--color-border);
+    background: var(--color-surface-muted);
+  }
+
+  .project-visual__blocks span:first-child {
+    background: var(--section-soft);
+    box-shadow: inset 0 calc(var(--pixel-unit) * 2) 0 var(--section-accent);
+    grid-column: 1 / 3;
+  }
+
+  .project-visual__lines {
+    display: grid;
+    align-content: center;
+    gap: 0.75rem;
+  }
+
+  .project-visual__lines i {
+    height: var(--pixel-unit);
+    background: var(--color-border-strong);
+  }
+
+  .project-visual__lines i:nth-child(2) {
+    width: 72%;
+    background: var(--section-accent);
+  }
+
+  .project-visual__lines i:nth-child(3) {
+    width: 88%;
+  }
+
+  .project-visual__lines i:nth-child(4) {
+    width: 54%;
+    background: var(--section-hot);
+  }
+
+  .project-visual__map {
+    display: grid;
+    aspect-ratio: 1;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--pixel-unit);
+  }
+
+  .project-visual__map span {
+    border: 1px solid var(--color-border);
+    background: var(--color-surface-muted);
+  }
+
+  .project-visual__map span:first-child {
+    background: var(--section-accent);
+    grid-column: 1 / 3;
+  }
+
+  .project-visual__map span:nth-child(3) {
+    background: var(--section-soft);
+    grid-row: span 2;
+  }
+
+  .project-visual--reader .project-visual__window-body {
+    grid-template-columns: 0.7fr 1.3fr;
+  }
+
+  .project-visual--parser .project-visual__map span:first-child {
+    background: var(--section-hot);
+  }
+
+  .project-visual figcaption {
+    margin-top: 0.75rem;
+    color: var(--color-text-faint);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 40rem) {
+    .project-visual__canvas {
+      grid-template-columns: 1.5rem minmax(0, 1fr);
+    }
+
+    .project-visual__map {
+      display: none;
+    }
+
+    .project-visual__frame > footer {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+</style>

@@ -1,7 +1,9 @@
 ---
+import { getEntry } from "astro:content";
 import ProjectLinks from "../components/project/ProjectLinks.astro";
 import ProjectStatus from "../components/project/ProjectStatus.astro";
 import ProjectTechStack from "../components/project/ProjectTechStack.astro";
+import ProjectVisual from "../components/project/ProjectVisual.astro";
 import type { ProjectItem } from "../lib/content/projects";
 import BaseLayout from "./BaseLayout.astro";
 
@@ -10,6 +12,26 @@ type Props = {
 };
 
 const { project } = Astro.props;
+const relatedNotes = (
+  await Promise.all(
+    project.relatedNotes.map(async (slug) => {
+      const entry = await getEntry("notes", slug);
+      return entry && !entry.data.draft
+        ? { href: `/notes/${slug}/`, title: entry.data.title }
+        : undefined;
+    }),
+  )
+).filter((item) => item !== undefined);
+const relatedArchive = (
+  await Promise.all(
+    project.relatedArchive.map(async (slug) => {
+      const entry = await getEntry("archive", slug);
+      return entry
+        ? { href: `/archive/#${slug}`, title: entry.data.title }
+        : undefined;
+    }),
+  )
+).filter((item) => item !== undefined);
 ---
 
 <BaseLayout title={project.title} description={project.description}>
@@ -25,6 +47,8 @@ const { project } = Astro.props;
       <p class="project-detail__description">{project.description}</p>
       <ProjectLinks links={project.links} />
     </header>
+
+    <ProjectVisual project={project} />
 
     <div class="project-detail__grid">
       <aside class="project-detail__sidebar" aria-label="Project metadata">
@@ -44,24 +68,48 @@ const { project } = Astro.props;
           )
         }
 
+        <section>
+          <h2>Timeline</h2>
+          <dl class="project-detail__timeline">
+            <dt>State</dt>
+            <dd>{project.status}</dd>
+            {
+              project.startDate && (
+                <>
+                  <dt>Start</dt>
+                  <dd>{project.startDate}</dd>
+                </>
+              )
+            }
+            {
+              project.endDate && (
+                <>
+                  <dt>End</dt>
+                  <dd>{project.endDate}</dd>
+                </>
+              )
+            }
+          </dl>
+        </section>
+
         {
-          (project.startDate || project.endDate) && (
+          (relatedNotes.length > 0 || relatedArchive.length > 0) && (
             <section>
-              <h2>Timeline</h2>
-              <dl class="project-detail__timeline">
-                {project.startDate && (
-                  <>
-                    <dt>Start</dt>
-                    <dd>{project.startDate}</dd>
-                  </>
-                )}
-                {project.endDate && (
-                  <>
-                    <dt>End</dt>
-                    <dd>{project.endDate}</dd>
-                  </>
-                )}
-              </dl>
+              <h2>Related records</h2>
+              <ul class="project-detail__related">
+                {relatedNotes.map((item) => (
+                  <li>
+                    <span>NOTE</span>
+                    <a href={item.href}>{item.title}</a>
+                  </li>
+                ))}
+                {relatedArchive.map((item) => (
+                  <li>
+                    <span>SAVE</span>
+                    <a href={item.href}>{item.title}</a>
+                  </li>
+                ))}
+              </ul>
             </section>
           )
         }
@@ -185,6 +233,35 @@ const { project } = Astro.props;
   .project-detail__timeline dd {
     margin: 0;
     color: var(--color-text);
+  }
+
+  .project-detail__related {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    gap: 0.75rem;
+    list-style: none;
+  }
+
+  .project-detail__related li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.65rem;
+    align-items: baseline;
+  }
+
+  .project-detail__related span {
+    color: var(--section-accent);
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    font-weight: 700;
+  }
+
+  .project-detail__related a {
+    color: var(--color-text);
+    font-size: 0.78rem;
+    text-decoration-color: var(--color-border-strong);
+    text-underline-offset: 0.2em;
   }
 
   .project-detail__content {
