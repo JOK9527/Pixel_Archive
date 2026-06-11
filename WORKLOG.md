@@ -1,5 +1,15 @@
 # WORKLOG
 
+## 2026-06-12 / Phase 13
+
+### Notes and long-form reading
+
+- Expanded published Notes from one entry to five verified articles and logs.
+- Added heading-based table of contents, Notes archive return path, and newer / older navigation.
+- Added long-form styles for figure captions and dependency-free formula blocks.
+- Covered headings, lists, quotes, code, inline code, tables, images, captions, and responsive reading layouts.
+- Connected the new Notes back to relevant Projects through existing schema fields.
+
 ## 2026-06-12 / Phase 12
 
 ### Initial real project entries

@@ -1,0 +1,69 @@
+---
+title: "Quiet Pixel 视觉系统再校准"
+description: "记录 Pixel Archive 如何把颜色、边框和像素语言从装饰层整理成语义系统。"
+type: "Article"
+category: "Design System"
+tags:
+  - css
+  - design-system
+  - pixel-ui
+date: "2026-06-12"
+draft: false
+relatedProjects:
+  - "pixel-archive"
+---
+
+## 问题不是颜色不够多
+
+早期页面已经有米色背景、绿色状态和少量紫色，但普通边框、卡片层级与页面角色仍然靠相近颜色维持，视觉变化很容易只停留在“换了一种边框色”。
+
+> 再校准的目标不是让页面更响亮，而是让每一种颜色承担稳定职责。
+
+## 先建立语义顺序
+
+颜色使用顺序被约束为：
+
+1. 中性表面决定页面明暗和层级。
+2. 标题与正文保证阅读对比。
+3. 栏目色只标识状态或区域。
+4. 红、琥珀和灰紫只出现在小范围强调。
+
+<figure>
+  <img
+    src="/images/notes/2026-06-12-quiet-pixel-system/palette-map.svg"
+    alt="Quiet Pixel Archive 语义色阶图，展示中性表面、绿色状态、朱红操作、琥珀存档和灰紫实验色。"
+  />
+  <figcaption>
+    Phase 19 使用的语义色阶关系。图中面积也表达了使用比例：中性色最大，强调色最小。
+  </figcaption>
+</figure>
+
+## Token 如何落地
+
+页面不直接写具体颜色，而是消费语义变量：
+
+```css
+[data-section="archive"] {
+  --section-accent: var(--color-warm-text);
+  --section-hot: var(--color-accent);
+  --section-soft: var(--color-warm-soft);
+}
+```
+
+这样 Archive、Notes 和 Lab 可以保持不同气质，同时普通边框仍由统一的 `--color-border` 系列控制。
+
+## 像素语言的边界
+
+像素感主要存在于角标、状态块、短线和点阵，而不是把正文或整张卡片变成游戏界面。
+
+| 元素 | 像素表达 | 阅读约束 |
+| --- | --- | --- |
+| 卡片 | 块状角标、4px 阴影 | 不使用高饱和整圈边框 |
+| 状态 | 小型信号块 | 文本标签仍可直接识别 |
+| 分割线 | 断续短线或点阵 | 不穿过正文 |
+| 封面 | 文件块、芯片、网格 | 不伪装为真实截图 |
+
+## 当前判断
+
+Quiet Pixel 的完成标准不是“看起来更像像素画”，而是页面在去掉具体内容后，仍能通过表面、栏目色和组件语法被识别为同一个档案系统。
+

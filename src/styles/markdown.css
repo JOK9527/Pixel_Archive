@@ -65,6 +65,36 @@
   background: var(--color-surface-muted);
 }
 
+.markdown-content figure {
+  margin-inline: 0;
+}
+
+.markdown-content figure img {
+  margin-bottom: 0;
+}
+
+.markdown-content figcaption {
+  padding: 0.65rem 0.8rem;
+  border: 1px solid var(--color-border);
+  border-top: 0;
+  background: var(--color-surface-muted);
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  line-height: 1.6;
+}
+
+.markdown-content .formula {
+  padding: 1rem;
+  border-block: 1px solid var(--color-border);
+  background: var(--color-surface-muted);
+  color: var(--color-heading);
+  font-family: var(--font-mono);
+  font-size: clamp(0.82rem, 2vw, 0.96rem);
+  text-align: center;
+  overflow-x: auto;
+}
+
 .markdown-content a {
   color: var(--color-link);
   overflow-wrap: anywhere;

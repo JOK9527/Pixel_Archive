@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 480" role="img" aria-labelledby="title desc">
+  <title id="title">Quiet Pixel Archive semantic palette map</title>
+  <desc id="desc">A diagram showing neutral surfaces, green status, red accent, amber archive, and violet lab colors.</desc>
+  <rect width="960" height="480" fill="#f8f5f0"/>
+  <g fill="none" stroke="#2a3c5c" stroke-opacity=".18">
+    <path d="M0 80h960M0 160h960M0 240h960M0 320h960M0 400h960"/>
+    <path d="M80 0v480M160 0v480M240 0v480M320 0v480M400 0v480M480 0v480M560 0v480M640 0v480M720 0v480M800 0v480M880 0v480"/>
+  </g>
+  <g font-family="Consolas, monospace">
+    <text x="64" y="65" fill="#2a3c5c" font-size="22" font-weight="700">QUIET PIXEL / SEMANTIC COLOR MAP</text>
+    <text x="64" y="101" fill="#6f7a83" font-size="14">SURFACE FIRST, ACCENT BY ROLE</text>
+  </g>
+  <g transform="translate(64 144)">
+    <rect width="224" height="232" fill="#fffdf7" stroke="#2a3c5c" stroke-opacity=".34"/>
+    <rect x="16" y="16" width="192" height="48" fill="#eef1eb"/>
+    <rect x="16" y="80" width="80" height="80" fill="#e1e8e3"/>
+    <rect x="112" y="80" width="96" height="16" fill="#9fa9a4"/>
+    <rect x="112" y="112" width="64" height="16" fill="#9b856a"/>
+    <rect x="112" y="144" width="80" height="16" fill="#2a3c5c"/>
+    <text x="16" y="204" fill="#2a3c5c" font-family="Consolas, monospace" font-size="14">NEUTRAL ARCHIVE BASE</text>
+  </g>
+  <g transform="translate(320 144)">
+    <rect width="128" height="104" fill="#ddefe8" stroke="#428675"/>
+    <rect y="128" width="128" height="104" fill="#ffe8de" stroke="#ed5126"/>
+    <text x="16" y="56" fill="#3b7a5d" font-family="Consolas, monospace" font-size="14">STATUS</text>
+    <text x="16" y="184" fill="#c63f1c" font-family="Consolas, monospace" font-size="14">ACTION</text>
+  </g>
+  <g transform="translate(480 144)">
+    <rect width="128" height="104" fill="#fff0d2" stroke="#d69a2d"/>
+    <rect y="128" width="128" height="104" fill="#f0e8f5" stroke="#7257a5"/>
+    <text x="16" y="56" fill="#925514" font-family="Consolas, monospace" font-size="14">ARCHIVE</text>
+    <text x="16" y="184" fill="#7257a5" font-family="Consolas, monospace" font-size="14">LAB</text>
+  </g>
+  <g transform="translate(640 144)" font-family="Consolas, monospace">
+    <rect width="256" height="232" fill="#fffdf7" stroke="#2a3c5c" stroke-opacity=".34"/>
+    <text x="20" y="40" fill="#2a3c5c" font-size="14" font-weight="700">USAGE ORDER</text>
+    <text x="20" y="78" fill="#6f7a83" font-size="14">01 / SURFACE</text>
+    <text x="20" y="110" fill="#6f7a83" font-size="14">02 / TEXT</text>
+    <text x="20" y="142" fill="#428675" font-size="14">03 / SECTION ROLE</text>
+    <text x="20" y="174" fill="#ed5126" font-size="14">04 / SMALL ACCENT</text>
+    <rect x="20" y="198" width="112" height="4" fill="#428675"/>
+    <rect x="140" y="198" width="32" height="4" fill="#ed5126"/>
+    <rect x="180" y="198" width="16" height="4" fill="#d69a2d"/>
+  </g>
+</svg>

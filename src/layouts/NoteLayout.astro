@@ -6,9 +6,22 @@ import BaseLayout from "./BaseLayout.astro";
 
 type Props = {
   note: NoteItem;
+  headings?: Array<{
+    depth: number;
+    slug: string;
+    text: string;
+  }>;
+  newerNote?: NoteItem;
+  olderNote?: NoteItem;
 };
 
-const { note } = Astro.props;
+const {
+  note,
+  headings = [],
+  newerNote,
+  olderNote,
+} = Astro.props;
+const tocHeadings = headings.filter((heading) => heading.depth === 2 || heading.depth === 3);
 ---
 
 <BaseLayout title={note.title} description={note.description}>
@@ -32,15 +45,55 @@ const { note } = Astro.props;
       }
     </header>
 
-    <MarkdownContent>
-      <slot />
-    </MarkdownContent>
+    <div class="note-detail__reading">
+      {
+        tocHeadings.length > 0 && (
+          <aside class="note-detail__toc" aria-labelledby="note-toc-title">
+            <h2 id="note-toc-title">On this page</h2>
+            <ol>
+              {tocHeadings.map((heading) => (
+                <li class:list={{ "is-nested": heading.depth === 3 }}>
+                  <a href={`#${heading.slug}`}>{heading.text}</a>
+                </li>
+              ))}
+            </ol>
+          </aside>
+        )
+      }
+
+      <div class="note-detail__body">
+        <MarkdownContent>
+          <slot />
+        </MarkdownContent>
+
+        {
+          (newerNote || olderNote) && (
+            <nav class="note-detail__pager" aria-label="Adjacent notes">
+              {newerNote ? (
+                <a href={newerNote.href}>
+                  <span>← Newer note</span>
+                  <strong>{newerNote.title}</strong>
+                </a>
+              ) : (
+                <span></span>
+              )}
+              {olderNote && (
+                <a href={olderNote.href}>
+                  <span>Older note →</span>
+                  <strong>{olderNote.title}</strong>
+                </a>
+              )}
+            </nav>
+          )
+        }
+      </div>
+    </div>
   </article>
 </BaseLayout>
 
 <style>
   .note-detail {
-    max-width: var(--reading-width);
+    max-width: 64rem;
     margin-inline: auto;
   }
 
@@ -57,7 +110,9 @@ const { note } = Astro.props;
   }
 
   .note-detail > header {
+    max-width: var(--reading-width);
     margin-bottom: clamp(3rem, 8vw, 5rem);
+    margin-inline: auto;
     padding-bottom: 2rem;
     border-bottom: 1px solid var(--color-border);
   }
@@ -85,5 +140,123 @@ const { note } = Astro.props;
     font-family: var(--font-mono);
     font-size: 0.68rem;
     list-style: none;
+  }
+
+  .note-detail__reading {
+    display: grid;
+    grid-template-columns: 11rem minmax(0, var(--reading-width));
+    gap: clamp(2rem, 6vw, 4rem);
+    justify-content: center;
+    align-items: start;
+  }
+
+  .note-detail__toc {
+    position: sticky;
+    top: 2rem;
+    padding-top: 0.8rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .note-detail__toc h2 {
+    margin-bottom: 0.8rem;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .note-detail__toc ol {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    gap: 0.6rem;
+    list-style: none;
+  }
+
+  .note-detail__toc li.is-nested {
+    padding-left: 0.75rem;
+  }
+
+  .note-detail__toc a {
+    color: var(--color-text-muted);
+    font-size: 0.72rem;
+    line-height: 1.45;
+    text-decoration: none;
+  }
+
+  .note-detail__toc a:hover,
+  .note-detail__toc a:focus-visible {
+    color: var(--section-accent);
+  }
+
+  .note-detail__body {
+    min-width: 0;
+  }
+
+  .note-detail__pager {
+    display: grid;
+    margin-top: 4rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-border);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .note-detail__pager a {
+    display: grid;
+    min-width: 0;
+    padding: 0.9rem;
+    border: 1px solid var(--color-border-subtle);
+    background: var(--color-surface-raised);
+    color: var(--color-text);
+    gap: 0.35rem;
+    text-decoration: none;
+  }
+
+  .note-detail__pager a:last-child {
+    text-align: right;
+  }
+
+  .note-detail__pager span {
+    color: var(--section-accent);
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .note-detail__pager strong {
+    overflow-wrap: anywhere;
+    font-size: 0.84rem;
+  }
+
+  @media (max-width: 52rem) {
+    .note-detail__reading {
+      grid-template-columns: minmax(0, var(--reading-width));
+    }
+
+    .note-detail__toc {
+      position: static;
+    }
+
+    .note-detail__toc ol {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 34rem) {
+    .note-detail__toc ol,
+    .note-detail__pager {
+      grid-template-columns: 1fr;
+    }
+
+    .note-detail__pager > span {
+      display: none;
+    }
+
+    .note-detail__pager a:last-child {
+      text-align: left;
+    }
   }
 </style>

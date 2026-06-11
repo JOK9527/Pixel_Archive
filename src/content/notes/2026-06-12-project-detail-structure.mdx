@@ -1,0 +1,62 @@
+---
+title: "项目详情页的信息组织"
+description: "把项目状态、技术上下文、时间线和关联记录组织成可持续维护的详情页。"
+type: "Article"
+category: "Information Architecture"
+tags:
+  - content-design
+  - information-architecture
+  - projects
+date: "2026-06-12"
+draft: false
+relatedProjects:
+  - "pixel-archive"
+  - "scholarlens-ai"
+  - "glm-ocr-tool"
+---
+
+## 详情页需要回答什么
+
+项目卡片负责快速识别，详情页则至少要回答四个问题：
+
+1. 这是一个什么项目。
+2. 当前处于什么状态。
+3. 使用了哪些可公开的技术与方法。
+4. 哪些 Notes 和 Archive 可以继续解释它。
+
+## 稳定信息与阶段信息
+
+标题、项目目标和主要问题域通常较稳定；状态、时间线和当前重点会持续变化。把两者混在长段落中，后续更新很容易遗漏。
+
+| 区域 | 信息寿命 | 更新方式 |
+| --- | --- | --- |
+| Header | 长期稳定 | 修改 frontmatter |
+| Status / timeline | 阶段变化 | 更新枚举与日期 |
+| Project brief | 中期稳定 | 修改正文 |
+| Current focus | 短期变化 | 按阶段维护列表 |
+| Related records | 持续增长 | 使用 slug 建立引用 |
+
+## 关联记录不等于外链
+
+项目详情中的 Related Notes 和 Archive 是站内内容关系。它们应当从 schema 中的 slug 解析到真实条目，而不是在正文中重复手写标题和 URL。
+
+```ts
+const relatedNotes = await Promise.all(
+  project.relatedNotes.map((slug) => getEntry("notes", slug)),
+);
+```
+
+这样标题变化时，详情页仍显示内容条目的最新标题。
+
+## 视觉记录的角色
+
+没有经过脱敏的真实截图时，抽象视觉只能表达系统类型，不能伪装成产品界面。当前项目详情使用文件块、解析窗口和档案网格作为“视觉记录”，并明确标记截图仍需隐私复核。
+
+## 阅读宽度
+
+详情页正文宽度受阅读上限控制：
+
+<p class="formula" role="math">content width = min(viewport - gutters, 46rem)</p>
+
+侧栏保存状态、技术栈和时间线，正文保持连续阅读。窄屏时两者回到单列，避免为了保留桌面层级而制造横向滚动。
+
