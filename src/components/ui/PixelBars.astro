@@ -1,0 +1,47 @@
+---
+type Props = {
+  bars: number[];
+  compact?: boolean;
+};
+
+const { bars, compact = false } = Astro.props;
+const visibleBars = compact ? bars.slice(0, 3) : bars;
+---
+
+<div class:list={["pixel-bars", { "pixel-bars--compact": compact }]}>
+  {
+    visibleBars.map((width, index) => (
+      <i
+        style={`--bar-width:${width}%`}
+        data-accent={index === 1 ? "accent" : index === 3 ? "hot" : "neutral"}
+      ></i>
+    ))
+  }
+</div>
+
+<style>
+  .pixel-bars {
+    display: grid;
+    align-content: center;
+    gap: 0.55rem;
+  }
+
+  .pixel-bars i {
+    width: var(--bar-width);
+    min-width: calc(var(--pixel-unit) * 3);
+    height: var(--pixel-unit);
+    background: var(--color-border-strong);
+  }
+
+  .pixel-bars i[data-accent="accent"] {
+    background: var(--cover-accent, var(--section-accent));
+  }
+
+  .pixel-bars i[data-accent="hot"] {
+    background: var(--cover-hot, var(--section-hot));
+  }
+
+  .pixel-bars--compact {
+    gap: 0.35rem;
+  }
+</style>

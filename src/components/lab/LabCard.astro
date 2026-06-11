@@ -1,5 +1,7 @@
 ---
 import type { LabStatusValue, LabTypeValue } from "../../lib/content/lab";
+import { getLabCoverVariant } from "../../lib/visual/pixel-cover";
+import PixelCover from "../ui/PixelCover.astro";
 import LabTypeBadge from "./LabTypeBadge.astro";
 
 type Props = {
@@ -11,6 +13,7 @@ type Props = {
   href?: string;
   cover?: string;
   date?: string;
+  seed?: string;
 };
 
 const {
@@ -22,6 +25,7 @@ const {
   href,
   cover,
   date,
+  seed = title,
 } = Astro.props;
 
 const Element = href ? "a" : "article";
@@ -37,9 +41,15 @@ const Element = href ? "a" : "article";
       cover ? (
         <img src={cover} alt="" loading="lazy" />
       ) : (
-        <div class="lab-card__pixels" aria-hidden="true">
-          {Array.from({ length: 20 }, (_, index) => <span data-index={index}></span>)}
-        </div>
+        <PixelCover
+          variant={getLabCoverVariant(type)}
+          section="lab"
+          status={status}
+          tags={tags}
+          seed={seed}
+          compact
+          label={`${title} abstract experiment cover`}
+        />
       )
     }
   </div>
@@ -117,33 +127,8 @@ const Element = href ? "a" : "article";
     object-fit: cover;
   }
 
-  .lab-card__pixels {
-    display: grid;
+  .lab-card__screen > :global(.pixel-cover) {
     min-height: 9rem;
-    padding: 1rem;
-    grid-template-columns: repeat(10, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    gap: 0.35rem;
-  }
-
-  .lab-card__pixels span {
-    align-self: center;
-    height: 0.45rem;
-    background: var(--color-border-strong);
-  }
-
-  .lab-card__pixels span:nth-child(3n) {
-    height: 2rem;
-    background: var(--color-violet);
-  }
-
-  .lab-card__pixels span:nth-child(5n + 1) {
-    height: 4rem;
-    background: var(--color-pixel-mark);
-  }
-
-  .lab-card__pixels span:nth-child(4n + 2) {
-    height: 1rem;
   }
 
   .lab-card__meta {

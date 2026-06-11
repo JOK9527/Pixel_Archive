@@ -2,7 +2,10 @@
 import type {
   ProjectLinksValue,
   ProjectStatusValue,
+  ProjectTypeValue,
 } from "../../lib/content/projects";
+import { getProjectCoverVariant } from "../../lib/visual/pixel-cover";
+import PixelCover from "../ui/PixelCover.astro";
 import ProjectStatus from "./ProjectStatus.astro";
 import ProjectTechStack from "./ProjectTechStack.astro";
 
@@ -10,6 +13,7 @@ type Props = {
   title: string;
   slug: string;
   description: string;
+  projectType: ProjectTypeValue;
   status: ProjectStatusValue;
   category: string;
   tags?: string[];
@@ -24,6 +28,7 @@ const {
   title,
   slug,
   description,
+  projectType,
   status,
   category,
   tags = [],
@@ -32,17 +37,6 @@ const {
   cover,
   featured = false,
 } = Astro.props;
-const code = title
-  .split(/[\s-]+/)
-  .map((part) => part[0])
-  .join("")
-  .slice(0, 3)
-  .toUpperCase();
-const visual = slug.includes("scholarlens")
-  ? "reader"
-  : slug.includes("ocr")
-    ? "parser"
-    : "archive";
 ---
 
 <article
@@ -58,38 +52,15 @@ const visual = slug.includes("scholarlens")
         cover ? (
           <img src={cover} alt="" loading="lazy" />
         ) : (
-          <div
-            class:list={[
-              "project-card__placeholder",
-              `project-card__placeholder--${visual}`,
-            ]}
-            aria-hidden="true"
-          >
-            <div class="project-card__cover-index">
-              <span>PX</span>
-              <span>{featured ? "FEATURED" : "ARCHIVE"}</span>
-              <span>01</span>
-            </div>
-            <div class="project-card__chip">
-              <div class="project-card__chip-head">
-                <span>{code}</span>
-                <i></i>
-              </div>
-              <div class="project-card__chip-grid">
-                {Array.from({ length: 24 }, () => <i></i>)}
-              </div>
-              <div class="project-card__chip-ports">
-                {Array.from({ length: 6 }, () => <i></i>)}
-              </div>
-            </div>
-            <div class="project-card__files">
-              <i></i><i></i><i></i>
-            </div>
-            <div class="project-card__data">
-              <span></span><span></span><span></span><span></span>
-            </div>
-            <p>{visual.toUpperCase()} SYSTEM / ABSTRACT RECORD</p>
-          </div>
+          <PixelCover
+            variant={getProjectCoverVariant(projectType)}
+            section="projects"
+            status={status}
+            tags={techStack}
+            seed={slug}
+            compact={!featured}
+            label={`${title} abstract project cover`}
+          />
         )
       }
     </div>
@@ -164,236 +135,17 @@ const visual = slug.includes("scholarlens")
     object-fit: cover;
   }
 
-  .project-card__placeholder {
-    position: relative;
-    display: grid;
-    min-height: 12rem;
-    padding: 1.25rem;
-    overflow: hidden;
-    background-color: var(--color-surface-muted);
-    background-image:
-      linear-gradient(var(--color-grid) 1px, transparent 1px),
-      linear-gradient(90deg, var(--color-grid) 1px, transparent 1px);
-    background-size: 24px 24px;
-    grid-template-columns: 4.5rem minmax(8rem, 12rem) 1fr;
-    grid-template-rows: 1fr auto;
-    align-items: center;
-    gap: 1rem;
-    color: var(--color-text-muted);
-    font-family: var(--font-mono);
-    font-size: 0.62rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-  }
-
-  .project-card__cover-index {
-    display: grid;
-    align-self: stretch;
-    padding-right: 0.85rem;
-    border-right: 1px solid var(--color-border);
-    grid-template-rows: auto 1fr auto;
-    color: var(--color-text-faint);
-  }
-
-  .project-card__cover-index span:nth-child(2) {
-    align-self: center;
-    font-size: 0.52rem;
-    letter-spacing: 0.14em;
-    writing-mode: vertical-rl;
-  }
-
-  .project-card__chip {
-    position: relative;
-    display: grid;
-    min-height: 7.5rem;
-    padding: 0.8rem;
-    border: 1px solid var(--color-border-strong);
-    background: var(--color-surface-deep);
-    box-shadow: var(--shadow-pixel-soft);
-    grid-template-rows: auto 1fr auto;
-    gap: 0.65rem;
-  }
-
-  .project-card__chip::before,
-  .project-card__chip::after {
-    position: absolute;
-    top: 1rem;
-    bottom: 1rem;
-    width: var(--pixel-unit);
-    background:
-      repeating-linear-gradient(
-        to bottom,
-        var(--color-tea) 0 var(--pixel-unit),
-        transparent var(--pixel-unit) calc(var(--pixel-unit) * 2)
-      );
-    content: "";
-  }
-
-  .project-card__chip::before {
-    left: calc(var(--pixel-unit) * -1);
-  }
-
-  .project-card__chip::after {
-    right: calc(var(--pixel-unit) * -1);
-  }
-
-  .project-card__chip-head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    color: var(--color-text);
-    font-size: 0.78rem;
-  }
-
-  .project-card__chip-head i {
-    width: calc(var(--pixel-unit) * 4);
-    height: var(--pixel-unit);
-    background: var(--color-pixel-mark);
-    box-shadow: calc(var(--pixel-unit) * -1) var(--pixel-unit) 0
-      var(--color-pixel-mark);
-  }
-
-  .project-card__chip-grid {
-    display: grid;
-    grid-template-columns: repeat(8, 1fr);
-    gap: var(--pixel-unit);
-  }
-
-  .project-card__chip-grid i {
-    aspect-ratio: 1;
-    background: var(--color-border);
-  }
-
-  .project-card__chip-grid i:nth-child(4n + 1),
-  .project-card__chip-grid i:nth-child(7n) {
-    background: var(--color-pixel-mark);
-  }
-
-  .project-card__chip-grid i:nth-child(11n) {
-    background: var(--color-accent);
-  }
-
-  .project-card__placeholder--reader .project-card__chip-grid i:nth-child(3n) {
-    background: var(--color-info);
-  }
-
-  .project-card__placeholder--parser .project-card__chip-grid i:nth-child(5n) {
-    background: var(--color-warm);
-  }
-
-  .project-card__chip-ports {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: var(--pixel-unit);
-  }
-
-  .project-card__chip-ports i {
-    height: var(--pixel-unit);
-    background: var(--color-tea);
-  }
-
-  .project-card__files {
-    position: relative;
-    align-self: stretch;
-  }
-
-  .project-card__files i {
-    position: absolute;
-    right: 0;
-    width: 72%;
-    height: 46%;
-    border: 1px solid var(--color-border-strong);
-    background: var(--color-surface);
-    box-shadow: var(--shadow-pixel-soft);
-  }
-
-  .project-card__files i::before {
-    display: block;
-    width: 38%;
-    height: calc(var(--pixel-unit) * 2);
-    background: var(--color-stone);
-    content: "";
-  }
-
-  .project-card__files i:nth-child(1) {
-    top: 8%;
-  }
-
-  .project-card__files i:nth-child(2) {
-    top: 28%;
-    right: 10%;
-  }
-
-  .project-card__files i:nth-child(3) {
-    top: 48%;
-    right: 20%;
-  }
-
-  .project-card__data {
-    display: flex;
-    grid-column: 2 / 4;
-    gap: var(--pixel-unit);
-  }
-
-  .project-card__data span {
-    width: 2rem;
-    height: var(--pixel-unit);
-    background: var(--color-border-strong);
-  }
-
-  .project-card__data span:nth-child(2) {
-    width: 4rem;
-    background: var(--color-pixel-mark);
-  }
-
-  .project-card__data span:nth-child(3) {
-    width: 1rem;
-    background: var(--color-accent);
-  }
-
-  .project-card__placeholder p {
-    position: absolute;
-    right: 1rem;
-    bottom: 0.9rem;
-    margin: 0;
-    color: var(--color-text-faint);
-    font-size: 0.55rem;
-  }
-
   .project-card--featured .project-card__cover {
     min-height: 15rem;
   }
 
-  .project-card--featured .project-card__placeholder {
+  .project-card__cover > :global(.pixel-cover) {
+    height: 100%;
+    min-height: 12rem;
+  }
+
+  .project-card--featured .project-card__cover > :global(.pixel-cover) {
     min-height: 15rem;
-    grid-template-columns: 5rem minmax(11rem, 15rem) 1fr;
-    background-color: var(--color-surface-deep);
-  }
-
-  .project-card--featured .project-card__chip {
-    min-height: 9.5rem;
-    background: var(--color-surface-raised);
-  }
-
-  .project-card--featured .project-card__chip-grid i {
-    background: var(--color-stone);
-  }
-
-  .project-card--featured .project-card__chip-grid i:nth-child(4n + 1),
-  .project-card--featured .project-card__chip-grid i:nth-child(7n) {
-    background: var(--color-status);
-  }
-
-  @media (max-width: 36rem) {
-    .project-card__placeholder,
-    .project-card--featured .project-card__placeholder {
-      grid-template-columns: 3rem minmax(7rem, 10rem) 1fr;
-      gap: 0.7rem;
-    }
-
-    .project-card__files i {
-      width: 90%;
-    }
   }
 
   .project-card__body {

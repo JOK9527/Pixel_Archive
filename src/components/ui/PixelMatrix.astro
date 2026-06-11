@@ -1,0 +1,44 @@
+---
+type Props = {
+  cells: number[];
+  compact?: boolean;
+};
+
+const { cells, compact = false } = Astro.props;
+const visibleCells = compact ? cells.slice(0, 24) : cells;
+---
+
+<div class:list={["pixel-matrix", { "pixel-matrix--compact": compact }]}>
+  {visibleCells.map((level) => <i data-level={level}></i>)}
+</div>
+
+<style>
+  .pixel-matrix {
+    display: grid;
+    min-width: 0;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: var(--pixel-unit);
+  }
+
+  .pixel-matrix i {
+    aspect-ratio: 1;
+    background: var(--color-border);
+  }
+
+  .pixel-matrix i[data-level="1"] {
+    background: var(--color-stone);
+  }
+
+  .pixel-matrix i[data-level="2"] {
+    background: var(--cover-accent, var(--section-accent));
+  }
+
+  .pixel-matrix i[data-level="3"] {
+    background: var(--cover-hot, var(--section-hot));
+  }
+
+  .pixel-matrix--compact {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: calc(var(--pixel-unit) * 0.75);
+  }
+</style>

@@ -1,0 +1,354 @@
+---
+import {
+  createPixelCoverModel,
+  type PixelCoverSection,
+  type PixelCoverVariant,
+} from "../../lib/visual/pixel-cover";
+import PixelBars from "./PixelBars.astro";
+import PixelMatrix from "./PixelMatrix.astro";
+import PixelStatusMark from "./PixelStatusMark.astro";
+
+type Props = {
+  variant: PixelCoverVariant;
+  section: PixelCoverSection;
+  status?: string;
+  tags?: string[];
+  seed: string;
+  compact?: boolean;
+  label?: string;
+};
+
+const {
+  variant,
+  section,
+  status = "ready",
+  tags = [],
+  seed,
+  compact = false,
+  label = `${section} ${variant} cover`,
+} = Astro.props;
+const model = createPixelCoverModel(seed, tags, status);
+---
+
+<figure
+  class:list={[
+    "pixel-cover",
+    `pixel-cover--${variant}`,
+    `pixel-cover--${section}`,
+    { "pixel-cover--compact": compact },
+  ]}
+  aria-label={label}
+  data-cover-seed={seed}
+>
+  <header>
+    <span>{section} / {variant}</span>
+    <PixelStatusMark status={status} />
+  </header>
+
+  <div class="pixel-cover__stage">
+    {
+      variant === "file-matrix" && (
+        <>
+          <div class="pixel-cover__file-stack">
+            <i></i><i></i><i></i>
+          </div>
+          <PixelMatrix cells={model.cells} compact={compact} />
+        </>
+      )
+    }
+
+    {
+      variant === "terminal-strip" && (
+        <>
+          <div class="pixel-cover__terminal">
+            <span>{model.code}.record</span>
+            <PixelBars bars={model.bars} compact={compact} />
+          </div>
+          <PixelMatrix cells={model.cells.slice(0, 16)} compact />
+        </>
+      )
+    }
+
+    {
+      variant === "save-chip" && (
+        <>
+          <div class="pixel-cover__chip">
+            <strong>{model.code}</strong>
+            <PixelMatrix cells={model.cells} compact={compact} />
+          </div>
+          <PixelBars bars={model.bars} compact={compact} />
+        </>
+      )
+    }
+
+    {
+      variant === "timeline-fragment" && (
+        <>
+          <div class="pixel-cover__timeline">
+            {model.nodes.map((level) => <i data-level={level}></i>)}
+          </div>
+          <PixelBars bars={model.bars} compact={compact} />
+        </>
+      )
+    }
+
+    {
+      variant === "experiment-grid" && (
+        <>
+          <PixelMatrix cells={model.cells} compact={compact} />
+          <div class="pixel-cover__experiment">
+            {model.nodes.map((level) => <i data-level={level}></i>)}
+          </div>
+        </>
+      )
+    }
+  </div>
+
+  <footer>
+    <strong>{model.code}</strong>
+    <span>{String(tags.length).padStart(2, "0")} META / {status}</span>
+  </footer>
+</figure>
+
+<style>
+  .pixel-cover {
+    --cover-accent: var(--section-accent);
+    --cover-hot: var(--section-hot);
+
+    display: grid;
+    width: 100%;
+    min-height: 15rem;
+    margin: 0;
+    overflow: hidden;
+    background-color: var(--color-surface-deep);
+    background-image:
+      linear-gradient(var(--color-grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-grid) 1px, transparent 1px);
+    background-size: 24px 24px;
+    color: var(--color-text-muted);
+    grid-template-rows: auto 1fr auto;
+    font-family: var(--font-mono);
+  }
+
+  .pixel-cover--lab {
+    --cover-accent: var(--color-violet);
+    --cover-hot: var(--color-accent);
+  }
+
+  .pixel-cover--home {
+    --cover-accent: var(--card-accent, var(--color-primary));
+    --cover-hot: var(--color-accent);
+  }
+
+  .pixel-cover--compact {
+    min-height: 9rem;
+  }
+
+  .pixel-cover > :is(header, footer) {
+    display: flex;
+    min-width: 0;
+    padding: 0.65rem 0.8rem;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    background: color-mix(
+      in srgb,
+      var(--color-surface-raised) 86%,
+      transparent
+    );
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+  }
+
+  .pixel-cover > header {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .pixel-cover > footer {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .pixel-cover > footer strong {
+    color: var(--color-heading);
+    font-size: 0.72rem;
+  }
+
+  .pixel-cover > footer span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .pixel-cover__stage {
+    display: grid;
+    min-width: 0;
+    padding: clamp(0.9rem, 4vw, 1.4rem);
+    grid-template-columns: minmax(0, 1fr) minmax(5rem, 0.75fr);
+    align-items: center;
+    gap: clamp(0.8rem, 3vw, 1.4rem);
+  }
+
+  .pixel-cover__file-stack {
+    position: relative;
+    min-height: 7rem;
+  }
+
+  .pixel-cover__file-stack i {
+    position: absolute;
+    width: 82%;
+    height: 58%;
+    border: 1px solid var(--color-border-strong);
+    background: var(--color-surface-raised);
+    box-shadow: var(--shadow-pixel-soft);
+  }
+
+  .pixel-cover__file-stack i::before {
+    display: block;
+    width: 38%;
+    height: calc(var(--pixel-unit) * 2);
+    background: var(--cover-accent);
+    content: "";
+  }
+
+  .pixel-cover__file-stack i:nth-child(1) {
+    top: 0;
+    right: 0;
+  }
+
+  .pixel-cover__file-stack i:nth-child(2) {
+    top: 18%;
+    right: 9%;
+  }
+
+  .pixel-cover__file-stack i:nth-child(3) {
+    top: 36%;
+    right: 18%;
+  }
+
+  .pixel-cover__terminal,
+  .pixel-cover__chip {
+    display: grid;
+    min-height: 7rem;
+    padding: 0.8rem;
+    border: 1px solid var(--color-border-strong);
+    background: var(--color-surface-raised);
+    box-shadow: var(--shadow-pixel-soft);
+    align-content: space-between;
+    gap: 0.8rem;
+  }
+
+  .pixel-cover__terminal > span,
+  .pixel-cover__chip > strong {
+    color: var(--color-heading);
+    font-size: 0.72rem;
+    letter-spacing: 0.07em;
+  }
+
+  .pixel-cover__chip {
+    position: relative;
+  }
+
+  .pixel-cover__chip::before,
+  .pixel-cover__chip::after {
+    position: absolute;
+    top: 1rem;
+    bottom: 1rem;
+    width: var(--pixel-unit);
+    background:
+      repeating-linear-gradient(
+        to bottom,
+        var(--color-tea) 0 var(--pixel-unit),
+        transparent var(--pixel-unit) calc(var(--pixel-unit) * 2)
+      );
+    content: "";
+  }
+
+  .pixel-cover__chip::before {
+    left: calc(var(--pixel-unit) * -1);
+  }
+
+  .pixel-cover__chip::after {
+    right: calc(var(--pixel-unit) * -1);
+  }
+
+  .pixel-cover__timeline {
+    position: relative;
+    display: grid;
+    min-height: 7rem;
+    padding-left: 1.2rem;
+    align-content: space-between;
+  }
+
+  .pixel-cover__timeline::before {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0.35rem;
+    width: var(--pixel-unit);
+    background:
+      repeating-linear-gradient(
+        to bottom,
+        var(--color-border-strong) 0 calc(var(--pixel-unit) * 2),
+        transparent calc(var(--pixel-unit) * 2) calc(var(--pixel-unit) * 4)
+      );
+    content: "";
+  }
+
+  .pixel-cover__timeline i {
+    width: calc(35% + var(--level, 0) * 18%);
+    height: calc(var(--pixel-unit) * 2);
+    background: var(--color-border-strong);
+  }
+
+  .pixel-cover__timeline i[data-level="1"] {
+    width: 58%;
+    background: var(--cover-accent);
+  }
+
+  .pixel-cover__timeline i[data-level="2"] {
+    width: 78%;
+    background: var(--cover-hot);
+  }
+
+  .pixel-cover__experiment {
+    display: grid;
+    min-height: 7rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    gap: var(--pixel-unit);
+  }
+
+  .pixel-cover__experiment i {
+    border: 1px solid var(--color-border);
+    background: var(--color-surface-raised);
+  }
+
+  .pixel-cover__experiment i[data-level="1"] {
+    background: var(--cover-accent);
+  }
+
+  .pixel-cover__experiment i[data-level="2"] {
+    background: var(--cover-hot);
+  }
+
+  .pixel-cover--compact .pixel-cover__stage {
+    padding: 0.75rem;
+  }
+
+  .pixel-cover--compact .pixel-cover__file-stack,
+  .pixel-cover--compact .pixel-cover__terminal,
+  .pixel-cover--compact .pixel-cover__chip,
+  .pixel-cover--compact .pixel-cover__timeline,
+  .pixel-cover--compact .pixel-cover__experiment {
+    min-height: 4.5rem;
+  }
+
+  @media (max-width: 30rem) {
+    .pixel-cover__stage {
+      grid-template-columns: minmax(0, 1.1fr) minmax(4.5rem, 0.9fr);
+      gap: 0.65rem;
+    }
+  }
+</style>

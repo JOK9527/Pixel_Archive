@@ -1,12 +1,12 @@
 # Pixel Archive
 
-> Phase 18 local development completed on 2026-06-12. Public deployment is waiting for a Git remote, Cloudflare Pages project, and confirmed production URL.
+> Phase 19 local development completed on 2026-06-12. Public deployment is waiting for a Git remote, Cloudflare Pages project, and confirmed production URL.
 
 Pixel Archive 是一个以极简阅读体验为基础、以像素组件为识别符号、以复古终端和存档隐喻为氛围的个人档案馆。
 
 ## 当前阶段
 
-Phase 18：Archive year.month / type 索引、计数与轻量筛选已完成本地验收。
+Phase 19：确定性的语义化 PixelCover 组件族已接入 Projects、Lab 与 Home Save Slots，并完成本地验收。
 
 当前已在第一阶段结构基线上完成纸白 / 黛蓝 / 亚丁绿 / 朱红 / 琥珀 / 藕荷紫语义色阶，并完成像素语法、首页档案终端、Project 抽象封面、状态系统和栏目识别。页面能力、内容系统、路由与技术栈保持不变。
 
@@ -91,10 +91,11 @@ src/content.config.ts    Content Collections schema 与 loaders
 src/data/                站点和导航配置
 src/layouts/             页面基础布局与项目详情布局
 src/lib/content/         Content Collections 读取与数据整理
+src/lib/visual/          确定性视觉模型与业务类型映射
 src/pages/               Astro 页面路由
 src/styles/              主题、全局和 Markdown 样式
 ```
 
 ## 下一步
 
-进入 Phase 19：建立确定性的语义化 PixelCover 组件族，并接入 Projects、Lab 与 Home Save Slots。
+进入 Phase 20：补齐侧边辅助、长文阅读进度与克制动效，不改变路由和内容 schema。

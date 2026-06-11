@@ -1,5 +1,29 @@
 # WORKLOG
 
+## 2026-06-12 / Phase 19
+
+### Semantic pixel cover system
+
+- Added deterministic `PixelCover`, `PixelMatrix`, `PixelBars`, and `PixelStatusMark` UI primitives.
+- Added five metadata-driven variants: `file-matrix`, `terminal-strip`, `save-chip`, `timeline-fragment`, and `experiment-grid`.
+- Mapped Project and Lab types to stable templates; seed, tags, and status determine blocks and bars without runtime randomness.
+- Replaced the ProjectCard slug-specific placeholder, Project detail visual, LabCard placeholder, and Home Save Slot screen with the shared system.
+- Preserved real cover images and retained stronger height and surface hierarchy for featured Projects.
+
+### Verification
+
+- `npm run build`: passed; 51 static pages generated.
+- Determinism: Project cover signatures were identical before and after reload.
+- Desktop: Projects, Lab, and Home inspected at 1440px.
+- Mobile dark theme: Projects inspected at 390px; actual horizontal scroll remained `0`.
+- Browser console: 0 errors, 0 warnings.
+- Screenshots: `output/playwright/phase19-projects-desktop.png`, `phase19-lab-desktop.png`, `phase19-home-desktop.png`, and `phase19-projects-mobile-dark.png`; retained locally and not committed.
+- No dependency, route, Content Collections schema, backend, CMS, or database changes.
+
+### Next
+
+- Phase 20: side rails, long-page reading aids, and restrained motion.
+
 ## 2026-06-12 / Phase 18
 
 ### Archive indexing
