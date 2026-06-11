@@ -13,7 +13,6 @@ const { projects } = Astro.props;
   projects.length > 0 && (
     <section class="featured-projects" aria-labelledby="featured-projects-title">
       <header>
-        <p>Priority files</p>
         <h2 id="featured-projects-title">Featured Projects</h2>
       </header>
       <ProjectGrid projects={projects} featured />
@@ -28,16 +27,6 @@ const { projects } = Astro.props;
 
   .featured-projects header {
     margin-bottom: 1.4rem;
-  }
-
-  .featured-projects header p {
-    margin-bottom: 0.35rem;
-    color: var(--color-green);
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.09em;
-    text-transform: uppercase;
   }
 
   .featured-projects h2 {

@@ -49,16 +49,23 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   .about__note dl {
     display: grid;
     margin: 0;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1rem;
+    border-block: 1px solid var(--color-border);
+    gap: 0;
     font-family: var(--font-mono);
     font-size: 0.75rem;
   }
 
   .about__note dl div {
-    padding: 0.85rem;
-    border: 1px solid var(--color-border);
-    background: var(--color-surface);
+    display: grid;
+    padding: 0.8rem 0;
+    border-bottom: 1px dashed var(--color-border);
+    grid-template-columns: minmax(6rem, 0.32fr) 1fr;
+    align-items: baseline;
+    gap: 1rem;
+  }
+
+  .about__note dl div:last-child {
+    border-bottom: 0;
   }
 
   .about__note dt {
@@ -69,13 +76,13 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   }
 
   .about__note dd {
-    margin: 0.3rem 0 0;
+    margin: 0;
     color: var(--color-text);
   }
 
   @media (max-width: 32rem) {
-    .about__note dl {
-      grid-template-columns: 1fr;
+    .about__note dl div {
+      grid-template-columns: 5.5rem 1fr;
     }
   }
 </style>

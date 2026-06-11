@@ -23,7 +23,6 @@ const tones = ["green", "purple", "neutral"] as const;
       ))
     }
   </div>
-  <p class="status-bar__version">v0.2</p>
 </aside>
 
 <style>
@@ -65,6 +64,7 @@ const tones = ["green", "purple", "neutral"] as const;
 
   .status-bar__items {
     display: flex;
+    flex: 1;
     align-items: center;
     justify-content: center;
     gap: clamp(0.8rem, 3vw, 2rem);
@@ -83,8 +83,5 @@ const tones = ["green", "purple", "neutral"] as const;
       gap: 0.7rem;
     }
 
-    .status-bar__version {
-      align-self: flex-end;
-    }
   }
 </style>
