@@ -1,5 +1,46 @@
 # WORKLOG
 
+## 2026-06-12 / Phase 22.6 Pixel Cover System
+
+### Component system
+
+- Added the text-led `PixelCover` component family: `PixelCoverBand`, `PixelHeatStrip`, `PixelCornerMark`, and `PixelMetaBar`.
+- Implemented four semantic templates: `project-code`, `terminal-record`, `save-point`, and `experiment-sheet`.
+- Replaced runtime-looking random mosaics with deterministic heat cells derived from seed, variant, density, and progress.
+- Added the noindex local preview route `/design/pixel-cover-system/` with full and compact examples.
+
+### Page integration
+
+- Projects use full covers for featured/detail views and compact covers for secondary cards.
+- Lab uses compact experiment sheets in the grid and full experiment sheets on detail pages.
+- Archive keeps the timeline as the primary structure and adds lightweight save-point strips inside entries.
+- Notes keep text as the primary entry; generated terminal covers appear only on wide layouts and are hidden on mobile, while real images remain visible.
+- Home Save Slots now use the same save-point template.
+
+### Data model
+
+- Preserved `cover?: string` for reviewed real images.
+- Added optional, collection-specific `coverMeta` schemas for code, accent, progress, density, seed, and heat visibility.
+- Passed `coverMeta` through all content helpers and business components.
+- Added one metadata override example per collection while retaining automatic fallback coverage.
+- Removed the legacy PixelCover renderer, matrix, bars, status mark, and old visual helper.
+
+### Verification
+
+- `npm run build`: passed; 52 static pages generated.
+- Playwright checked 54 page/text routes plus the favicon endpoint: no HTTP failures, layout failures, console errors, or page errors.
+- Eight representative routes passed 390 x 844 dark-mode checks with no actual horizontal scrolling, internal cover overflow, or clipped codes.
+- Notes mobile check: four generated covers hidden; one real cover remains visible.
+- Determinism check: the same archive seed produced the same 32-cell signature before and after reload.
+- `coverMeta` checks: Project `PA`, Note `N147`, Lab `PCS`, and Archive 100% progress rendered as configured; unconfigured content retained deterministic fallback.
+- Screenshots are stored locally under `output/playwright/` and remain untracked.
+- No dependencies were added.
+
+### Known limits
+
+- The preview route is built with the static site but remains unlinked and noindex.
+- Heat strips are semantic texture, not precise analytics or charts.
+
 ## 2026-06-12 / Phase 22.5
 
 ### Idle motion and reduced-motion closure
