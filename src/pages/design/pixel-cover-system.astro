@@ -1,0 +1,169 @@
+---
+import PixelCover from "../../components/cover/PixelCover.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const covers = [
+  {
+    kind: "project" as const,
+    variant: "project-code" as const,
+    code: "PA",
+    title: "Pixel Archive Website",
+    subtitle: "A durable archive for projects, notes, save points and experiments.",
+    meta: ["Astro", "MDX", "Web"],
+    tags: ["archive", "content", "pixel-ui"],
+    status: "WIP",
+    progress: 62,
+    accent: "green" as const,
+    density: "high" as const,
+    seed: "pixel-archive",
+  },
+  {
+    kind: "note" as const,
+    variant: "terminal-record" as const,
+    code: "N241",
+    title: "Responsive Layout Breakpoints",
+    subtitle: "> reading notes...",
+    meta: ["CSS", "LOG"],
+    tags: ["layout", "responsive", "css"],
+    status: "LOG",
+    progress: 54,
+    date: "2026.06.12",
+    accent: "orange" as const,
+    density: "medium" as const,
+    seed: "responsive-layout-breakpoints",
+  },
+  {
+    kind: "archive" as const,
+    variant: "save-point" as const,
+    code: "2026.06.12",
+    title: "Grid System Refinement",
+    subtitle: "Phase 22 layout and visual identity checkpoint.",
+    meta: ["PHASE-22", "MILESTONE"],
+    status: "MILESTONE",
+    progress: 80,
+    accent: "teal" as const,
+    density: "medium" as const,
+    seed: "2026-06-12-grid-system-refinement",
+  },
+  {
+    kind: "lab" as const,
+    variant: "experiment-sheet" as const,
+    code: "L-017",
+    title: "Pixel UI Component Study",
+    subtitle: "Interactive data matrix exploration.",
+    meta: ["UI", "STUDY"],
+    tags: ["matrix", "component", "pixel"],
+    status: "TESTING",
+    progress: 42,
+    accent: "purple" as const,
+    density: "high" as const,
+    seed: "pixel-ui-component-study",
+  },
+];
+---
+
+<BaseLayout
+  title="Pixel Cover System"
+  description="Local preview for the typographic Pixel Cover System."
+  robots="noindex, nofollow"
+>
+  <section class="cover-preview">
+    <header>
+      <span>DESIGN SYSTEM / LOCAL PREVIEW</span>
+      <h1>Pixel Cover System</h1>
+      <p>
+        Text leads. Semantic bands explain state. Heat strips add stable,
+        metadata-driven rhythm.
+      </p>
+    </header>
+
+    <div class="cover-preview__grid">
+      {
+        covers.map((cover) => (
+          <article>
+            <PixelCover {...cover} />
+            <p>{cover.variant}</p>
+          </article>
+        ))
+      }
+    </div>
+
+    <section class="cover-preview__compact" aria-labelledby="compact-title">
+      <h2 id="compact-title">Compact modes</h2>
+      <div>
+        {covers.map((cover) => <PixelCover {...cover} compact />)}
+      </div>
+    </section>
+  </section>
+</BaseLayout>
+
+<style>
+  .cover-preview {
+    max-width: 76rem;
+    margin-inline: auto;
+  }
+
+  .cover-preview > header {
+    max-width: 44rem;
+    margin-bottom: clamp(2.5rem, 8vw, 5rem);
+  }
+
+  .cover-preview > header span {
+    color: var(--color-primary);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+
+  .cover-preview h1 {
+    margin-block: 0.8rem 1rem;
+    font-size: clamp(2.7rem, 9vw, 6.5rem);
+    letter-spacing: -0.075em;
+    line-height: 0.88;
+  }
+
+  .cover-preview > header p {
+    color: var(--color-text-muted);
+    font-size: 1rem;
+  }
+
+  .cover-preview__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1.5rem, 4vw, 2.5rem);
+  }
+
+  .cover-preview__grid article {
+    min-width: 0;
+  }
+
+  .cover-preview__grid article > p {
+    margin-top: 0.65rem;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+  }
+
+  .cover-preview__compact {
+    margin-top: clamp(3.5rem, 9vw, 6rem);
+  }
+
+  .cover-preview__compact h2 {
+    margin-bottom: 1.4rem;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+  }
+
+  .cover-preview__compact > div {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  @media (max-width: 46rem) {
+    .cover-preview__grid,
+    .cover-preview__compact > div {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

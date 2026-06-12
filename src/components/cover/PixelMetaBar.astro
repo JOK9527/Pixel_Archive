@@ -1,0 +1,74 @@
+---
+type Props = {
+  items?: string[];
+  label?: string;
+  compact?: boolean;
+};
+
+const { items = [], label, compact = false } = Astro.props;
+---
+
+<footer class:list={["pixel-meta-bar", { "pixel-meta-bar--compact": compact }]}>
+  {label && <strong>{label}</strong>}
+  {
+    items.length > 0 && (
+      <ul aria-label="Cover metadata">
+        {items.map((item) => <li>{item}</li>)}
+      </ul>
+    )
+  }
+</footer>
+
+<style>
+  .pixel-meta-bar {
+    display: flex;
+    min-width: 0;
+    padding: 0.62rem 0.75rem;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    border-top: 1px solid var(--color-border);
+    background: color-mix(
+      in srgb,
+      var(--color-surface-raised) 88%,
+      transparent
+    );
+    font-family: var(--font-mono);
+    font-size: 0.56rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .pixel-meta-bar strong {
+    color: var(--cover-accent);
+  }
+
+  .pixel-meta-bar ul {
+    display: flex;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    gap: 0.7rem;
+    color: var(--color-text-muted);
+    list-style: none;
+  }
+
+  .pixel-meta-bar li {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .pixel-meta-bar li + li::before {
+    margin-right: 0.7rem;
+    color: var(--color-border-strong);
+    content: "/";
+  }
+
+  .pixel-meta-bar--compact {
+    padding: 0.48rem 0.6rem;
+    font-size: 0.5rem;
+  }
+</style>

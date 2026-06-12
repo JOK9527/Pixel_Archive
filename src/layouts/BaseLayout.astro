@@ -11,6 +11,7 @@ type Props = {
   image?: string;
   type?: "website" | "article";
   publishedTime?: string;
+  robots?: string;
 };
 
 const {
@@ -19,6 +20,7 @@ const {
   image = site.defaultImage,
   type = "website",
   publishedTime,
+  robots = "index, follow",
 } = Astro.props;
 
 const pageTitle = title === site.name ? title : `${title} | ${site.name}`;
@@ -44,7 +46,7 @@ const socialImage = site.url
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content={robots} />
     <meta name="theme-color" content="#f8f5f0" />
     {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
     <link

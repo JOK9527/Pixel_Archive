@@ -1,0 +1,97 @@
+---
+import {
+  generateHeatCells,
+  type CoverAccent,
+  type CoverDensity,
+  type PixelHeatVariant,
+} from "../../lib/visual/pixel-cover-system";
+
+type Props = {
+  seed: string;
+  variant?: PixelHeatVariant;
+  density?: CoverDensity;
+  progress?: number;
+  intensity?: number;
+  accent?: CoverAccent;
+  compact?: boolean;
+};
+
+const {
+  seed,
+  variant = "progress",
+  density = "medium",
+  progress,
+  intensity = 0.5,
+  accent = "neutral",
+  compact = false,
+} = Astro.props;
+const cells = generateHeatCells({
+  seed,
+  variant,
+  density,
+  progress,
+  intensity,
+});
+---
+
+<div
+  class:list={[
+    "pixel-heat-strip",
+    `pixel-heat-strip--${variant}`,
+    `pixel-heat-strip--${accent}`,
+    { "pixel-heat-strip--compact": compact },
+  ]}
+  aria-hidden="true"
+  data-heat-seed={seed}
+>
+  {cells.map((cell) => <i data-level={cell.level}></i>)}
+</div>
+
+<style>
+  .pixel-heat-strip {
+    display: grid;
+    min-width: 0;
+    grid-template-columns: repeat(16, minmax(0, 1fr));
+    gap: calc(var(--pixel-unit) * 0.75);
+  }
+
+  .pixel-heat-strip i {
+    min-width: 0;
+    aspect-ratio: 1.45;
+    background: color-mix(in srgb, var(--color-border) 72%, transparent);
+  }
+
+  .pixel-heat-strip i[data-level="1"] {
+    background: var(--color-stone);
+  }
+
+  .pixel-heat-strip i[data-level="2"] {
+    background: var(--cover-accent);
+  }
+
+  .pixel-heat-strip i[data-level="3"] {
+    background: var(--cover-hot);
+  }
+
+  .pixel-heat-strip--pulse i:nth-child(4n + 2),
+  .pixel-heat-strip--timeline i:nth-child(5n + 1) {
+    transform: translateY(calc(var(--pixel-unit) * -0.5));
+  }
+
+  .pixel-heat-strip--matrix {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  .pixel-heat-strip--matrix i {
+    aspect-ratio: 1;
+  }
+
+  .pixel-heat-strip--compact {
+    grid-template-columns: repeat(16, minmax(0, 1fr));
+    gap: calc(var(--pixel-unit) * 0.5);
+  }
+
+  .pixel-heat-strip--compact i {
+    aspect-ratio: 1.2;
+  }
+</style>

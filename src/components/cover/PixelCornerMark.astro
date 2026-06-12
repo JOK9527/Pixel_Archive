@@ -1,0 +1,61 @@
+---
+type Props = {
+  position?: "top-left" | "top-right" | "bottom-left" | "bottom-right";
+};
+
+const { position = "top-left" } = Astro.props;
+---
+
+<span
+  class:list={["pixel-corner-mark", `pixel-corner-mark--${position}`]}
+  aria-hidden="true"
+></span>
+
+<style>
+  .pixel-corner-mark {
+    position: absolute;
+    width: calc(var(--pixel-unit) * 3);
+    height: calc(var(--pixel-unit) * 3);
+    pointer-events: none;
+  }
+
+  .pixel-corner-mark::before,
+  .pixel-corner-mark::after {
+    position: absolute;
+    background: var(--cover-accent);
+    content: "";
+  }
+
+  .pixel-corner-mark::before {
+    width: 100%;
+    height: var(--pixel-unit);
+  }
+
+  .pixel-corner-mark::after {
+    width: var(--pixel-unit);
+    height: 100%;
+  }
+
+  .pixel-corner-mark--top-left {
+    top: 0;
+    left: 0;
+  }
+
+  .pixel-corner-mark--top-right {
+    top: 0;
+    right: 0;
+    transform: rotate(90deg);
+  }
+
+  .pixel-corner-mark--bottom-left {
+    bottom: 0;
+    left: 0;
+    transform: rotate(-90deg);
+  }
+
+  .pixel-corner-mark--bottom-right {
+    right: 0;
+    bottom: 0;
+    transform: rotate(180deg);
+  }
+</style>

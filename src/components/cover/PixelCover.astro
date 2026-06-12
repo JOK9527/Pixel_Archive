@@ -1,0 +1,402 @@
+---
+import type {
+  CoverAccent,
+  CoverDensity,
+  CoverKind,
+  CoverVariant,
+  PixelHeatVariant,
+} from "../../lib/visual/pixel-cover-system";
+import PixelCornerMark from "./PixelCornerMark.astro";
+import PixelCoverBand from "./PixelCoverBand.astro";
+import PixelHeatStrip from "./PixelHeatStrip.astro";
+import PixelMetaBar from "./PixelMetaBar.astro";
+
+type Props = {
+  kind: CoverKind;
+  variant: CoverVariant;
+  code: string;
+  title: string;
+  label?: string;
+  subtitle?: string;
+  meta?: string[];
+  tags?: string[];
+  status?: string;
+  progress?: number;
+  date?: string;
+  accent?: CoverAccent;
+  density?: CoverDensity;
+  seed: string;
+  showHeat?: boolean;
+  compact?: boolean;
+};
+
+const {
+  kind,
+  variant,
+  code,
+  title,
+  label,
+  subtitle,
+  meta = [],
+  tags = [],
+  status = "ready",
+  progress,
+  date,
+  accent = "neutral",
+  density = "medium",
+  seed,
+  showHeat = true,
+  compact = false,
+} = Astro.props;
+
+const variantLabel: Record<CoverVariant, string> = {
+  "project-code": "PROJECT CODE",
+  "terminal-record": "TERMINAL RECORD",
+  "save-point": "SAVE POINT",
+  "experiment-sheet": "EXPERIMENT CODE",
+};
+
+const heatVariant: Record<CoverVariant, PixelHeatVariant> = {
+  "project-code": "progress",
+  "terminal-record": "pulse",
+  "save-point": "timeline",
+  "experiment-sheet": "matrix",
+};
+
+const visibleMeta = date ? [date, ...meta] : meta;
+const visibleTags = tags.slice(0, compact ? 3 : 5);
+const bandValue =
+  progress === undefined ? status : `${status} > ${Math.round(progress)}%`;
+---
+
+<figure
+  class:list={[
+    "pixel-cover-system",
+    `pixel-cover-system--${kind}`,
+    `pixel-cover-system--${variant}`,
+    `pixel-cover-system--accent-${accent}`,
+    `pixel-cover-system--density-${density}`,
+    { "pixel-cover-system--compact": compact },
+  ]}
+  aria-label={label ?? `${title} ${variantLabel[variant].toLowerCase()} cover`}
+  data-cover-seed={seed}
+  data-cover-variant={variant}
+  data-cover-accent={accent}
+  data-cover-density={density}
+>
+  <PixelCornerMark position="top-left" />
+  <PixelCornerMark position="bottom-right" />
+
+  {
+    variant === "save-point" && (
+      <PixelCoverBand
+        label="Timeline"
+        value={status}
+        progress={progress}
+        orientation="vertical"
+        compact={compact}
+      />
+    )
+  }
+
+  <div class="pixel-cover-system__content">
+    <header>
+      <span>{label ?? variantLabel[variant]}</span>
+      <span>{kind} / {density}</span>
+    </header>
+
+    <div class="pixel-cover-system__primary">
+      <strong>{code}</strong>
+      <div>
+        <h3>{title}</h3>
+        {subtitle && <p>{subtitle}</p>}
+        {
+          visibleTags.length > 0 && (
+            <ul aria-label="Cover tags">
+              {visibleTags.map((tag) => <li>#{tag}</li>)}
+            </ul>
+          )
+        }
+      </div>
+    </div>
+
+    {
+      showHeat && (
+        <div class="pixel-cover-system__heat">
+          <PixelHeatStrip
+            seed={seed}
+            variant={heatVariant[variant]}
+            density={density}
+            progress={progress}
+            accent={accent}
+            compact={compact}
+          />
+        </div>
+      )
+    }
+
+    {
+      variant !== "save-point" && (
+        <PixelCoverBand
+          label={variant === "terminal-record" ? "> reading record" : "Status"}
+          value={bandValue}
+          progress={progress}
+          compact={compact}
+        />
+      )
+    }
+
+    <PixelMetaBar
+      label={variant === "terminal-record" ? `${code}.record` : code}
+      items={visibleMeta}
+      compact={compact}
+    />
+  </div>
+</figure>
+
+<style>
+  .pixel-cover-system {
+    --cover-accent: var(--color-border-strong);
+    --cover-hot: var(--color-accent);
+
+    position: relative;
+    display: grid;
+    width: 100%;
+    min-width: 0;
+    min-height: 15rem;
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid var(--color-border-strong);
+    background-color: var(--color-surface-deep);
+    background-image:
+      linear-gradient(var(--color-grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-grid) 1px, transparent 1px);
+    background-size: 24px 24px;
+    color: var(--color-text-muted);
+    font-family: var(--font-ui);
+  }
+
+  .pixel-cover-system--accent-green {
+    --cover-accent: var(--color-primary);
+    --cover-hot: var(--color-accent);
+  }
+
+  .pixel-cover-system--accent-orange {
+    --cover-accent: var(--color-warm);
+    --cover-hot: var(--color-accent);
+  }
+
+  .pixel-cover-system--accent-teal {
+    --cover-accent: var(--color-tea);
+    --cover-hot: var(--color-primary);
+  }
+
+  .pixel-cover-system--accent-purple {
+    --cover-accent: var(--color-violet);
+    --cover-hot: var(--color-accent);
+  }
+
+  .pixel-cover-system--accent-blue {
+    --cover-accent: var(--color-info);
+    --cover-hot: var(--color-cyan);
+  }
+
+  .pixel-cover-system--save-point {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .pixel-cover-system__content {
+    display: grid;
+    min-width: 0;
+    grid-template-rows: auto 1fr auto auto auto;
+  }
+
+  .pixel-cover-system__content > header {
+    display: flex;
+    min-width: 0;
+    padding: 0.7rem 0.8rem;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    border-bottom: 1px solid var(--color-border);
+    background: color-mix(
+      in srgb,
+      var(--color-surface-raised) 88%,
+      transparent
+    );
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .pixel-cover-system__content > header span {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .pixel-cover-system__content > header span:first-child {
+    color: var(--cover-accent);
+  }
+
+  .pixel-cover-system__primary {
+    display: grid;
+    min-width: 0;
+    padding: clamp(1rem, 4vw, 1.6rem);
+    grid-template-columns: minmax(7rem, 0.9fr) minmax(0, 1.1fr);
+    align-items: center;
+    gap: clamp(1rem, 4vw, 2rem);
+  }
+
+  .pixel-cover-system__primary > strong {
+    min-width: 0;
+    overflow: hidden;
+    color: var(--cover-accent);
+    font-family: var(--font-ui);
+    font-size: clamp(2.8rem, 7vw, 4.75rem);
+    font-weight: 800;
+    letter-spacing: -0.09em;
+    line-height: 0.8;
+    text-overflow: clip;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .pixel-cover-system--save-point .pixel-cover-system__primary > strong {
+    font-size: clamp(1.45rem, 3.4vw, 2.5rem);
+    letter-spacing: -0.07em;
+  }
+
+  .pixel-cover-system--save-point .pixel-cover-system__primary {
+    grid-template-columns: minmax(9.5rem, 0.9fr) minmax(0, 1.1fr);
+  }
+
+  .pixel-cover-system__primary > div {
+    min-width: 0;
+  }
+
+  .pixel-cover-system h3 {
+    margin: 0;
+    overflow-wrap: anywhere;
+    color: var(--color-heading);
+    font-size: clamp(1rem, 3vw, 1.35rem);
+    letter-spacing: -0.035em;
+    line-height: 1.12;
+  }
+
+  .pixel-cover-system p {
+    display: -webkit-box;
+    margin: 0.45rem 0 0;
+    overflow: hidden;
+    color: var(--color-text-muted);
+    font-size: 0.72rem;
+    line-height: 1.5;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .pixel-cover-system ul {
+    display: flex;
+    min-width: 0;
+    margin: 0.65rem 0 0;
+    padding: 0;
+    overflow: hidden;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.55rem;
+    color: var(--cover-accent);
+    font-family: var(--font-mono);
+    font-size: 0.56rem;
+    list-style: none;
+  }
+
+  .pixel-cover-system__heat {
+    padding: 0.35rem clamp(1rem, 4vw, 1.6rem) 0.9rem;
+  }
+
+  .pixel-cover-system--compact {
+    min-height: 9rem;
+  }
+
+  .pixel-cover-system--compact .pixel-cover-system__content > header {
+    padding: 0.5rem 0.6rem;
+    font-size: 0.5rem;
+  }
+
+  .pixel-cover-system--compact .pixel-cover-system__primary {
+    padding: 0.75rem;
+    grid-template-columns: minmax(3.7rem, 0.58fr) minmax(0, 1.42fr);
+    gap: 0.75rem;
+  }
+
+  .pixel-cover-system--compact .pixel-cover-system__primary > strong {
+    font-size: clamp(2rem, 7vw, 3.4rem);
+  }
+
+  .pixel-cover-system--compact.pixel-cover-system--save-point
+    .pixel-cover-system__primary
+    > strong {
+    font-size: clamp(1.15rem, 2.4vw, 1.6rem);
+  }
+
+  .pixel-cover-system--compact.pixel-cover-system--save-point
+    .pixel-cover-system__primary {
+    grid-template-columns: minmax(7.7rem, 0.8fr) minmax(0, 1.2fr);
+  }
+
+  .pixel-cover-system--compact h3 {
+    display: -webkit-box;
+    overflow: hidden;
+    font-size: 0.82rem;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .pixel-cover-system--compact p {
+    display: none;
+  }
+
+  .pixel-cover-system--compact ul {
+    margin-top: 0.4rem;
+    font-size: 0.5rem;
+  }
+
+  .pixel-cover-system--compact .pixel-cover-system__heat {
+    padding: 0.2rem 0.75rem 0.55rem;
+  }
+
+  @media (max-width: 34rem) {
+    .pixel-cover-system__primary {
+      grid-template-columns: 1fr;
+      align-content: center;
+      gap: 0.85rem;
+    }
+
+    .pixel-cover-system__primary > strong {
+      font-size: clamp(2.4rem, 16vw, 4.5rem);
+    }
+
+    .pixel-cover-system--save-point .pixel-cover-system__primary {
+      grid-template-columns: 1fr;
+    }
+
+    .pixel-cover-system--save-point .pixel-cover-system__primary > strong {
+      font-size: clamp(1.5rem, 8vw, 2.5rem);
+    }
+
+    .pixel-cover-system--compact .pixel-cover-system__primary {
+      grid-template-columns: minmax(3.5rem, 0.55fr) minmax(0, 1.45fr);
+    }
+
+    .pixel-cover-system--compact.pixel-cover-system--save-point
+      .pixel-cover-system__primary {
+      grid-template-columns: 1fr;
+    }
+
+    .pixel-cover-system__content > header span:last-child {
+      display: none;
+    }
+  }
+</style>
