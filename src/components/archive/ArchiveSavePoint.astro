@@ -67,8 +67,14 @@ const coverRecipe = normalizeCoverMeta({
 
 <style>
   .archive-save-point {
-    --cover-accent: var(--color-tea);
-    --cover-hot: var(--color-primary);
+    --cover-accent: var(--section-archive-main);
+    --cover-hot: var(--section-archive-peak);
+    --cover-corner-accent: var(--section-archive-main);
+    --cover-heat-empty: var(--heat-archive-0);
+    --cover-heat-low: var(--heat-archive-1);
+    --cover-heat-mid: var(--heat-archive-2);
+    --cover-heat-high: var(--heat-archive-3);
+    --cover-heat-peak: var(--heat-archive-4);
 
     position: relative;
     display: grid;
@@ -77,14 +83,27 @@ const coverRecipe = normalizeCoverMeta({
     padding: 0.75rem;
     overflow: hidden;
     border: 1px solid var(--color-border);
-    background-color: color-mix(
-      in srgb,
-      var(--color-surface-deep) 88%,
-      var(--color-tea) 12%
-    );
+    background-color: var(--section-archive-paper);
     background-image:
-      linear-gradient(var(--color-grid) 1px, transparent 1px),
-      linear-gradient(90deg, var(--color-grid) 1px, transparent 1px);
+      linear-gradient(
+        color-mix(
+            in srgb,
+            var(--section-archive-cool) 22%,
+            transparent
+          )
+          1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        90deg,
+        color-mix(
+            in srgb,
+            var(--section-archive-cool) 22%,
+            transparent
+          )
+          1px,
+        transparent 1px
+      );
     background-size: 20px 20px;
     grid-template-columns: minmax(8rem, auto) minmax(0, 1fr);
     align-items: end;
@@ -131,8 +150,12 @@ const coverRecipe = normalizeCoverMeta({
     letter-spacing: 0.08em;
   }
 
+  .archive-save-point__identity span {
+    color: var(--section-archive-main);
+  }
+
   .archive-save-point__identity time {
-    color: var(--cover-accent);
+    color: var(--section-archive-deep);
     font-size: clamp(1rem, 3vw, 1.35rem);
     font-weight: 800;
     letter-spacing: -0.05em;
@@ -140,7 +163,7 @@ const coverRecipe = normalizeCoverMeta({
   }
 
   .archive-save-point__identity strong {
-    color: var(--color-heading);
+    color: var(--section-archive-deep);
   }
 
   @media (max-width: 32rem) {

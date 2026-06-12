@@ -53,6 +53,8 @@ const { slug, title, date, type, description, coverMeta, relatedHref } =
   }
 
   .archive-entry__node {
+    --archive-node-color: var(--section-archive-main);
+
     position: absolute;
     /* Absolute positioning starts at the padding box; offset the 1px card border. */
     top: -1px;
@@ -63,19 +65,20 @@ const { slug, title, date, type, description, coverMeta, relatedHref } =
     width: 0.7rem;
     height: 0.7rem;
     border: 2px solid var(--color-bg);
-    background: var(--color-warm);
+    background: var(--archive-node-color);
     box-shadow:
       0 0 0 2px var(--color-border),
-      4px 4px 0 color-mix(in srgb, var(--color-warm) 30%, transparent);
+      4px 4px 0
+        color-mix(in srgb, var(--archive-node-color) 30%, transparent);
     transform: translate(-50%, -50%);
   }
 
   .archive-entry--milestone .archive-entry__node {
-    background: var(--color-green);
+    --archive-node-color: var(--section-archive-cool);
   }
 
   .archive-entry--project-log .archive-entry__node {
-    background: var(--color-accent);
+    --archive-node-color: var(--section-archive-peak);
   }
 
   .archive-entry h3 {

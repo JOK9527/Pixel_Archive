@@ -89,7 +89,7 @@ const monthLabels = [
     top: var(--space-5);
     height: fit-content;
     margin-bottom: 0;
-    color: var(--color-warm-strong);
+    color: var(--section-archive-deep);
     font-family: var(--font-mono);
     font-size: 1.1rem;
   }
@@ -108,7 +108,7 @@ const monthLabels = [
   .archive-month > h3 {
     margin-bottom: 0;
     padding-top: var(--space-1);
-    color: var(--color-primary);
+    color: var(--section-archive-main);
     font-family: var(--font-mono);
     font-size: 0.7rem;
     letter-spacing: 0.08em;
@@ -137,7 +137,12 @@ const monthLabels = [
     background:
       repeating-linear-gradient(
         to bottom,
-        var(--color-border-strong) 0 calc(var(--pixel-unit) * 3),
+        color-mix(
+            in srgb,
+            var(--section-archive-main) 38%,
+            var(--section-archive-neutral)
+          )
+          0 calc(var(--pixel-unit) * 3),
         transparent calc(var(--pixel-unit) * 3) calc(var(--pixel-unit) * 5)
       );
     content: "";

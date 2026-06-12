@@ -203,54 +203,160 @@ const bandValue =
     --cover-hot: var(--color-cyan);
   }
 
-  .pixel-cover-system--terminal-record {
-    --cover-accent: var(--cover-notes-main);
-    --cover-hot: var(--cover-notes-heat-4);
-    --cover-surface: var(--cover-notes-paper);
-    --cover-grid: var(--cover-notes-grid);
-    --cover-code: var(--cover-notes-main);
-    --cover-ink: var(--cover-notes-ink);
-    --cover-tag: var(--cover-notes-cool);
-    --cover-header-accent: var(--cover-notes-main);
-    --cover-corner-accent: var(--cover-notes-main);
-    --cover-band-surface: var(--cover-notes-band-dark);
-    --cover-band-ink: var(--cover-notes-paper);
-    --cover-band-accent: var(--cover-notes-main);
-    --cover-meta-accent: var(--cover-notes-cool);
-    --cover-heat-empty: var(--cover-notes-heat-0);
-    --cover-heat-low: var(--cover-notes-heat-1);
-    --cover-heat-mid: var(--cover-notes-heat-2);
-    --cover-heat-high: var(--cover-notes-heat-3);
-    --cover-heat-peak: var(--cover-notes-heat-4);
+  .pixel-cover-system--project {
+    --cover-accent: var(--section-projects-main);
+    --cover-hot: var(--section-projects-peak);
+    --cover-surface: var(--section-projects-paper);
+    --cover-grid: color-mix(
+      in srgb,
+      var(--section-projects-cool) 22%,
+      transparent
+    );
+    --cover-code: var(--section-projects-main);
+    --cover-ink: var(--section-projects-deep);
+    --cover-tag: var(--section-projects-main);
+    --cover-header-accent: var(--section-projects-main);
+    --cover-header-surface: color-mix(
+      in srgb,
+      var(--section-projects-paper) 88%,
+      var(--section-projects-neutral)
+    );
+    --cover-corner-accent: var(--section-projects-main);
+    --cover-band-surface: color-mix(
+      in srgb,
+      var(--section-projects-main) 10%,
+      var(--section-projects-paper)
+    );
+    --cover-band-ink: var(--section-projects-deep);
+    --cover-band-accent: var(--section-projects-main);
+    --cover-meta-accent: var(--section-projects-main);
+    --cover-meta-surface: color-mix(
+      in srgb,
+      var(--section-projects-paper) 92%,
+      var(--section-projects-neutral)
+    );
+    --cover-heat-empty: var(--heat-projects-0);
+    --cover-heat-low: var(--heat-projects-1);
+    --cover-heat-mid: var(--heat-projects-2);
+    --cover-heat-high: var(--heat-projects-3);
+    --cover-heat-peak: var(--heat-projects-4);
+  }
+
+  .pixel-cover-system--note {
+    --cover-accent: var(--section-notes-main);
+    --cover-hot: var(--heat-notes-4);
+    --cover-surface: var(--section-notes-paper);
+    --cover-grid: color-mix(
+      in srgb,
+      var(--section-notes-cool) 20%,
+      transparent
+    );
+    --cover-code: var(--section-notes-main);
+    --cover-ink: var(--section-notes-ink);
+    --cover-tag: var(--section-notes-cool);
+    --cover-header-accent: var(--section-notes-main);
+    --cover-header-surface: color-mix(
+      in srgb,
+      var(--section-notes-paper) 90%,
+      var(--section-notes-neutral)
+    );
+    --cover-corner-accent: var(--section-notes-main);
+    --cover-band-surface: var(--section-notes-band);
+    --cover-band-ink: var(--section-notes-paper);
+    --cover-band-accent: var(--section-notes-main);
+    --cover-meta-accent: var(--section-notes-cool);
+    --cover-meta-surface: color-mix(
+      in srgb,
+      var(--section-notes-paper) 92%,
+      var(--section-notes-neutral)
+    );
+    --cover-heat-empty: var(--heat-notes-0);
+    --cover-heat-low: var(--heat-notes-1);
+    --cover-heat-mid: var(--heat-notes-2);
+    --cover-heat-high: var(--heat-notes-3);
+    --cover-heat-peak: var(--heat-notes-4);
+  }
+
+  .pixel-cover-system--archive {
+    --cover-accent: var(--section-archive-main);
+    --cover-hot: var(--section-archive-peak);
+    --cover-surface: var(--section-archive-paper);
+    --cover-grid: color-mix(
+      in srgb,
+      var(--section-archive-cool) 22%,
+      transparent
+    );
+    --cover-code: var(--section-archive-deep);
+    --cover-ink: var(--section-archive-deep);
+    --cover-tag: var(--section-archive-main);
+    --cover-header-accent: var(--section-archive-main);
+    --cover-header-surface: color-mix(
+      in srgb,
+      var(--section-archive-paper) 88%,
+      var(--section-archive-neutral)
+    );
+    --cover-corner-accent: var(--section-archive-main);
+    --cover-band-surface: color-mix(
+      in srgb,
+      var(--section-archive-main) 10%,
+      var(--section-archive-paper)
+    );
+    --cover-band-ink: var(--section-archive-deep);
+    --cover-band-accent: var(--section-archive-main);
+    --cover-meta-accent: var(--section-archive-main);
+    --cover-meta-surface: color-mix(
+      in srgb,
+      var(--section-archive-paper) 92%,
+      var(--section-archive-neutral)
+    );
+    --cover-heat-empty: var(--heat-archive-0);
+    --cover-heat-low: var(--heat-archive-1);
+    --cover-heat-mid: var(--heat-archive-2);
+    --cover-heat-high: var(--heat-archive-3);
+    --cover-heat-peak: var(--heat-archive-4);
   }
 
   .pixel-cover-system--save-point {
     grid-template-columns: auto minmax(0, 1fr);
   }
 
-  .pixel-cover-system--experiment-sheet {
-    --cover-accent: var(--cover-lab-main);
-    --cover-hot: var(--cover-lab-hot);
-    --cover-surface: var(--cover-lab-paper);
-    --cover-grid: var(--cover-lab-grid);
-    --cover-code: var(--cover-lab-deep);
-    --cover-ink: var(--cover-lab-ink);
-    --cover-tag: var(--cover-lab-cool);
-    --cover-header-accent: var(--cover-lab-main);
-    --cover-corner-accent: var(--cover-lab-main);
+  .pixel-cover-system--lab {
+    --cover-accent: var(--section-lab-main);
+    --cover-hot: var(--section-lab-peak);
+    --cover-surface: var(--section-lab-paper);
+    --cover-grid: color-mix(
+      in srgb,
+      var(--section-lab-bluegray) 20%,
+      transparent
+    );
+    --cover-code: var(--section-lab-deep);
+    --cover-ink: var(--section-lab-deep);
+    --cover-tag: var(--section-lab-cool);
+    --cover-header-accent: var(--section-lab-main);
+    --cover-header-surface: color-mix(
+      in srgb,
+      var(--section-lab-paper) 90%,
+      var(--section-lab-neutral)
+    );
+    --cover-corner-accent: var(--section-lab-main);
     --cover-band-surface: color-mix(
       in srgb,
-      var(--cover-lab-deep) 13%,
-      var(--cover-lab-paper)
+      var(--section-lab-main) 11%,
+      var(--section-lab-paper)
     );
-    --cover-band-ink: var(--cover-lab-ink);
-    --cover-band-accent: var(--cover-lab-deep);
-    --cover-meta-accent: var(--cover-lab-bluegray);
-    --cover-heat-empty: var(--cover-lab-heat-0);
-    --cover-heat-low: var(--cover-lab-heat-1);
-    --cover-heat-mid: var(--cover-lab-heat-2);
-    --cover-heat-high: var(--cover-lab-heat-3);
-    --cover-heat-peak: var(--cover-lab-heat-4);
+    --cover-band-ink: var(--section-lab-deep);
+    --cover-band-accent: var(--section-lab-main);
+    --cover-meta-accent: var(--section-lab-bluegray);
+    --cover-meta-surface: color-mix(
+      in srgb,
+      var(--section-lab-paper) 92%,
+      var(--section-lab-neutral)
+    );
+    --cover-heat-empty: var(--heat-lab-0);
+    --cover-heat-low: var(--heat-lab-1);
+    --cover-heat-mid: var(--heat-lab-2);
+    --cover-heat-high: var(--heat-lab-3);
+    --cover-heat-peak: var(--heat-lab-4);
   }
 
   .pixel-cover-system__content {
@@ -267,10 +373,13 @@ const bandValue =
     justify-content: space-between;
     gap: 1rem;
     border-bottom: 1px solid var(--color-border);
-    background: color-mix(
-      in srgb,
-      var(--color-surface-raised) 88%,
-      transparent
+    background: var(
+      --cover-header-surface,
+      color-mix(
+        in srgb,
+        var(--color-surface-raised) 88%,
+        transparent
+      )
     );
     font-family: var(--font-mono);
     font-size: 0.58rem;

@@ -28,10 +28,13 @@ const { items = [], label, compact = false } = Astro.props;
     justify-content: space-between;
     gap: 0.75rem;
     border-top: 1px solid var(--color-border);
-    background: color-mix(
-      in srgb,
-      var(--color-surface-raised) 88%,
-      transparent
+    background: var(
+      --cover-meta-surface,
+      color-mix(
+        in srgb,
+        var(--color-surface-raised) 88%,
+        transparent
+      )
     );
     font-family: var(--font-mono);
     font-size: 0.56rem;
