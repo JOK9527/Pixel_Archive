@@ -18,7 +18,10 @@ const coverRecipe = normalizeCoverMeta({
   date: item.date,
   status: item.status,
   tagCount: item.tags.length,
-  coverMeta: { density: "high" },
+  coverMeta: {
+    ...item.coverMeta,
+    density: item.coverMeta?.density ?? "high",
+  },
 });
 ---
 

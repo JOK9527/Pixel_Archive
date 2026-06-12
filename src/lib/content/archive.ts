@@ -1,4 +1,5 @@
 import { getCollection, type CollectionEntry } from "astro:content";
+import type { CoverMeta } from "../visual/pixel-cover-system";
 
 export type ArchiveTypeValue = "save-point" | "milestone" | "project-log";
 
@@ -8,6 +9,7 @@ export type ArchiveItem = {
   date: string;
   type: ArchiveTypeValue;
   description: string;
+  coverMeta?: CoverMeta;
   relatedProject?: string;
   relatedNote?: string;
   relatedHref?: string;
@@ -40,6 +42,7 @@ function toArchiveItem(entry: CollectionEntry<"archive">): ArchiveItem {
     date: entry.data.date,
     type: entry.data.type,
     description: entry.data.description,
+    coverMeta: entry.data.coverMeta,
     relatedProject: entry.data.relatedProject,
     relatedNote: entry.data.relatedNote,
     relatedHref,

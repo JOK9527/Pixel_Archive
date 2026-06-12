@@ -2,9 +2,11 @@
 import type {
   ProjectLinksValue,
   ProjectStatusValue,
-  ProjectTypeValue,
 } from "../../lib/content/projects";
-import { normalizeCoverMeta } from "../../lib/visual/pixel-cover-system";
+import {
+  normalizeCoverMeta,
+  type CoverMeta,
+} from "../../lib/visual/pixel-cover-system";
 import PixelCover from "../cover/PixelCover.astro";
 import ProjectStatus from "./ProjectStatus.astro";
 import ProjectTechStack from "./ProjectTechStack.astro";
@@ -13,13 +15,13 @@ type Props = {
   title: string;
   slug: string;
   description: string;
-  projectType: ProjectTypeValue;
   status: ProjectStatusValue;
   category: string;
   tags?: string[];
   techStack?: string[];
   href: string;
   cover?: string;
+  coverMeta?: CoverMeta;
   links?: ProjectLinksValue;
   featured?: boolean;
 };
@@ -28,13 +30,13 @@ const {
   title,
   slug,
   description,
-  projectType,
   status,
   category,
   tags = [],
   techStack = [],
   href,
   cover,
+  coverMeta,
   featured = false,
 } = Astro.props;
 const coverRecipe = normalizeCoverMeta({
@@ -44,7 +46,8 @@ const coverRecipe = normalizeCoverMeta({
   status,
   tagCount: techStack.length,
   coverMeta: {
-    density: featured ? "high" : undefined,
+    ...coverMeta,
+    density: coverMeta?.density ?? (featured ? "high" : undefined),
   },
 });
 ---

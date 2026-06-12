@@ -1,4 +1,5 @@
 import { getCollection, getEntry, type CollectionEntry } from "astro:content";
+import type { CoverMeta } from "../visual/pixel-cover-system";
 
 export type LabTypeValue =
   | "pixel"
@@ -19,6 +20,7 @@ export type LabItem = {
   tags: string[];
   status: LabStatusValue;
   cover?: string;
+  coverMeta?: CoverMeta;
   date?: string;
 };
 
@@ -38,6 +40,7 @@ function toLabItem(entry: CollectionEntry<"lab">): LabItem {
     tags: entry.data.tags,
     status: entry.data.status,
     cover: entry.data.cover,
+    coverMeta: entry.data.coverMeta,
     date: entry.data.date,
   };
 }

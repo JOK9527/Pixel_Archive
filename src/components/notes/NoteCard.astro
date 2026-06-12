@@ -1,6 +1,9 @@
 ---
 import type { NoteTypeValue } from "../../lib/content/notes";
-import { normalizeCoverMeta } from "../../lib/visual/pixel-cover-system";
+import {
+  normalizeCoverMeta,
+  type CoverMeta,
+} from "../../lib/visual/pixel-cover-system";
 import PixelCover from "../cover/PixelCover.astro";
 import NoteMeta from "./NoteMeta.astro";
 
@@ -15,6 +18,7 @@ type Props = {
   updated?: string;
   href: string;
   cover?: string;
+  coverMeta?: CoverMeta;
 };
 
 const {
@@ -28,6 +32,7 @@ const {
   updated,
   href,
   cover,
+  coverMeta,
 } = Astro.props;
 const coverRecipe = normalizeCoverMeta({
   kind: "note",
@@ -36,6 +41,7 @@ const coverRecipe = normalizeCoverMeta({
   date,
   status: type,
   tagCount: tags.length,
+  coverMeta,
 });
 ---
 

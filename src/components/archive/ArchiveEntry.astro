@@ -1,5 +1,6 @@
 ---
 import type { ArchiveTypeValue } from "../../lib/content/archive";
+import type { CoverMeta } from "../../lib/visual/pixel-cover-system";
 import ArchiveSavePoint from "./ArchiveSavePoint.astro";
 
 type Props = {
@@ -8,10 +9,12 @@ type Props = {
   date: string;
   type: ArchiveTypeValue;
   description?: string;
+  coverMeta?: CoverMeta;
   relatedHref?: string;
 };
 
-const { slug, title, date, type, description, relatedHref } = Astro.props;
+const { slug, title, date, type, description, coverMeta, relatedHref } =
+  Astro.props;
 
 ---
 
@@ -20,7 +23,13 @@ const { slug, title, date, type, description, relatedHref } = Astro.props;
   class:list={["archive-entry", "pixel-corner", `archive-entry--${type}`]}
 >
   <span class="archive-entry__node" aria-hidden="true"></span>
-  <ArchiveSavePoint date={date} type={type} seed={slug} />
+  <ArchiveSavePoint
+    date={date}
+    title={title}
+    type={type}
+    seed={slug}
+    coverMeta={coverMeta}
+  />
   <h3>{title}</h3>
   {description && <p>{description}</p>}
   {

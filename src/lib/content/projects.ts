@@ -1,4 +1,5 @@
 import { getCollection, getEntry, type CollectionEntry } from "astro:content";
+import type { CoverMeta } from "../visual/pixel-cover-system";
 
 export type ProjectStatusValue = "WIP" | "Done" | "Prototype" | "Paused";
 export type ProjectTypeValue =
@@ -27,6 +28,7 @@ export type ProjectItem = {
   techStack: string[];
   featured: boolean;
   cover?: string;
+  coverMeta?: CoverMeta;
   links?: ProjectLinksValue;
   startDate?: string;
   updatedDate?: string;
@@ -54,6 +56,7 @@ function toProjectItem(entry: CollectionEntry<"projects">): ProjectItem {
     techStack: entry.data.techStack,
     featured: entry.data.featured,
     cover: entry.data.cover,
+    coverMeta: entry.data.coverMeta,
     links: entry.data.links,
     startDate: entry.data.startDate,
     updatedDate: entry.data.updatedDate,

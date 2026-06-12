@@ -1,6 +1,9 @@
 ---
 import type { LabStatusValue, LabTypeValue } from "../../lib/content/lab";
-import { normalizeCoverMeta } from "../../lib/visual/pixel-cover-system";
+import {
+  normalizeCoverMeta,
+  type CoverMeta,
+} from "../../lib/visual/pixel-cover-system";
 import PixelCover from "../cover/PixelCover.astro";
 import LabTypeBadge from "./LabTypeBadge.astro";
 
@@ -12,6 +15,7 @@ type Props = {
   status?: LabStatusValue;
   href?: string;
   cover?: string;
+  coverMeta?: CoverMeta;
   date?: string;
   seed?: string;
 };
@@ -24,6 +28,7 @@ const {
   status = "idea",
   href,
   cover,
+  coverMeta,
   date,
   seed = title,
 } = Astro.props;
@@ -36,7 +41,10 @@ const coverRecipe = normalizeCoverMeta({
   date,
   status,
   tagCount: tags.length,
-  coverMeta: { density: "high" },
+  coverMeta: {
+    ...coverMeta,
+    density: coverMeta?.density ?? "high",
+  },
 });
 ---
 

@@ -1,15 +1,21 @@
 ---
 import type { ArchiveTypeValue } from "../../lib/content/archive";
+import {
+  normalizeCoverMeta,
+  type CoverMeta,
+} from "../../lib/visual/pixel-cover-system";
 import PixelCornerMark from "../cover/PixelCornerMark.astro";
 import PixelHeatStrip from "../cover/PixelHeatStrip.astro";
 
 type Props = {
   date: string;
+  title: string;
   type: ArchiveTypeValue;
   seed: string;
+  coverMeta?: CoverMeta;
 };
 
-const { date, type, seed } = Astro.props;
+const { date, title, type, seed, coverMeta } = Astro.props;
 const progressByType: Record<ArchiveTypeValue, number> = {
   "save-point": 45,
   milestone: 80,
@@ -20,26 +26,41 @@ const typeLabels: Record<ArchiveTypeValue, string> = {
   milestone: "MILESTONE",
   "project-log": "PROJECT LOG",
 };
-const displayDate = date.replaceAll("-", ".");
+const coverRecipe = normalizeCoverMeta({
+  kind: "archive",
+  title,
+  seed,
+  date,
+  status: type,
+  coverMeta: {
+    ...coverMeta,
+    progress: coverMeta?.progress ?? progressByType[type],
+    density:
+      coverMeta?.density ?? (type === "milestone" ? "high" : "medium"),
+  },
+});
 ---
 
 <div
-  class="archive-save-point"
-  data-cover-variant="save-point"
-  data-cover-seed={seed}
+  class:list={[
+    "archive-save-point",
+    `archive-save-point--accent-${coverRecipe.accent}`,
+  ]}
+  data-cover-variant={coverRecipe.variant}
+  data-cover-seed={coverRecipe.seed}
 >
   <PixelCornerMark position="top-left" />
   <div class="archive-save-point__identity">
     <span>SAVE POINT</span>
-    <time datetime={date}>{displayDate}</time>
+    <time datetime={date}>{coverRecipe.code}</time>
     <strong>{typeLabels[type]}</strong>
   </div>
   <PixelHeatStrip
-    seed={seed}
+    seed={coverRecipe.seed}
     variant="timeline"
-    density={type === "milestone" ? "high" : "medium"}
-    progress={progressByType[type]}
-    accent="teal"
+    density={coverRecipe.density}
+    progress={coverRecipe.progress}
+    accent={coverRecipe.accent}
     compact
   />
 </div>
@@ -68,6 +89,31 @@ const displayDate = date.replaceAll("-", ".");
     grid-template-columns: minmax(8rem, auto) minmax(0, 1fr);
     align-items: end;
     gap: 1rem;
+  }
+
+  .archive-save-point--accent-green {
+    --cover-accent: var(--color-primary);
+    --cover-hot: var(--color-accent);
+  }
+
+  .archive-save-point--accent-orange {
+    --cover-accent: var(--color-warm);
+    --cover-hot: var(--color-accent);
+  }
+
+  .archive-save-point--accent-purple {
+    --cover-accent: var(--color-violet);
+    --cover-hot: var(--color-accent);
+  }
+
+  .archive-save-point--accent-blue {
+    --cover-accent: var(--color-info);
+    --cover-hot: var(--color-cyan);
+  }
+
+  .archive-save-point--accent-neutral {
+    --cover-accent: var(--color-border-strong);
+    --cover-hot: var(--color-accent);
   }
 
   .archive-save-point__identity {

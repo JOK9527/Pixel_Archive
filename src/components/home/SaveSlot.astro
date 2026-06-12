@@ -1,6 +1,6 @@
 ---
 import StatusPill from "../ui/StatusPill.astro";
-import PixelCover from "../ui/PixelCover.astro";
+import PixelCover from "../cover/PixelCover.astro";
 
 type Props = {
   slotNumber: string;
@@ -27,6 +27,20 @@ const tone = active
     : status === "empty"
       ? "purple"
       : "neutral";
+const coverAccent = active
+  ? "green"
+  : status === "locked"
+    ? "orange"
+    : status === "empty"
+      ? "purple"
+      : "neutral";
+const coverProgress = active
+  ? 78
+  : status === "locked"
+    ? 8
+    : status === "empty"
+      ? 0
+      : 45;
 const Element = href ? "a" : "article";
 ---
 
@@ -41,13 +55,19 @@ const Element = href ? "a" : "article";
   </div>
   <div class="save-slot__cover">
     <PixelCover
-      variant="save-chip"
-      section="home"
+      kind="archive"
+      variant="save-point"
+      code={`S${slotNumber}`}
+      title={title}
+      meta={[status]}
       status={status}
       tags={[title, status]}
+      progress={coverProgress}
       seed={`${slotNumber}-${title}`}
+      accent={coverAccent}
+      density="low"
       compact
-      label={`${title} save slot record`}
+      label="SAVE SLOT"
     />
   </div>
   <h3>{title}</h3>
@@ -121,7 +141,7 @@ const Element = href ? "a" : "article";
     border: 1px solid var(--color-border);
   }
 
-  .save-slot__cover > :global(.pixel-cover) {
+  .save-slot__cover > :global(.pixel-cover-system) {
     min-height: 7rem;
   }
 

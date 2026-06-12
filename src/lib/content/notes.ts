@@ -1,4 +1,5 @@
 import { getCollection, getEntry, type CollectionEntry } from "astro:content";
+import type { CoverMeta } from "../visual/pixel-cover-system";
 
 export type NoteTypeValue = "Article" | "Log" | "Note";
 
@@ -13,6 +14,7 @@ export type NoteItem = {
   date: string;
   updated?: string;
   cover?: string;
+  coverMeta?: CoverMeta;
   draft: boolean;
   relatedProjects: string[];
   relatedArchive: string[];
@@ -36,6 +38,7 @@ function toNoteItem(entry: CollectionEntry<"notes">): NoteItem {
     date: entry.data.date,
     updated: entry.data.updated,
     cover: entry.data.cover,
+    coverMeta: entry.data.coverMeta,
     draft: entry.data.draft,
     relatedProjects: entry.data.relatedProjects ?? [],
     relatedArchive: entry.data.relatedArchive ?? [],
