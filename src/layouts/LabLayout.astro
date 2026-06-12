@@ -2,6 +2,7 @@
 import LabTypeBadge from "../components/lab/LabTypeBadge.astro";
 import MarkdownContent from "../components/notes/MarkdownContent.astro";
 import PixelCover from "../components/cover/PixelCover.astro";
+import AmbientPixelBand from "../components/visual/AmbientPixelBand.astro";
 import type { LabItem } from "../lib/content/lab";
 import { normalizeCoverMeta } from "../lib/visual/pixel-cover-system";
 import BaseLayout from "./BaseLayout.astro";
@@ -27,6 +28,13 @@ const coverRecipe = normalizeCoverMeta({
 
 <BaseLayout title={item.title} description={item.description}>
   <article class="lab-detail">
+    <AmbientPixelBand
+      section="lab"
+      seed={item.slug}
+      variant="auto"
+      intensity="low"
+      placement="lab-detail"
+    />
     <a class="lab-detail__back" href="/lab/">← LAB INDEX</a>
 
     <header class="lab-detail__header">
@@ -94,8 +102,18 @@ const coverRecipe = normalizeCoverMeta({
 
 <style>
   .lab-detail {
+    position: relative;
+    isolation: isolate;
     max-width: 62rem;
     margin-inline: auto;
+  }
+
+  .lab-detail__back,
+  .lab-detail__header,
+  .lab-detail__frame,
+  .lab-detail__body {
+    position: relative;
+    z-index: 1;
   }
 
   .lab-detail__back {

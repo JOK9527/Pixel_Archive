@@ -4,6 +4,7 @@ import ProjectLinks from "../components/project/ProjectLinks.astro";
 import ProjectStatus from "../components/project/ProjectStatus.astro";
 import ProjectTechStack from "../components/project/ProjectTechStack.astro";
 import ProjectVisual from "../components/project/ProjectVisual.astro";
+import AmbientPixelBand from "../components/visual/AmbientPixelBand.astro";
 import type { ProjectItem } from "../lib/content/projects";
 import BaseLayout from "./BaseLayout.astro";
 
@@ -36,6 +37,13 @@ const relatedArchive = (
 
 <BaseLayout title={project.title} description={project.description}>
   <article class="project-detail">
+    <AmbientPixelBand
+      section="projects"
+      seed={project.slug}
+      variant="auto"
+      intensity="low"
+      placement="project-detail"
+    />
     <a class="project-detail__back" href="/projects/">← PROJECTS INDEX</a>
 
     <header class="project-detail__header">
@@ -132,8 +140,18 @@ const relatedArchive = (
 
 <style>
   .project-detail {
+    position: relative;
+    isolation: isolate;
     max-width: 64rem;
     margin-inline: auto;
+  }
+
+  .project-detail__back,
+  .project-detail__header,
+  .project-detail > :global(.project-visual),
+  .project-detail__grid {
+    position: relative;
+    z-index: 1;
   }
 
   .project-detail__back {
