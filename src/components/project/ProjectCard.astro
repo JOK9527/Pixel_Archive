@@ -4,7 +4,7 @@ import type {
   ProjectStatusValue,
   ProjectTypeValue,
 } from "../../lib/content/projects";
-import { getProjectCoverVariant } from "../../lib/visual/pixel-cover";
+import { getProjectCoverRecipe } from "../../lib/visual/pixel-cover";
 import PixelCover from "../ui/PixelCover.astro";
 import ProjectStatus from "./ProjectStatus.astro";
 import ProjectTechStack from "./ProjectTechStack.astro";
@@ -37,6 +37,7 @@ const {
   cover,
   featured = false,
 } = Astro.props;
+const coverRecipe = getProjectCoverRecipe(projectType, featured);
 ---
 
 <article
@@ -53,11 +54,13 @@ const {
           <img src={cover} alt="" loading="lazy" />
         ) : (
           <PixelCover
-            variant={getProjectCoverVariant(projectType)}
+            variant={coverRecipe.variant}
             section="projects"
             status={status}
             tags={techStack}
             seed={slug}
+            accent={coverRecipe.accent}
+            density={coverRecipe.density}
             compact={!featured}
             label={`${title} abstract project cover`}
           />

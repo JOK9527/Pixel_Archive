@@ -21,6 +21,7 @@ const { notes, filterRoot } = Astro.props;
         data-year={toTaxonomyValue(getYearMonth(note.updated ?? note.date))}
       >
         <NoteCard
+          slug={note.slug}
           title={note.title}
           description={note.description}
           type={note.type}

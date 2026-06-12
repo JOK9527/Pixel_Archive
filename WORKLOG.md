@@ -1,5 +1,25 @@
 # WORKLOG
 
+## 2026-06-12 / Phase 22.4
+
+### Metadata-driven pixel cover closure
+
+- Reduced the active cover system to four explainable templates.
+- Added typed accent and density recipes for Project, Note, and Lab metadata.
+- Made density alter deterministic matrix distributions without runtime randomness.
+- Added generated Terminal Strip fallbacks for Notes without a real cover while preserving real-cover priority.
+- Exposed seed, variant, accent, and density as cover data attributes for QA.
+- Kept content schemas, routes, and frontmatter unchanged.
+
+### Verification
+
+- `npm run build`: passed; 51 static pages generated.
+- Project, Note, and Lab covers expose the expected recipe metadata with 0 internal overflow.
+- Four Notes use generated covers and one existing Note keeps its real image.
+- Generated Note signatures remain identical after reload.
+- 390px mobile dark mode has 0 actual horizontal scroll and 0 cover overflow.
+- Browser console: 0 errors, 0 warnings.
+
 ## 2026-06-12 / Phase 22.3
 
 ### UI font and label strategy

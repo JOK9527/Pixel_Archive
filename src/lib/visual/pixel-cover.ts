@@ -1,12 +1,21 @@
 import type { LabTypeValue } from "../content/lab";
+import type { NoteTypeValue } from "../content/notes";
 import type { ProjectTypeValue } from "../content/projects";
 
 export type PixelCoverVariant =
-  | "file-matrix"
   | "terminal-strip"
   | "save-chip"
   | "timeline-fragment"
   | "experiment-grid";
+
+export type PixelCoverAccent =
+  | "green"
+  | "blue"
+  | "amber"
+  | "violet"
+  | "red";
+
+export type PixelCoverDensity = "low" | "medium" | "high";
 
 export type PixelCoverSection =
   | "projects"
@@ -20,6 +29,12 @@ export type PixelCoverModel = {
   cells: number[];
   bars: number[];
   nodes: number[];
+};
+
+export type PixelCoverRecipe = {
+  variant: PixelCoverVariant;
+  accent: PixelCoverAccent;
+  density: PixelCoverDensity;
 };
 
 function hashText(value: string) {
@@ -47,12 +62,27 @@ export function createPixelCoverModel(
   seed: string,
   tags: string[] = [],
   status = "",
+  density: PixelCoverDensity = "medium",
 ): PixelCoverModel {
-  let state = hashText([seed, status, ...tags].join("|"));
+  let state = hashText([seed, status, density, ...tags].join("|"));
   const take = (limit: number) => {
     const next = nextValue(state);
     state = next.state;
     return next.value % limit;
+  };
+  const densityThresholds: Record<PixelCoverDensity, [number, number, number]> = {
+    low: [56, 78, 94],
+    medium: [40, 65, 88],
+    high: [26, 48, 78],
+  };
+  const [emptyAt, neutralAt, accentAt] = densityThresholds[density];
+  const takeCell = () => {
+    const value = take(100);
+
+    if (value < emptyAt) return 0;
+    if (value < neutralAt) return 1;
+    if (value < accentAt) return 2;
+    return 3;
   };
 
   const code =
@@ -66,36 +96,80 @@ export function createPixelCoverModel(
 
   return {
     code,
-    cells: Array.from({ length: 32 }, () => take(4)),
+    cells: Array.from({ length: 32 }, takeCell),
     bars: Array.from({ length: 5 }, () => 28 + take(68)),
     nodes: Array.from({ length: 6 }, () => take(3)),
   };
 }
 
-export function getProjectCoverVariant(
+export function getProjectCoverRecipe(
   type: ProjectTypeValue,
-): PixelCoverVariant {
-  const variants: Record<ProjectTypeValue, PixelCoverVariant> = {
-    web: "file-matrix",
-    "ai-tool": "terminal-strip",
-    research: "timeline-fragment",
-    design: "file-matrix",
-    hardware: "save-chip",
-    "personal-site": "save-chip",
+  featured = false,
+): PixelCoverRecipe {
+  const recipes: Record<
+    ProjectTypeValue,
+    Omit<PixelCoverRecipe, "density">
+  > = {
+    web: { variant: "save-chip", accent: "green" },
+    "ai-tool": { variant: "terminal-strip", accent: "blue" },
+    research: { variant: "timeline-fragment", accent: "amber" },
+    design: { variant: "experiment-grid", accent: "violet" },
+    hardware: { variant: "save-chip", accent: "red" },
+    "personal-site": { variant: "save-chip", accent: "green" },
   };
 
-  return variants[type];
+  return {
+    ...recipes[type],
+    density: featured ? "high" : "medium",
+  };
 }
 
-export function getLabCoverVariant(type: LabTypeValue): PixelCoverVariant {
-  const variants: Record<LabTypeValue, PixelCoverVariant> = {
-    pixel: "file-matrix",
-    ui: "experiment-grid",
-    minecraft: "timeline-fragment",
-    image: "file-matrix",
-    demo: "terminal-strip",
-    other: "experiment-grid",
+export function getLabCoverRecipe(
+  type: LabTypeValue,
+  status = "",
+): PixelCoverRecipe {
+  const recipes: Record<
+    LabTypeValue,
+    Omit<PixelCoverRecipe, "density">
+  > = {
+    pixel: { variant: "experiment-grid", accent: "violet" },
+    ui: { variant: "experiment-grid", accent: "blue" },
+    minecraft: { variant: "timeline-fragment", accent: "green" },
+    image: { variant: "experiment-grid", accent: "red" },
+    demo: { variant: "terminal-strip", accent: "amber" },
+    other: { variant: "experiment-grid", accent: "violet" },
   };
 
-  return variants[type];
+  return {
+    ...recipes[type],
+    density: ["active", "building"].includes(status.toLowerCase())
+      ? "high"
+      : "medium",
+  };
+}
+
+export function getNoteCoverRecipe(
+  type: NoteTypeValue,
+  category: string,
+  tagCount: number,
+): PixelCoverRecipe {
+  const accents: PixelCoverAccent[] = [
+    "green",
+    "blue",
+    "amber",
+    "violet",
+    "red",
+  ];
+  const typeOffset: Record<NoteTypeValue, number> = {
+    Article: 1,
+    Log: 0,
+    Note: 2,
+  };
+  const accentIndex = (hashText(category) + typeOffset[type]) % accents.length;
+
+  return {
+    variant: "terminal-strip",
+    accent: accents[accentIndex],
+    density: tagCount >= 4 ? "high" : tagCount <= 1 ? "low" : "medium",
+  };
 }

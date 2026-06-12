@@ -1,6 +1,8 @@
 ---
 import {
   createPixelCoverModel,
+  type PixelCoverAccent,
+  type PixelCoverDensity,
   type PixelCoverSection,
   type PixelCoverVariant,
 } from "../../lib/visual/pixel-cover";
@@ -14,6 +16,8 @@ type Props = {
   status?: string;
   tags?: string[];
   seed: string;
+  accent?: PixelCoverAccent;
+  density?: PixelCoverDensity;
   compact?: boolean;
   label?: string;
 };
@@ -24,10 +28,12 @@ const {
   status = "ready",
   tags = [],
   seed,
+  accent = "green",
+  density = "medium",
   compact = false,
   label = `${section} ${variant} cover`,
 } = Astro.props;
-const model = createPixelCoverModel(seed, tags, status);
+const model = createPixelCoverModel(seed, tags, status, density);
 ---
 
 <figure
@@ -35,10 +41,15 @@ const model = createPixelCoverModel(seed, tags, status);
     "pixel-cover",
     `pixel-cover--${variant}`,
     `pixel-cover--${section}`,
+    `pixel-cover--accent-${accent}`,
+    `pixel-cover--density-${density}`,
     { "pixel-cover--compact": compact },
   ]}
   aria-label={label}
   data-cover-seed={seed}
+  data-cover-variant={variant}
+  data-cover-accent={accent}
+  data-cover-density={density}
 >
   <header>
     <span>{section} / {variant}</span>
@@ -46,17 +57,6 @@ const model = createPixelCoverModel(seed, tags, status);
   </header>
 
   <div class="pixel-cover__stage">
-    {
-      variant === "file-matrix" && (
-        <>
-          <div class="pixel-cover__file-stack">
-            <i></i><i></i><i></i>
-          </div>
-          <PixelMatrix cells={model.cells} compact={compact} />
-        </>
-      )
-    }
-
     {
       variant === "terminal-strip" && (
         <>
@@ -127,12 +127,32 @@ const model = createPixelCoverModel(seed, tags, status);
     background-size: 24px 24px;
     color: var(--color-text-muted);
     grid-template-rows: auto 1fr auto;
-    font-family: var(--font-mono);
+    font-family: var(--font-ui);
   }
 
-  .pixel-cover--lab {
-    --cover-accent: var(--color-violet);
+  .pixel-cover--accent-green {
+    --cover-accent: var(--color-primary);
     --cover-hot: var(--color-accent);
+  }
+
+  .pixel-cover--accent-blue {
+    --cover-accent: var(--color-info);
+    --cover-hot: var(--color-cyan);
+  }
+
+  .pixel-cover--accent-amber {
+    --cover-accent: var(--color-warm);
+    --cover-hot: var(--color-accent);
+  }
+
+  .pixel-cover--accent-violet {
+    --cover-accent: var(--color-violet);
+    --cover-hot: var(--color-primary);
+  }
+
+  .pixel-cover--accent-red {
+    --cover-accent: var(--color-accent);
+    --cover-hot: var(--color-warm);
   }
 
   .pixel-cover--home {
@@ -188,43 +208,6 @@ const model = createPixelCoverModel(seed, tags, status);
     grid-template-columns: minmax(0, 1fr) minmax(5rem, 0.75fr);
     align-items: center;
     gap: clamp(0.8rem, 3vw, 1.4rem);
-  }
-
-  .pixel-cover__file-stack {
-    position: relative;
-    min-height: 7rem;
-  }
-
-  .pixel-cover__file-stack i {
-    position: absolute;
-    width: 82%;
-    height: 58%;
-    border: 1px solid var(--color-border-strong);
-    background: var(--color-surface-raised);
-    box-shadow: var(--shadow-pixel-soft);
-  }
-
-  .pixel-cover__file-stack i::before {
-    display: block;
-    width: 38%;
-    height: calc(var(--pixel-unit) * 2);
-    background: var(--cover-accent);
-    content: "";
-  }
-
-  .pixel-cover__file-stack i:nth-child(1) {
-    top: 0;
-    right: 0;
-  }
-
-  .pixel-cover__file-stack i:nth-child(2) {
-    top: 18%;
-    right: 9%;
-  }
-
-  .pixel-cover__file-stack i:nth-child(3) {
-    top: 36%;
-    right: 18%;
   }
 
   .pixel-cover__terminal,
@@ -337,7 +320,6 @@ const model = createPixelCoverModel(seed, tags, status);
     padding: 0.75rem;
   }
 
-  .pixel-cover--compact .pixel-cover__file-stack,
   .pixel-cover--compact .pixel-cover__terminal,
   .pixel-cover--compact .pixel-cover__chip,
   .pixel-cover--compact .pixel-cover__timeline,

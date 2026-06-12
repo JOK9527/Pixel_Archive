@@ -1,8 +1,11 @@
 ---
 import type { NoteTypeValue } from "../../lib/content/notes";
+import { getNoteCoverRecipe } from "../../lib/visual/pixel-cover";
+import PixelCover from "../ui/PixelCover.astro";
 import NoteMeta from "./NoteMeta.astro";
 
 type Props = {
+  slug: string;
   title: string;
   description?: string;
   type: NoteTypeValue;
@@ -15,6 +18,7 @@ type Props = {
 };
 
 const {
+  slug,
   title,
   description,
   type,
@@ -25,17 +29,35 @@ const {
   href,
   cover,
 } = Astro.props;
+const coverRecipe = getNoteCoverRecipe(type, category, tags.length);
 ---
 
 <article class="note-card">
   <a href={href} aria-label={`Read note: ${title}`}>
-    {
-      cover && (
-        <div class="note-card__cover">
+    <div
+      class:list={[
+        "note-card__cover",
+        { "note-card__cover--generated": !cover },
+      ]}
+    >
+      {
+        cover ? (
           <img src={cover} alt="" loading="lazy" />
-        </div>
-      )
-    }
+        ) : (
+          <PixelCover
+            variant={coverRecipe.variant}
+            section="notes"
+            status={type}
+            tags={tags}
+            seed={slug}
+            accent={coverRecipe.accent}
+            density={coverRecipe.density}
+            compact
+            label={`${title} abstract note cover`}
+          />
+        )
+      }
+    </div>
     <div class="note-card__body">
       <NoteMeta type={type} category={category} date={date} updated={updated} />
       <h2>{title}</h2>
@@ -84,7 +106,7 @@ const {
   }
 
   .note-card__cover {
-    width: 9rem;
+    width: 11rem;
     min-height: 7rem;
     overflow: hidden;
     border: 1px solid var(--color-border);
@@ -97,6 +119,10 @@ const {
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+
+  .note-card__cover--generated :global(.pixel-cover) {
+    min-height: 9rem;
   }
 
   .note-card__body {

@@ -1,6 +1,6 @@
 ---
 import type { ProjectItem } from "../../lib/content/projects";
-import { getProjectCoverVariant } from "../../lib/visual/pixel-cover";
+import { getProjectCoverRecipe } from "../../lib/visual/pixel-cover";
 import PixelCover from "../ui/PixelCover.astro";
 
 type Props = {
@@ -8,6 +8,7 @@ type Props = {
 };
 
 const { project } = Astro.props;
+const coverRecipe = getProjectCoverRecipe(project.type, true);
 ---
 
 <figure class="project-visual">
@@ -16,11 +17,13 @@ const { project } = Astro.props;
       <img src={project.cover} alt="" loading="eager" />
     ) : (
       <PixelCover
-        variant={getProjectCoverVariant(project.type)}
+        variant={coverRecipe.variant}
         section="projects"
         status={project.status}
         tags={project.techStack}
         seed={project.slug}
+        accent={coverRecipe.accent}
+        density={coverRecipe.density}
         label={`${project.title} abstract system record`}
       />
     )

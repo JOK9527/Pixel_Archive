@@ -1,6 +1,6 @@
 ---
 import type { LabStatusValue, LabTypeValue } from "../../lib/content/lab";
-import { getLabCoverVariant } from "../../lib/visual/pixel-cover";
+import { getLabCoverRecipe } from "../../lib/visual/pixel-cover";
 import PixelCover from "../ui/PixelCover.astro";
 import LabTypeBadge from "./LabTypeBadge.astro";
 
@@ -29,6 +29,7 @@ const {
 } = Astro.props;
 
 const Element = href ? "a" : "article";
+const coverRecipe = getLabCoverRecipe(type, status);
 ---
 
 <Element
@@ -42,11 +43,13 @@ const Element = href ? "a" : "article";
         <img src={cover} alt="" loading="lazy" />
       ) : (
         <PixelCover
-          variant={getLabCoverVariant(type)}
+          variant={coverRecipe.variant}
           section="lab"
           status={status}
           tags={tags}
           seed={seed}
+          accent={coverRecipe.accent}
+          density={coverRecipe.density}
           compact
           label={`${title} abstract experiment cover`}
         />
