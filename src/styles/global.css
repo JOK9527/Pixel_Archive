@@ -9,6 +9,7 @@
 
 html {
   min-width: 20rem;
+  overflow-x: clip;
   background: var(--color-bg);
   scroll-behavior: smooth;
 }
@@ -133,7 +134,6 @@ p {
   *::after {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
+    animation: none !important;
   }
 }

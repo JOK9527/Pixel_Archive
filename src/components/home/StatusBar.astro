@@ -18,7 +18,6 @@ const tones = ["green", "purple", "warning"] as const;
         <StatusPill
           label={item}
           tone={tones[index % tones.length]}
-          pulse={index === 0}
         />
       ))
     }

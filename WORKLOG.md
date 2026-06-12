@@ -1,5 +1,24 @@
 # WORKLOG
 
+## 2026-06-12 / Phase 22.5
+
+### Idle motion and reduced-motion closure
+
+- Limited the Home screen to two idle animations: the 18-second grid drift and a slower 1.8-second READY cursor blink.
+- Removed repeated status pulses from the terminal, status bar, and active Save Slots.
+- Changed reduced-motion handling to disable all CSS animations while retaining near-instant transitions.
+- Marked Phase 21–22 complete in the phase plan and README.
+- Kept child pages free from continuous animation and added no animation dependency.
+
+### Verification
+
+- `npm run build`: passed; 51 static pages generated.
+- Normal Home mode exposes exactly two animations: 18-second `archive-grid-drift` and 1.8-second `cursor-blink`.
+- Reduced-motion mode exposes 0 running animations; cursor and grid compute to `animation-name: none`, with transitions reduced to `0.01ms`.
+- Added root horizontal clipping so decorative pixel geometry cannot create user-scrollable overflow.
+- 11 representative routes passed desktop and 390px mobile dark reduced-motion checks, 22 route-mode checks total.
+- Browser console: 0 errors, 0 warnings.
+
 ## 2026-06-12 / Phase 22.4
 
 ### Metadata-driven pixel cover closure

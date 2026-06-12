@@ -1,12 +1,14 @@
 # Pixel Archive
 
-> Phase 21 local development completed on 2026-06-12. Phase 22 visual-identity calibration is in progress; public deployment still waits for a Git remote, Cloudflare Pages project, and confirmed production URL.
+> Phase 21–22 local development completed on 2026-06-12. Public deployment still waits for a Git remote, Cloudflare Pages project, and confirmed production URL.
 
 Pixel Archive 是一个以极简阅读体验为基础、以像素组件为识别符号、以复古终端和存档隐喻为氛围的个人档案馆。
 
 ## 当前阶段
 
 Phase 21：全站 spacing scale、页面栅格、Sidebar 比例、卡片节奏、正文 measure 与 Archive 时间线对齐已完成本地验收。
+
+Phase 22：中英文职责、跨页坐标网格、像素 UI 标签、四模板 metadata 封面系统和静置动效上限已完成本地验收。
 
 当前已在第一阶段结构基线上完成纸白 / 黛蓝 / 亚丁绿 / 朱红 / 琥珀 / 藕荷紫语义色阶，并完成像素语法、首页档案终端、Project 抽象封面、状态系统和栏目识别。页面能力、内容系统、路由与技术栈保持不变。
 
@@ -98,4 +100,4 @@ src/styles/              主题、全局和 Markdown 样式
 
 ## 下一步
 
-Phase 21 已完成。下一步执行 Phase 22：语言系统、跨页视觉母题、像素 UI 标签、封面规则与静置动效收口；完成后再进入正式部署准备。
+Phase 21–22 已完成。下一步进入正式部署准备；当前仍缺少 Git remote、Cloudflare Pages 项目和确认后的生产域名。

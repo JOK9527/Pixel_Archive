@@ -2,18 +2,16 @@
 type Props = {
   label: string;
   tone?: "neutral" | "green" | "purple" | "warning";
-  pulse?: boolean;
 };
 
 const {
   label,
   tone = "neutral",
-  pulse = false,
 } = Astro.props;
 ---
 
 <span class:list={["status-pill", "ui-label", `status-pill--${tone}`]}>
-  <span class:list={["status-pill__signal", { "status-pill__signal--pulse": pulse }]} aria-hidden="true">
+  <span class="status-pill__signal" aria-hidden="true">
     <i></i><i></i><i></i>
   </span>
   {label}
@@ -73,18 +71,4 @@ const {
     opacity: 0.75;
   }
 
-  .status-pill__signal--pulse {
-    animation: status-pulse 2.4s ease-in-out infinite;
-  }
-
-  @keyframes status-pulse {
-    0%,
-    100% {
-      opacity: 0.55;
-    }
-
-    50% {
-      opacity: 1;
-    }
-  }
 </style>
