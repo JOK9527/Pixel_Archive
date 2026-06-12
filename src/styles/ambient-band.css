@@ -1,0 +1,131 @@
+.ambient-band {
+  position: absolute;
+  z-index: 0;
+  top: -2rem;
+  bottom: -4rem;
+  left: 50%;
+  width: 100vw;
+  overflow: hidden;
+  pointer-events: none;
+  transform: translateX(-50%);
+}
+
+.ambient-band__svg {
+  position: absolute;
+  width: clamp(17.5rem, 32vw, 32.5rem);
+  max-width: 32.5rem;
+  height: auto;
+  opacity: var(--ambient-opacity-low);
+}
+
+.ambient-band--medium .ambient-band__svg {
+  opacity: var(--ambient-opacity-medium);
+}
+
+.ambient-band__texture {
+  opacity: var(--ambient-pixel-opacity);
+}
+
+.ambient-band__facet {
+  opacity: 0.38;
+}
+
+.ambient-band__secondary {
+  opacity: 0.42;
+}
+
+.ambient-band__node {
+  fill: var(--ambient-pixel);
+  opacity: 0.58;
+}
+
+.ambient-band__node--hot {
+  fill: var(--ambient-hot);
+  opacity: 0.72;
+}
+
+.ambient-band--diagonal-up .ambient-band__svg,
+.ambient-band--side-arc .ambient-band__svg {
+  top: 10rem;
+  right: -5rem;
+  mask-image: linear-gradient(to left, #000 56%, transparent 100%);
+}
+
+.ambient-band--diagonal-down .ambient-band__svg {
+  top: 7rem;
+  left: -5rem;
+  mask-image: linear-gradient(to right, #000 56%, transparent 100%);
+}
+
+.ambient-band--corner-sweep .ambient-band__svg {
+  top: 3rem;
+  right: -4rem;
+  mask-image: linear-gradient(to left, #000 50%, transparent 100%);
+}
+
+.ambient-band--low-cross .ambient-band__svg {
+  right: -3rem;
+  bottom: 10%;
+  opacity: var(--ambient-opacity-faint);
+  mask-image: linear-gradient(to left, #000 52%, transparent 100%);
+}
+
+.ambient-band--gutter-split .ambient-band__svg {
+  top: 20rem;
+  left: 50%;
+  width: clamp(23rem, 48vw, 35rem);
+  transform: translateX(-50%);
+  opacity: var(--ambient-opacity-faint);
+  mask-image: linear-gradient(
+    90deg,
+    #000 0%,
+    #000 23%,
+    transparent 39%,
+    transparent 61%,
+    #000 77%,
+    #000 100%
+  );
+}
+
+.ambient-band--project-detail .ambient-band__svg {
+  top: 14rem;
+}
+
+.ambient-band--lab-detail .ambient-band__svg {
+  top: 18rem;
+}
+
+@media (max-width: 68rem) {
+  .ambient-band__svg {
+    width: clamp(16rem, 36vw, 22rem);
+    opacity: var(--ambient-opacity-compact);
+  }
+
+  .ambient-band--diagonal-up .ambient-band__svg,
+  .ambient-band--side-arc .ambient-band__svg,
+  .ambient-band--corner-sweep .ambient-band__svg,
+  .ambient-band--low-cross .ambient-band__svg {
+    right: -7rem;
+  }
+
+  .ambient-band--diagonal-down .ambient-band__svg {
+    left: -7rem;
+  }
+}
+
+@media (max-width: 47.5rem) {
+  .ambient-band {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient-band__svg {
+    transform: none;
+    transition: none;
+  }
+
+  .ambient-band--gutter-split .ambient-band__svg {
+    transform: translateX(-50%);
+  }
+}
