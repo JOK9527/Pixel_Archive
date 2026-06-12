@@ -1,0 +1,107 @@
+---
+import type { ArchiveTypeValue } from "../../lib/content/archive";
+import PixelCornerMark from "../cover/PixelCornerMark.astro";
+import PixelHeatStrip from "../cover/PixelHeatStrip.astro";
+
+type Props = {
+  date: string;
+  type: ArchiveTypeValue;
+  seed: string;
+};
+
+const { date, type, seed } = Astro.props;
+const progressByType: Record<ArchiveTypeValue, number> = {
+  "save-point": 45,
+  milestone: 80,
+  "project-log": 62,
+};
+const typeLabels: Record<ArchiveTypeValue, string> = {
+  "save-point": "SAVE POINT",
+  milestone: "MILESTONE",
+  "project-log": "PROJECT LOG",
+};
+const displayDate = date.replaceAll("-", ".");
+---
+
+<div
+  class="archive-save-point"
+  data-cover-variant="save-point"
+  data-cover-seed={seed}
+>
+  <PixelCornerMark position="top-left" />
+  <div class="archive-save-point__identity">
+    <span>SAVE POINT</span>
+    <time datetime={date}>{displayDate}</time>
+    <strong>{typeLabels[type]}</strong>
+  </div>
+  <PixelHeatStrip
+    seed={seed}
+    variant="timeline"
+    density={type === "milestone" ? "high" : "medium"}
+    progress={progressByType[type]}
+    accent="teal"
+    compact
+  />
+</div>
+
+<style>
+  .archive-save-point {
+    --cover-accent: var(--color-tea);
+    --cover-hot: var(--color-primary);
+
+    position: relative;
+    display: grid;
+    min-width: 0;
+    margin-bottom: var(--space-4);
+    padding: 0.75rem;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    background-color: color-mix(
+      in srgb,
+      var(--color-surface-deep) 88%,
+      var(--color-tea) 12%
+    );
+    background-image:
+      linear-gradient(var(--color-grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-grid) 1px, transparent 1px);
+    background-size: 20px 20px;
+    grid-template-columns: minmax(8rem, auto) minmax(0, 1fr);
+    align-items: end;
+    gap: 1rem;
+  }
+
+  .archive-save-point__identity {
+    display: grid;
+    min-width: 0;
+    gap: 0.18rem;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+  }
+
+  .archive-save-point__identity span,
+  .archive-save-point__identity strong {
+    color: var(--color-text-muted);
+    font-size: 0.54rem;
+    letter-spacing: 0.08em;
+  }
+
+  .archive-save-point__identity time {
+    color: var(--cover-accent);
+    font-size: clamp(1rem, 3vw, 1.35rem);
+    font-weight: 800;
+    letter-spacing: -0.05em;
+    line-height: 1;
+  }
+
+  .archive-save-point__identity strong {
+    color: var(--color-heading);
+  }
+
+  @media (max-width: 32rem) {
+    .archive-save-point {
+      grid-template-columns: 1fr;
+      align-items: start;
+      gap: 0.75rem;
+    }
+  }
+</style>

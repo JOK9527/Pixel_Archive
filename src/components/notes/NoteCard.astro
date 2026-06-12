@@ -1,7 +1,7 @@
 ---
 import type { NoteTypeValue } from "../../lib/content/notes";
-import { getNoteCoverRecipe } from "../../lib/visual/pixel-cover";
-import PixelCover from "../ui/PixelCover.astro";
+import { normalizeCoverMeta } from "../../lib/visual/pixel-cover-system";
+import PixelCover from "../cover/PixelCover.astro";
 import NoteMeta from "./NoteMeta.astro";
 
 type Props = {
@@ -29,7 +29,14 @@ const {
   href,
   cover,
 } = Astro.props;
-const coverRecipe = getNoteCoverRecipe(type, category, tags.length);
+const coverRecipe = normalizeCoverMeta({
+  kind: "note",
+  title,
+  seed: slug,
+  date,
+  status: type,
+  tagCount: tags.length,
+});
 ---
 
 <article class="note-card">
@@ -45,15 +52,21 @@ const coverRecipe = getNoteCoverRecipe(type, category, tags.length);
           <img src={cover} alt="" loading="lazy" />
         ) : (
           <PixelCover
+            kind="note"
             variant={coverRecipe.variant}
-            section="notes"
+            code={coverRecipe.code}
+            title={title}
+            meta={[category, type]}
             status={type}
             tags={tags}
-            seed={slug}
+            progress={coverRecipe.progress}
+            date={date.replaceAll("-", ".")}
+            seed={coverRecipe.seed}
             accent={coverRecipe.accent}
             density={coverRecipe.density}
+            showHeat={coverRecipe.showHeat}
             compact
-            label={`${title} abstract note cover`}
+            label={type.toUpperCase()}
           />
         )
       }
@@ -121,7 +134,8 @@ const coverRecipe = getNoteCoverRecipe(type, category, tags.length);
     object-fit: cover;
   }
 
-  .note-card__cover--generated :global(.pixel-cover) {
+  .note-card__cover--generated :global(.pixel-cover),
+  .note-card__cover--generated :global(.pixel-cover-system) {
     min-height: 9rem;
   }
 
@@ -186,6 +200,14 @@ const coverRecipe = getNoteCoverRecipe(type, category, tags.length);
 
     .note-card__body {
       grid-row: 2;
+    }
+
+    .note-card__cover--generated {
+      display: none;
+    }
+
+    .note-card__cover--generated + .note-card__body {
+      grid-row: 1;
     }
   }
 </style>

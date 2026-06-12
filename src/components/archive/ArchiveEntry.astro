@@ -1,5 +1,6 @@
 ---
 import type { ArchiveTypeValue } from "../../lib/content/archive";
+import ArchiveSavePoint from "./ArchiveSavePoint.astro";
 
 type Props = {
   slug: string;
@@ -12,11 +13,6 @@ type Props = {
 
 const { slug, title, date, type, description, relatedHref } = Astro.props;
 
-const typeLabels = {
-  "save-point": "SAVE POINT",
-  milestone: "MILESTONE",
-  "project-log": "PROJECT LOG",
-} as const;
 ---
 
 <article
@@ -24,10 +20,7 @@ const typeLabels = {
   class:list={["archive-entry", "pixel-corner", `archive-entry--${type}`]}
 >
   <span class="archive-entry__node" aria-hidden="true"></span>
-  <div class="archive-entry__header">
-    <time datetime={date}>{date}</time>
-    <span>{typeLabels[type]}</span>
-  </div>
+  <ArchiveSavePoint date={date} type={type} seed={slug} />
   <h3>{title}</h3>
   {description && <p>{description}</p>}
   {
@@ -76,19 +69,6 @@ const typeLabels = {
     background: var(--color-accent);
   }
 
-  .archive-entry__header {
-    display: flex;
-    margin-bottom: var(--space-3);
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-4);
-    color: var(--color-text-muted);
-    font-family: var(--font-ui);
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 0.07em;
-  }
-
   .archive-entry h3 {
     margin-bottom: var(--space-2);
     font-size: 1.2rem;
@@ -113,11 +93,4 @@ const typeLabels = {
     text-transform: uppercase;
   }
 
-  @media (max-width: 32rem) {
-    .archive-entry__header {
-      align-items: flex-start;
-      flex-direction: column;
-      gap: 0.25rem;
-    }
-  }
 </style>
