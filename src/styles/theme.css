@@ -105,6 +105,8 @@
   --measure-narrow: 38rem;
   --measure-reading: 46rem;
   --measure-wide: 58rem;
+  --layout-sidebar: 15rem;
+  --layout-gap: clamp(var(--space-6), 4vw, var(--space-8));
 
   --shadow-xs: 0 1px 0 rgb(19 24 36 / 8%);
   --shadow-sm: 0 8px 20px rgb(19 24 36 / 8%);
@@ -121,7 +123,7 @@
   --pixel-unit: 4px;
   --radius-sm: 2px;
   --radius-md: 4px;
-  --content-width: 70rem;
+  --content-width: 76rem;
   --reading-width: var(--measure-reading);
   --transition-fast: 160ms ease;
 }

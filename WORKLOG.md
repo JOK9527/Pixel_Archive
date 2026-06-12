@@ -1,5 +1,23 @@
 # WORKLOG
 
+## 2026-06-12 / Phase 21.2
+
+### Page grid and sidebar calibration
+
+- Increased the shared page container to 1216px while staying inside the planned 1120–1240px range.
+- Added shared 240px sidebar and responsive column-gap tokens.
+- Mapped Projects, Notes, Archive, Lab, and About to the same desktop content grid.
+- Increased index and profile-rail padding and gave taxonomy groups clearer internal separation.
+- Preserved the existing 54rem single-column mobile collapse.
+
+### Verification
+
+- `npm run build`: passed; 51 static pages generated.
+- Projects, Notes, Archive, Lab, and About resolve to the same 240px + 918px grid at 1440px.
+- All five pages collapse to a 370px single column at the 390px viewport.
+- Mobile dark theme: actual horizontal scroll remained 0.
+- Browser console: 0 errors, 0 warnings.
+
 ## 2026-06-12 / Phase 21.1
 
 ### Spacing token and section-gap audit

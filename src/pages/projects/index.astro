@@ -65,9 +65,9 @@ const taxonomy = getProjectTaxonomy(projects);
 <style>
   .projects-layout {
     display: grid;
-    grid-template-columns: minmax(10rem, 12rem) minmax(0, 1fr);
+    grid-template-columns: var(--layout-sidebar) minmax(0, 1fr);
     align-items: start;
-    gap: clamp(1.5rem, 4vw, 3rem);
+    gap: var(--layout-gap);
   }
 
   .projects-layout__content {

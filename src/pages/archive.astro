@@ -45,9 +45,9 @@ const taxonomy = getArchiveTaxonomy(entries);
 <style>
   .archive-layout {
     display: grid;
-    grid-template-columns: minmax(10rem, 12rem) minmax(0, 1fr);
+    grid-template-columns: var(--layout-sidebar) minmax(0, 1fr);
     align-items: start;
-    gap: clamp(1.5rem, 4vw, 3rem);
+    gap: var(--layout-gap);
   }
 
   @media (max-width: 54rem) {
