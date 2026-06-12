@@ -4,6 +4,7 @@ import MarkdownContent from "../components/notes/MarkdownContent.astro";
 import NoteMeta from "../components/notes/NoteMeta.astro";
 import OnThisPage from "../components/notes/OnThisPage.astro";
 import type { NoteItem } from "../lib/content/notes";
+import { generateCoverCode } from "../lib/visual/pixel-cover-system";
 import BaseLayout from "./BaseLayout.astro";
 
 type Props = {
@@ -24,6 +25,14 @@ const {
   olderNote,
 } = Astro.props;
 const tocHeadings = headings.filter((heading) => heading.depth === 2 || heading.depth === 3);
+const recordId =
+  note.coverMeta?.code ??
+  generateCoverCode({
+    kind: "note",
+    title: note.title,
+    seed: note.slug,
+    date: note.date,
+  });
 const relatedProjects = (
   await Promise.all(
     note.relatedProjects.map(async (slug) => {
@@ -76,7 +85,11 @@ const relatedArchive = (
     <div class="note-detail__reading">
       {
         tocHeadings.length > 0 && (
-          <OnThisPage headings={tocHeadings} />
+          <OnThisPage
+            headings={tocHeadings}
+            title={note.title}
+            recordId={recordId}
+          />
         )
       }
 

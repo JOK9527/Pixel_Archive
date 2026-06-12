@@ -85,7 +85,8 @@
   --section-notes-neutral: #d8d5c8;
   --section-notes-cool: #8fa7a0;
   --section-notes-ink: #2a3c5c;
-  --section-notes-band: #263746;
+  --section-notes-band: #2a3c5c;
+  --section-notes-band-ink: #fff9f2;
   --heat-notes-0: #fff7ef;
   --heat-notes-1: #d8d5c8;
   --heat-notes-2: #8fa7a0;
@@ -299,7 +300,8 @@
   --section-notes-neutral: #4a4540;
   --section-notes-cool: #6f8c84;
   --section-notes-ink: #f4e8d8;
-  --section-notes-band: #171c1f;
+  --section-notes-band: #304956;
+  --section-notes-band-ink: #f4e8d8;
   --heat-notes-0: #33231e;
   --heat-notes-1: #4a4540;
   --heat-notes-2: #6f8c84;

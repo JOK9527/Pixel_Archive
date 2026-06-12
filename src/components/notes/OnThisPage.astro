@@ -9,9 +9,11 @@ type Heading = {
 
 type Props = {
   headings: Heading[];
+  title: string;
+  recordId: string;
 };
 
-const { headings } = Astro.props;
+const { headings, title, recordId } = Astro.props;
 ---
 
 <aside
@@ -23,6 +25,10 @@ const { headings } = Astro.props;
     <h2 id="on-this-page-title">On this page</h2>
     <span>{headings.length.toString().padStart(2, "0")}</span>
   </header>
+  <div class="on-this-page__identity">
+    <strong>{recordId}</strong>
+    <p>{title}</p>
+  </div>
   <ReadingProgress />
   <ol>
     {
@@ -140,6 +146,35 @@ const { headings } = Astro.props;
   .on-this-page header span {
     color: var(--section-accent);
     font-weight: 700;
+  }
+
+  .on-this-page__identity {
+    display: grid;
+    margin-bottom: 0.8rem;
+    padding: 0.1rem 0 0.8rem;
+    border-bottom: 1px dashed var(--color-border);
+    gap: 0.3rem;
+  }
+
+  .on-this-page__identity strong {
+    color: var(--section-accent);
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .on-this-page__identity p {
+    display: -webkit-box;
+    margin: 0;
+    overflow: hidden;
+    color: var(--color-heading);
+    font-size: 0.72rem;
+    font-weight: 700;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
   }
 
   .on-this-page ol {
