@@ -59,7 +59,7 @@ const {
   }
 
   <p class="section-index__status" aria-live="polite" data-filter-status>
-    All records loaded.
+    ALL RECORDS LOADED.
   </p>
 </aside>
 
@@ -114,8 +114,8 @@ const {
         if (status) {
           status.textContent =
             kind === "all"
-              ? "All records loaded."
-              : `${visible} record${visible === 1 ? "" : "s"} matched.`;
+              ? "ALL RECORDS LOADED."
+              : `${visible} RECORD${visible === 1 ? "" : "S"} MATCHED.`;
         }
       };
 
@@ -244,7 +244,7 @@ const {
   @media (max-width: 54rem) {
     .section-index {
       position: static;
-      margin-inline: calc(var(--pixel-unit) * 0.5);
+      margin-inline: 0;
       padding: var(--space-4);
     }
 

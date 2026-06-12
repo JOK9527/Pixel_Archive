@@ -54,7 +54,7 @@ const relatedArchive = (
   image={note.cover}
 >
   <article class="note-detail">
-    <a class="note-detail__back" href="/notes/">← Notes archive</a>
+    <a class="note-detail__back" href="/notes/">← NOTES INDEX</a>
     <header>
       <NoteMeta
         type={note.type}
@@ -112,7 +112,7 @@ const relatedArchive = (
             <nav class="note-detail__pager" aria-label="Adjacent notes">
               {newerNote ? (
                 <a href={newerNote.href}>
-                  <span>← Newer note</span>
+                  <span>← NEWER NOTE</span>
                   <strong>{newerNote.title}</strong>
                 </a>
               ) : (
@@ -120,7 +120,7 @@ const relatedArchive = (
               )}
               {olderNote && (
                 <a href={olderNote.href}>
-                  <span>Older note →</span>
+                  <span>OLDER NOTE →</span>
                   <strong>{olderNote.title}</strong>
                 </a>
               )}

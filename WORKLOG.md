@@ -1,5 +1,23 @@
 # WORKLOG
 
+## 2026-06-12 / Phase 22.1
+
+### Language-role consistency
+
+- Formalized English system-layer and Chinese content-layer roles in the writing standard.
+- Unified Project, Note, Archive, Lab, Save Slot, discovery, and empty-state actions as stable English UI labels.
+- Standardized detail return links, Note pager labels, index counts, and filter status copy.
+- Preserved real content titles, descriptions, summaries, and body copy.
+- Kept routes, data models, and content files unchanged.
+
+### Verification
+
+- `npm run build`: passed; 51 static pages generated.
+- Project, Note, Archive, Lab, and topic pages expose the expected stable English action labels while preserving Chinese content copy.
+- Project filtering reports the normalized `ALL RECORDS LOADED.` system status.
+- Mobile dark theme resolves through the site theme state with 0 actual horizontal scroll.
+- Browser console: 0 errors, 0 warnings.
+
 ## 2026-06-12 / Phase 21.5
 
 ### Archive timeline alignment
