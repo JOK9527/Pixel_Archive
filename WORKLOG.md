@@ -1,5 +1,22 @@
 # WORKLOG
 
+## 2026-06-12 / Phase 21.5
+
+### Archive timeline alignment
+
+- Added one inherited timeline-offset baseline for the axis, nodes, and card indentation.
+- Moved save-point nodes onto the card top edge instead of the first metadata row.
+- Aligned month labels with the top of each month group and normalized year/month spacing.
+- Extended the dashed timeline through the complete record group.
+- Reduced the shared timeline offset on narrow screens without changing Archive filtering.
+
+### Verification
+
+- `npm run build`: passed; 51 static pages generated.
+- All 5 Archive nodes resolve to 0px axis-center and card-top alignment deltas.
+- Mobile dark theme: `milestone` filtering still returns 3 records with 0 actual horizontal scroll.
+- Browser console: 0 errors, 0 warnings.
+
 ## 2026-06-12 / Phase 21.4
 
 ### Text measure and detail-title calibration

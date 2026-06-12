@@ -52,8 +52,12 @@ const typeLabels = {
 
   .archive-entry__node {
     position: absolute;
-    top: 1.3rem;
-    left: -2.05rem;
+    /* Absolute positioning starts at the padding box; offset the 1px card border. */
+    top: -1px;
+    left: calc(
+      (var(--timeline-offset, var(--space-6)) * -1) +
+        (var(--pixel-unit) / 2) - 1px
+    );
     width: 0.7rem;
     height: 0.7rem;
     border: 2px solid var(--color-bg);
@@ -61,6 +65,7 @@ const typeLabels = {
     box-shadow:
       0 0 0 2px var(--color-border),
       4px 4px 0 color-mix(in srgb, var(--color-warm) 30%, transparent);
+    transform: translate(-50%, -50%);
   }
 
   .archive-entry--milestone .archive-entry__node {
