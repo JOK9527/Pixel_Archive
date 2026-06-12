@@ -12,7 +12,7 @@ const {
 } = Astro.props;
 ---
 
-<span class:list={["status-pill", `status-pill--${tone}`]}>
+<span class:list={["status-pill", "ui-label", `status-pill--${tone}`]}>
   <span class:list={["status-pill__signal", { "status-pill__signal--pulse": pulse }]} aria-hidden="true">
     <i></i><i></i><i></i>
   </span>
@@ -25,10 +25,10 @@ const {
     align-items: center;
     gap: 0.45rem;
     color: var(--color-text-muted);
-    font-family: var(--font-mono);
+    font-family: var(--font-ui);
     font-size: 0.68rem;
     font-weight: 700;
-    letter-spacing: 0.08em;
+    letter-spacing: var(--tracking-ui);
     line-height: 1;
     text-transform: uppercase;
   }

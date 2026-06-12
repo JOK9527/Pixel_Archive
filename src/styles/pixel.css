@@ -89,6 +89,22 @@
   background-size: calc(var(--pixel-unit) * 5) calc(var(--pixel-unit) * 5);
 }
 
+.ui-label,
+.ui-brand {
+  font-family: var(--font-ui);
+  font-feature-settings: "zero" 1;
+  font-variant-numeric: tabular-nums slashed-zero;
+  text-transform: uppercase;
+}
+
+.ui-label {
+  letter-spacing: var(--tracking-ui);
+}
+
+.ui-brand {
+  letter-spacing: var(--tracking-brand);
+}
+
 .pixel-ruler {
   position: relative;
 }

@@ -16,7 +16,7 @@ const typeMeta = {
 const meta = typeMeta[type];
 ---
 
-<span class:list={["note-type", `note-type--${meta.tone}`]}>
+<span class:list={["note-type", "ui-label", `note-type--${meta.tone}`]}>
   {meta.label}
 </span>
 
@@ -27,10 +27,10 @@ const meta = typeMeta[type];
     padding: 0.28rem 0.48rem;
     border: 1px solid var(--color-border);
     border-radius: var(--radius-sm);
-    font-family: var(--font-mono);
+    font-family: var(--font-ui);
     font-size: 0.63rem;
     font-weight: 700;
-    letter-spacing: 0.08em;
+    letter-spacing: var(--tracking-ui);
     line-height: 1;
     text-transform: uppercase;
   }

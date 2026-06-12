@@ -52,7 +52,7 @@ const Element = href ? "a" : "article";
   </div>
   <h3>{title}</h3>
   {description && <p>{description}</p>}
-  <span class="save-slot__action">{href ? "LOAD SLOT →" : "SLOT WAITING"}</span>
+  <span class="save-slot__action ui-label">{href ? "LOAD SLOT →" : "SLOT WAITING"}</span>
 </Element>
 
 <style>
@@ -110,7 +110,7 @@ const Element = href ? "a" : "article";
     justify-content: space-between;
     gap: 0.75rem;
     color: var(--color-text-muted);
-    font-family: var(--font-mono);
+    font-family: var(--font-ui);
     font-size: 0.65rem;
     font-weight: 700;
     letter-spacing: 0.08em;

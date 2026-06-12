@@ -70,7 +70,7 @@ const Element = href ? "a" : "article";
           )
         }
         {date && <time datetime={date}>{date}</time>}
-        {href && <span class="lab-card__action">OPEN EXPERIMENT →</span>}
+        {href && <span class="lab-card__action ui-label">OPEN EXPERIMENT →</span>}
       </div>
     )
   }
@@ -147,7 +147,7 @@ const Element = href ? "a" : "article";
 
   .lab-card__meta > span {
     color: var(--color-text-muted);
-    font-family: var(--font-mono);
+    font-family: var(--font-ui);
     font-size: 0.64rem;
     font-weight: 700;
     letter-spacing: 0.08em;

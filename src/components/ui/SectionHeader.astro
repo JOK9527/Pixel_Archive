@@ -15,7 +15,7 @@ const {
 ---
 
 <header class:list={["section-header", `section-header--${align}`]}>
-  {eyebrow && <p class="section-header__eyebrow">{eyebrow}</p>}
+  {eyebrow && <p class="section-header__eyebrow ui-label">{eyebrow}</p>}
   <h1>{title}</h1>
   {description && <p class="section-header__description">{description}</p>}
 </header>
@@ -55,10 +55,10 @@ const {
   .section-header__eyebrow {
     margin-bottom: var(--space-3);
     color: var(--section-accent);
-    font-family: var(--font-mono);
+    font-family: var(--font-ui);
     font-size: 0.72rem;
     font-weight: 700;
-    letter-spacing: 0.1em;
+    letter-spacing: var(--tracking-ui);
     text-transform: uppercase;
   }
 

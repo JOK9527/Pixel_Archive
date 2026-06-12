@@ -1,5 +1,22 @@
 # WORKLOG
 
+## 2026-06-12 / Phase 22.3
+
+### UI font and label strategy
+
+- Added `--font-ui`, shared tracking tokens, and reusable `.ui-label` / `.ui-brand` utilities.
+- Applied the UI font layer to the brand, navigation, theme control, footer metadata, statuses, badges, filters, and stable action labels.
+- Kept Chinese headings, descriptions, and Markdown reading content on the readable sans-serif stack.
+- Used only the existing local font stack with no font downloads or new dependencies.
+
+### Verification
+
+- `npm run build`: passed; 51 static pages generated.
+- Brand, navigation, badges, filters, and action labels resolve to the local UI monospace stack with uppercase, shared tracking, and tabular slashed-zero numerals.
+- Page headings, body copy, and Markdown paragraphs resolve to the system sans-serif stack without uppercase transforms.
+- Removed an existing `body { font: inherit; }` override that had reset general content to Times New Roman.
+- Mobile dark layout retains 0 actual horizontal scroll; browser console reports 0 errors and 0 warnings.
+
 ## 2026-06-12 / Phase 22.2
 
 ### Cross-page coordinate grid

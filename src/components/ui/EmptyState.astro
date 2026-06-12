@@ -29,12 +29,12 @@ const {
   <div class="empty-state__marker" aria-hidden="true">
     <span></span><span></span><span></span>
   </div>
-  <p class="empty-state__status">SLOT WAITING</p>
+  <p class="empty-state__status ui-label">SLOT WAITING</p>
   <h2>{title}</h2>
   {description && <p class="empty-state__description">{description}</p>}
   {
     actionLabel && actionHref && (
-      <a class="empty-state__action" href={actionHref}>
+      <a class="empty-state__action ui-label" href={actionHref}>
         {actionLabel}
       </a>
     )
@@ -90,7 +90,7 @@ const {
   .empty-state__status {
     margin-bottom: 0.7rem;
     color: var(--color-accent-text);
-    font-family: var(--font-mono);
+    font-family: var(--font-ui);
     font-size: 0.7rem;
     font-weight: 700;
     letter-spacing: 0.08em;
@@ -118,7 +118,7 @@ const {
     background: var(--color-surface-muted);
     color: var(--color-text);
     align-items: center;
-    font-family: var(--font-mono);
+    font-family: var(--font-ui);
     font-size: 0.76rem;
     font-weight: 700;
     letter-spacing: 0.04em;

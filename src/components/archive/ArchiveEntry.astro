@@ -32,7 +32,7 @@ const typeLabels = {
   {description && <p>{description}</p>}
   {
     relatedHref && (
-      <a href={relatedHref}>
+      <a class="ui-label" href={relatedHref}>
         OPEN RELATED FILE <span aria-hidden="true">→</span>
       </a>
     )
@@ -83,7 +83,7 @@ const typeLabels = {
     justify-content: space-between;
     gap: var(--space-4);
     color: var(--color-text-muted);
-    font-family: var(--font-mono);
+    font-family: var(--font-ui);
     font-size: 0.65rem;
     font-weight: 700;
     letter-spacing: 0.07em;

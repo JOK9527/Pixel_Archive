@@ -15,12 +15,13 @@ const isActive = (href: string) =>
 
 <header class="site-header">
   <div class="site-header__inner">
-    <a class="site-header__brand" href="/">{site.name}</a>
+    <a class="site-header__brand ui-brand" href="/">{site.name}</a>
 
     <nav class="site-header__nav" aria-label="Primary navigation">
       {
         navigation.map((item) => (
           <a
+            class="ui-label"
             href={item.href}
             aria-current={isActive(item.href) ? "page" : undefined}
           >
@@ -51,10 +52,9 @@ const isActive = (href: string) =>
 
   .site-header__brand {
     color: var(--color-heading);
-    font-family: var(--font-mono);
+    font-family: var(--font-ui);
     font-size: 0.9rem;
     font-weight: 700;
-    letter-spacing: 0.04em;
     text-decoration: none;
     white-space: nowrap;
   }
@@ -78,7 +78,7 @@ const isActive = (href: string) =>
     padding: 0.35rem 0.55rem;
     border-radius: var(--radius-sm);
     color: var(--color-text);
-    font-family: var(--font-mono);
+    font-family: var(--font-ui);
     font-size: 0.78rem;
     text-decoration: none;
     transition:

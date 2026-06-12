@@ -89,6 +89,9 @@
   --font-mono:
     "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
   --font-pixel: var(--font-mono);
+  --font-ui: var(--font-pixel);
+  --tracking-ui: 0.08em;
+  --tracking-brand: 0.1em;
 
   /* Shared spacing scale: 4px baseline with deliberate large section steps. */
   --space-0: 0;

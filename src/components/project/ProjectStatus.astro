@@ -21,6 +21,7 @@ const meta = statusMeta[status];
   class:list={[
     "project-status",
     "status-block",
+    "ui-label",
     `project-status--${meta.tone}`,
   ]}
 >
@@ -40,10 +41,10 @@ const meta = statusMeta[status];
     border-radius: var(--radius-sm);
     align-items: center;
     gap: 0.4rem;
-    font-family: var(--font-mono);
+    font-family: var(--font-ui);
     font-size: 0.65rem;
     font-weight: 700;
-    letter-spacing: 0.08em;
+    letter-spacing: var(--tracking-ui);
     line-height: 1;
     text-transform: uppercase;
     background: var(--color-surface);
