@@ -4,8 +4,8 @@ import type {
   ProjectStatusValue,
   ProjectTypeValue,
 } from "../../lib/content/projects";
-import { getProjectCoverRecipe } from "../../lib/visual/pixel-cover";
-import PixelCover from "../ui/PixelCover.astro";
+import { normalizeCoverMeta } from "../../lib/visual/pixel-cover-system";
+import PixelCover from "../cover/PixelCover.astro";
 import ProjectStatus from "./ProjectStatus.astro";
 import ProjectTechStack from "./ProjectTechStack.astro";
 
@@ -37,7 +37,16 @@ const {
   cover,
   featured = false,
 } = Astro.props;
-const coverRecipe = getProjectCoverRecipe(projectType, featured);
+const coverRecipe = normalizeCoverMeta({
+  kind: "project",
+  title,
+  seed: slug,
+  status,
+  tagCount: techStack.length,
+  coverMeta: {
+    density: featured ? "high" : undefined,
+  },
+});
 ---
 
 <article
@@ -54,15 +63,21 @@ const coverRecipe = getProjectCoverRecipe(projectType, featured);
           <img src={cover} alt="" loading="lazy" />
         ) : (
           <PixelCover
+            kind="project"
             variant={coverRecipe.variant}
-            section="projects"
+            code={coverRecipe.code}
+            title={title}
+            subtitle={description}
+            meta={techStack}
+            tags={tags}
             status={status}
-            tags={techStack}
-            seed={slug}
+            progress={coverRecipe.progress}
+            seed={coverRecipe.seed}
             accent={coverRecipe.accent}
             density={coverRecipe.density}
+            showHeat={coverRecipe.showHeat}
             compact={!featured}
-            label={`${title} abstract project cover`}
+            label="PROJECT CODE"
           />
         )
       }
@@ -142,12 +157,14 @@ const coverRecipe = getProjectCoverRecipe(projectType, featured);
     min-height: 15rem;
   }
 
-  .project-card__cover > :global(.pixel-cover) {
+  .project-card__cover > :global(.pixel-cover),
+  .project-card__cover > :global(.pixel-cover-system) {
     height: 100%;
     min-height: 12rem;
   }
 
-  .project-card--featured .project-card__cover > :global(.pixel-cover) {
+  .project-card--featured .project-card__cover > :global(.pixel-cover),
+  .project-card--featured .project-card__cover > :global(.pixel-cover-system) {
     min-height: 15rem;
   }
 

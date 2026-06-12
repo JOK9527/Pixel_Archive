@@ -1,14 +1,21 @@
 ---
 import type { ProjectItem } from "../../lib/content/projects";
-import { getProjectCoverRecipe } from "../../lib/visual/pixel-cover";
-import PixelCover from "../ui/PixelCover.astro";
+import { normalizeCoverMeta } from "../../lib/visual/pixel-cover-system";
+import PixelCover from "../cover/PixelCover.astro";
 
 type Props = {
   project: ProjectItem;
 };
 
 const { project } = Astro.props;
-const coverRecipe = getProjectCoverRecipe(project.type, true);
+const coverRecipe = normalizeCoverMeta({
+  kind: "project",
+  title: project.title,
+  seed: project.slug,
+  status: project.status,
+  tagCount: project.techStack.length,
+  coverMeta: { density: "high" },
+});
 ---
 
 <figure class="project-visual">
@@ -17,14 +24,21 @@ const coverRecipe = getProjectCoverRecipe(project.type, true);
       <img src={project.cover} alt="" loading="eager" />
     ) : (
       <PixelCover
+        kind="project"
         variant={coverRecipe.variant}
-        section="projects"
+        code={coverRecipe.code}
+        title={project.title}
+        subtitle={project.description}
+        meta={project.techStack}
+        tags={project.tags}
         status={project.status}
-        tags={project.techStack}
-        seed={project.slug}
+        progress={coverRecipe.progress}
+        date={project.updatedDate ?? project.startDate}
+        seed={coverRecipe.seed}
         accent={coverRecipe.accent}
         density={coverRecipe.density}
-        label={`${project.title} abstract system record`}
+        showHeat={coverRecipe.showHeat}
+        label="PROJECT CODE"
       />
     )
   }
@@ -40,7 +54,8 @@ const coverRecipe = getProjectCoverRecipe(project.type, true);
   }
 
   .project-visual > img,
-  .project-visual > :global(.pixel-cover) {
+  .project-visual > :global(.pixel-cover),
+  .project-visual > :global(.pixel-cover-system) {
     min-height: clamp(15rem, 34vw, 23rem);
     border: 1px solid var(--color-border-strong);
     box-shadow: var(--shadow-pixel-green), var(--shadow-md);

@@ -1,7 +1,9 @@
 ---
 import LabTypeBadge from "../components/lab/LabTypeBadge.astro";
 import MarkdownContent from "../components/notes/MarkdownContent.astro";
+import PixelCover from "../components/cover/PixelCover.astro";
 import type { LabItem } from "../lib/content/lab";
+import { normalizeCoverMeta } from "../lib/visual/pixel-cover-system";
 import BaseLayout from "./BaseLayout.astro";
 
 type Props = {
@@ -9,6 +11,15 @@ type Props = {
 };
 
 const { item } = Astro.props;
+const coverRecipe = normalizeCoverMeta({
+  kind: "lab",
+  title: item.title,
+  seed: item.slug,
+  date: item.date,
+  status: item.status,
+  tagCount: item.tags.length,
+  coverMeta: { density: "high" },
+});
 ---
 
 <BaseLayout title={item.title} description={item.description}>
@@ -34,10 +45,30 @@ const { item } = Astro.props;
       }
     </header>
 
-    <div class="lab-detail__frame pixel-corner pixel-grid" aria-hidden="true">
-      <span>EXPERIMENT FILE</span>
-      <strong>{item.slug.toUpperCase()}</strong>
-      <i></i><i></i><i></i><i></i>
+    <div class="lab-detail__frame">
+      {
+        item.cover ? (
+          <img src={item.cover} alt="" loading="eager" />
+        ) : (
+          <PixelCover
+            kind="lab"
+            variant={coverRecipe.variant}
+            code={coverRecipe.code}
+            title={item.title}
+            subtitle={item.description}
+            meta={[item.type]}
+            tags={item.tags}
+            status={item.status}
+            progress={coverRecipe.progress}
+            date={item.date}
+            seed={coverRecipe.seed}
+            accent={coverRecipe.accent}
+            density={coverRecipe.density}
+            showHeat={coverRecipe.showHeat}
+            label="EXPERIMENT CODE"
+          />
+        )
+      }
     </div>
 
     <div class="lab-detail__body">
@@ -143,50 +174,19 @@ const { item } = Astro.props;
   }
 
   .lab-detail__frame {
-    position: relative;
-    display: grid;
-    min-height: 10rem;
     margin-bottom: clamp(2.5rem, 7vw, 4.5rem);
-    padding: 1.25rem;
-    overflow: hidden;
-    border: 1px solid var(--color-border);
-    background-color: var(--color-surface-deep);
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: auto 1fr auto;
-    gap: var(--pixel-unit);
-    color: var(--color-text-muted);
-    font-family: var(--font-mono);
   }
 
-  .lab-detail__frame span {
-    grid-column: 1 / -1;
-    font-size: 0.62rem;
-    letter-spacing: 0.1em;
+  .lab-detail__frame > img,
+  .lab-detail__frame > :global(.pixel-cover-system) {
+    width: 100%;
+    min-height: clamp(15rem, 34vw, 23rem);
+    border: 1px solid var(--color-border-strong);
+    box-shadow: var(--shadow-pixel-violet), var(--shadow-md);
   }
 
-  .lab-detail__frame strong {
-    align-self: center;
-    overflow-wrap: anywhere;
-    grid-column: 1 / -1;
-    color: var(--color-heading);
-    font-size: clamp(1rem, 4vw, 1.6rem);
-  }
-
-  .lab-detail__frame i {
-    height: calc(var(--pixel-unit) * 2);
-    background: var(--color-border-strong);
-  }
-
-  .lab-detail__frame i:nth-of-type(2) {
-    background: var(--color-violet);
-  }
-
-  .lab-detail__frame i:nth-of-type(3) {
-    background: var(--color-pixel-mark);
-  }
-
-  .lab-detail__frame i:nth-of-type(4) {
-    background: var(--color-accent);
+  .lab-detail__frame > img {
+    object-fit: cover;
   }
 
   .lab-detail__body {

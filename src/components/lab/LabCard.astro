@@ -1,7 +1,7 @@
 ---
 import type { LabStatusValue, LabTypeValue } from "../../lib/content/lab";
-import { getLabCoverRecipe } from "../../lib/visual/pixel-cover";
-import PixelCover from "../ui/PixelCover.astro";
+import { normalizeCoverMeta } from "../../lib/visual/pixel-cover-system";
+import PixelCover from "../cover/PixelCover.astro";
 import LabTypeBadge from "./LabTypeBadge.astro";
 
 type Props = {
@@ -29,7 +29,15 @@ const {
 } = Astro.props;
 
 const Element = href ? "a" : "article";
-const coverRecipe = getLabCoverRecipe(type, status);
+const coverRecipe = normalizeCoverMeta({
+  kind: "lab",
+  title,
+  seed,
+  date,
+  status,
+  tagCount: tags.length,
+  coverMeta: { density: "high" },
+});
 ---
 
 <Element
@@ -43,15 +51,22 @@ const coverRecipe = getLabCoverRecipe(type, status);
         <img src={cover} alt="" loading="lazy" />
       ) : (
         <PixelCover
+          kind="lab"
           variant={coverRecipe.variant}
-          section="lab"
-          status={status}
+          code={coverRecipe.code}
+          title={title}
+          subtitle={description}
+          meta={[type]}
           tags={tags}
-          seed={seed}
+          status={status}
+          progress={coverRecipe.progress}
+          date={date}
+          seed={coverRecipe.seed}
           accent={coverRecipe.accent}
           density={coverRecipe.density}
+          showHeat={coverRecipe.showHeat}
           compact
-          label={`${title} abstract experiment cover`}
+          label="EXPERIMENT CODE"
         />
       )
     }
@@ -118,7 +133,7 @@ const coverRecipe = getLabCoverRecipe(type, status);
   }
 
   .lab-card__screen {
-    min-height: 9rem;
+    min-height: 14rem;
     margin-bottom: var(--space-5);
     overflow: hidden;
     border: 1px solid var(--color-border);
@@ -132,12 +147,16 @@ const coverRecipe = getLabCoverRecipe(type, status);
   .lab-card__screen img {
     width: 100%;
     height: 100%;
-    min-height: 9rem;
+    min-height: 14rem;
     object-fit: cover;
   }
 
   .lab-card__screen > :global(.pixel-cover) {
-    min-height: 9rem;
+    min-height: 14rem;
+  }
+
+  .lab-card__screen > :global(.pixel-cover-system) {
+    min-height: 14rem;
   }
 
   .lab-card__meta {
