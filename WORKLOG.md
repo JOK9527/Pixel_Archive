@@ -1,5 +1,24 @@
 # WORKLOG
 
+## 2026-06-12 / Phase 21.3
+
+### Card internal rhythm
+
+- Rebuilt Note metadata as a primary identity/date row plus a quieter updated row.
+- Standardized Project, Note, Archive, and Lab card spacing with the shared token scale.
+- Limited card description measures and strengthened action-row separation.
+- Grouped Lab tags, date, and action into a stable bottom footer.
+- Kept card data inputs, links, filtering metadata, and routes unchanged.
+
+### Verification
+
+- `npm run build`: passed; 51 static pages generated.
+- Notes: all 5 cards expose separate primary and updated metadata rows.
+- Projects and Lab: action rows resolve to a consistent 25px visual bottom inset.
+- Project `ai-tool` filtering still returns 2 records after the component changes.
+- Mobile dark theme: Projects and Lab retained 0 actual horizontal scroll.
+- Browser console: 0 errors, 0 warnings.
+
 ## 2026-06-12 / Phase 21.2
 
 ### Page grid and sidebar calibration

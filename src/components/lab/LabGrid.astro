@@ -40,7 +40,7 @@ const { items, filterRoot } = Astro.props;
   .lab-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
-    gap: 1.5rem;
+    gap: var(--space-5);
   }
 
   .lab-grid__item {

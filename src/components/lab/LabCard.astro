@@ -60,21 +60,27 @@ const Element = href ? "a" : "article";
   <h2>{title}</h2>
   <p>{description}</p>
   {
-    tags.length > 0 && (
-      <ul aria-label="Lab tags">
-        {tags.map((tag) => <li>#{tag}</li>)}
-      </ul>
+    (tags.length > 0 || date || href) && (
+      <div class="lab-card__footer">
+        {
+          tags.length > 0 && (
+            <ul aria-label="Lab tags">
+              {tags.map((tag) => <li>#{tag}</li>)}
+            </ul>
+          )
+        }
+        {date && <time datetime={date}>{date}</time>}
+        {href && <span class="lab-card__action">open experiment →</span>}
+      </div>
     )
   }
-  {date && <time datetime={date}>{date}</time>}
-  {href && <span class="lab-card__action">open experiment →</span>}
 </Element>
 
 <style>
   .lab-card {
     display: flex;
     min-width: 0;
-    padding: 1rem;
+    padding: var(--space-5);
     border: 1px solid var(--color-border-subtle);
     border-radius: var(--radius-sm);
     background: var(--color-surface-raised);
@@ -110,7 +116,7 @@ const Element = href ? "a" : "article";
 
   .lab-card__screen {
     min-height: 9rem;
-    margin-bottom: 1rem;
+    margin-bottom: var(--space-5);
     overflow: hidden;
     border: 1px solid var(--color-border);
     background-color: var(--color-surface-muted);
@@ -133,10 +139,10 @@ const Element = href ? "a" : "article";
 
   .lab-card__meta {
     display: flex;
-    margin-bottom: 0.85rem;
+    margin-bottom: var(--space-3);
     align-items: center;
     justify-content: space-between;
-    gap: 0.75rem;
+    gap: var(--space-3);
   }
 
   .lab-card__meta > span {
@@ -149,23 +155,31 @@ const Element = href ? "a" : "article";
   }
 
   .lab-card h2 {
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--space-2);
     font-size: 1.3rem;
     letter-spacing: -0.035em;
   }
 
   .lab-card p {
-    margin-bottom: 1rem;
+    max-width: 32rem;
+    margin-bottom: var(--space-4);
     color: var(--color-text-muted);
     font-size: 0.9rem;
   }
 
+  .lab-card__footer {
+    display: grid;
+    margin-top: auto;
+    padding-top: var(--space-4);
+    gap: var(--space-3);
+  }
+
   .lab-card ul {
     display: flex;
-    margin: auto 0 0;
+    margin: 0;
     padding: 0;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: var(--space-2);
     color: var(--color-violet);
     font-family: var(--font-mono);
     font-size: 0.64rem;
@@ -173,7 +187,6 @@ const Element = href ? "a" : "article";
   }
 
   .lab-card time {
-    margin-top: 0.85rem;
     color: var(--color-text-muted);
     font-family: var(--font-mono);
     font-size: 0.64rem;
@@ -181,7 +194,6 @@ const Element = href ? "a" : "article";
 
   .lab-card__action {
     display: inline-block;
-    margin-top: 1rem;
     color: var(--color-accent-text);
     font-family: var(--font-mono);
     font-size: 0.68rem;

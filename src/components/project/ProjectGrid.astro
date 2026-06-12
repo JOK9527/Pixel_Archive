@@ -52,7 +52,7 @@ const { projects, featured = false, filterRoot } = Astro.props;
   .project-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
-    gap: 1.25rem;
+    gap: var(--space-5);
   }
 
   .project-grid--featured {

@@ -63,10 +63,10 @@ const {
 
   .note-card > a {
     display: grid;
-    padding-block: 1.5rem;
+    padding-block: var(--space-5);
     color: var(--color-text);
     grid-template-columns: minmax(0, 1fr) auto;
-    gap: 1rem 2rem;
+    gap: var(--space-4) var(--space-6);
     text-decoration: none;
     transition:
       padding-inline var(--transition-fast),
@@ -106,7 +106,7 @@ const {
   }
 
   .note-card h2 {
-    margin-block: 0.75rem 0.45rem;
+    margin-block: var(--space-3) var(--space-2);
     font-size: clamp(1.35rem, 4vw, 1.8rem);
     letter-spacing: -0.04em;
     line-height: 1.15;
@@ -114,8 +114,8 @@ const {
   }
 
   .note-card p {
-    max-width: 42rem;
-    margin-bottom: 0.9rem;
+    max-width: 34rem;
+    margin-bottom: var(--space-4);
     color: var(--color-text-muted);
   }
 
@@ -124,7 +124,7 @@ const {
     margin: 0;
     padding: 0;
     flex-wrap: wrap;
-    gap: 0.55rem;
+    gap: var(--space-2);
     color: var(--color-primary);
     font-family: var(--font-mono);
     font-size: 0.65rem;
@@ -133,8 +133,8 @@ const {
 
   .note-card__action {
     display: inline-block;
-    margin-top: 1rem;
-    color: var(--color-link);
+    margin-top: var(--space-5);
+    color: var(--color-accent-text);
     font-family: var(--font-mono);
     font-size: 0.68rem;
     font-weight: 700;

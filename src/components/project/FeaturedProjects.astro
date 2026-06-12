@@ -27,11 +27,11 @@ const { projects, filterRoot } = Astro.props;
 
 <style>
   .featured-projects {
-    margin-bottom: clamp(3.5rem, 8vw, 6rem);
+    margin-bottom: clamp(var(--space-8), 8vw, var(--space-9));
   }
 
   .featured-projects header {
-    margin-bottom: 1.4rem;
+    margin-bottom: var(--space-5);
   }
 
   .featured-projects h2 {

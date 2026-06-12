@@ -13,26 +13,56 @@ const { type, category, date, updated } = Astro.props;
 ---
 
 <div class="note-meta">
-  <NoteTypeBadge type={type} />
-  <span>{category}</span>
-  <time datetime={date}>{date}</time>
-  {updated && <span>updated {updated}</span>}
+  <div class="note-meta__primary">
+    <NoteTypeBadge type={type} />
+    <span>{category}</span>
+    <time datetime={date}>{date}</time>
+  </div>
+  {
+    updated && (
+      <div class="note-meta__secondary">
+        <span>UPDATED</span>
+        <time datetime={updated}>{updated}</time>
+      </div>
+    )
+  }
 </div>
 
 <style>
   .note-meta {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 0.55rem 0.75rem;
+    display: grid;
+    gap: var(--space-2);
     color: var(--color-text-muted);
     font-family: var(--font-mono);
     font-size: 0.67rem;
   }
 
-  .note-meta > :not(:first-child)::before {
-    margin-inline-end: 0.75rem;
-    color: var(--color-border-strong);
-    content: "/";
+  .note-meta__primary,
+  .note-meta__secondary {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-3);
+  }
+
+  .note-meta__primary > span {
+    color: var(--color-text);
+    font-weight: 700;
+  }
+
+  .note-meta__primary time,
+  .note-meta__secondary time {
+    color: var(--color-text-muted);
+  }
+
+  .note-meta__secondary {
+    color: var(--color-text-faint);
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+  }
+
+  .note-meta__secondary span {
+    color: var(--section-accent);
+    font-weight: 700;
   }
 </style>
