@@ -1,5 +1,49 @@
 # WORKLOG
 
+## 2026-06-13 / Phase 24 Ambient Pixel Band System
+
+### Project source and scope
+
+- Re-read the project plan, standards overview, Pixel Cover System plan, section-color plan, visual/component/module/testing standards, internal interface rules, and Agent workflow.
+- Confirmed separate `NoteLayout`, `ProjectLayout`, and `LabLayout` detail mount points.
+- Kept Archive unmodified because the current project has no Archive detail route.
+
+### Component system
+
+- Added deterministic `AmbientPixelBand` rendering with a pure visual-model helper and dedicated stylesheet.
+- Implemented six variants: `diagonal-up`, `diagonal-down`, `side-arc`, `corner-sweep`, `low-cross`, and `gutter-split`.
+- Added `section`, `seed`, `variant`, `intensity`, `placement`, and `enabled` props.
+- Derived all ambient colors from the existing Projects, Notes, Archive, and Lab section tokens.
+- Used one geometric SVG band per detail page with a restrained facet, clipped pixel texture, and one peak node.
+- Added a direct `enabled={false}` rollback path; removing the layout mount also restores the previous page without route or content changes.
+
+### Page integration
+
+- Added low-intensity bands to Notes, Projects, and Lab detail layouts only.
+- Kept all list pages, Home, About, Archive, and 404 free from the ambient layer.
+- Preserved foreground interaction by isolating each detail article and placing the title, TOC, covers, metadata, links, and reading content above the decorative layer.
+- Hid the system below 760px and kept the desktop SVG width at or below 520px.
+- Shipped the first version as static decoration with no scroll, pointer, or continuous animation.
+
+### Verification
+
+- `npm run build`: passed; 55 static pages generated.
+- Browser matrix: 11 detail routes across 1440px light, 1024px dark, and 390px dark mobile, 33 checks total.
+- Desktop: all 22 checks render exactly one band; mobile: all 11 checks hide it.
+- All six variants appear across current content, and the same slug produces identical SVG output after reload.
+- Projects, Notes, Archive, and Lab list pages render zero ambient bands.
+- SVG width stayed within 520px; no tested route produced horizontal overflow.
+- TOC, return links, body links, covers, code blocks, and reading content remain in the foreground.
+- Dark-mode opacity stays between 0.07 and 0.10 for tested variants; no neon treatment.
+- Reduced-motion mode reports zero band animations and no transform-driven movement.
+- Browser console: 0 errors; page runtime: 0 errors.
+- No dependencies, routes, Content Collections schema, frontmatter, or content responsibilities changed.
+
+### Known limits
+
+- Archive support remains available in the component type and token layer but is not mounted because Archive has no detail page.
+- The first version is intentionally static; scroll drift remains deferred until the visual direction is stable.
+
 ## 2026-06-12 / Phase 22.6 Pixel Cover System
 
 ### Component system
