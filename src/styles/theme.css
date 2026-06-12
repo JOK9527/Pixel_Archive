@@ -90,6 +90,22 @@
     "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
   --font-pixel: var(--font-mono);
 
+  /* Shared spacing scale: 4px baseline with deliberate large section steps. */
+  --space-0: 0;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+
+  --measure-narrow: 38rem;
+  --measure-reading: 46rem;
+  --measure-wide: 58rem;
+
   --shadow-xs: 0 1px 0 rgb(19 24 36 / 8%);
   --shadow-sm: 0 8px 20px rgb(19 24 36 / 8%);
   --shadow-md: 0 18px 42px rgb(19 24 36 / 11%);
@@ -106,7 +122,7 @@
   --radius-sm: 2px;
   --radius-md: 4px;
   --content-width: 70rem;
-  --reading-width: 46rem;
+  --reading-width: var(--measure-reading);
   --transition-fast: 160ms ease;
 }
 

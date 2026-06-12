@@ -1,5 +1,23 @@
 # WORKLOG
 
+## 2026-06-12 / Phase 21.1
+
+### Spacing token and section-gap audit
+
+- Added a shared 4px-based `--space-0` through `--space-9` scale.
+- Added narrow, reading, and wide text measure tokens while preserving the existing reading-width alias.
+- Mapped the global page shell and shared section header to the spacing scale.
+- Standardized child-page header-to-content spacing at 64px desktop and 48px mobile.
+- Kept sidebar, card, timeline, route, content model, and color behavior unchanged for later steps.
+
+### Verification
+
+- `npm run build`: passed; 51 static pages generated.
+- Projects desktop: shared header-to-content gap resolves to 64px at 1440px.
+- Projects mobile dark theme: shared gap resolves to 48px at 390px.
+- Decorative pixel corners are clipped at the site shell; actual horizontal scroll is 0.
+- Browser console: 0 errors, 0 warnings.
+
 ## 2026-06-12 / Phase 20
 
 ### Side assistance and restrained motion

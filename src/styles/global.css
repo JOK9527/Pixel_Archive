@@ -110,20 +110,21 @@ p {
 .site-shell {
   display: flex;
   min-height: 100vh;
+  overflow-x: clip;
   flex-direction: column;
 }
 
 .site-main {
   width: min(100% - 2rem, var(--content-width));
   margin-inline: auto;
-  padding-block: clamp(3rem, 8vw, 6rem);
+  padding-block: clamp(var(--space-7), 8vw, var(--space-9));
   flex: 1;
 }
 
 @media (max-width: 42rem) {
   .site-main {
     width: min(100% - 1.25rem, var(--content-width));
-    padding-block: 2rem;
+    padding-block: var(--space-6);
   }
 }
 
