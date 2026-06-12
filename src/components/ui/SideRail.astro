@@ -8,16 +8,21 @@ type Props = {
   title: string;
   code?: string;
   items: RailItem[];
+  grid?: boolean;
 };
 
 const {
   title,
   code = "PA",
   items,
+  grid = false,
 } = Astro.props;
 ---
 
-<aside class="side-rail pixel-corner" aria-label={title}>
+<aside
+  class:list={["side-rail", "pixel-corner", { "coordinate-grid": grid }]}
+  aria-label={title}
+>
   <header>
     <span>{title}</span>
     <strong>{code}</strong>
@@ -45,7 +50,7 @@ const {
     min-width: 0;
     padding: var(--space-5);
     border: 1px solid var(--color-border);
-    background: color-mix(
+    background-color: color-mix(
       in srgb,
       var(--color-surface) 90%,
       var(--section-soft)

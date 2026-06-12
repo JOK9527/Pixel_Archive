@@ -17,7 +17,14 @@ const {
 ---
 
 <section
-  class:list={["empty-state", "pixel-corners", `empty-state--${variant}`]}
+  class:list={[
+    "empty-state",
+    "pixel-corners",
+    `empty-state--${variant}`,
+    {
+      "coordinate-grid coordinate-grid--strong": variant === "terminal",
+    },
+  ]}
 >
   <div class="empty-state__marker" aria-hidden="true">
     <span></span><span></span><span></span>
@@ -43,7 +50,7 @@ const {
     overflow: hidden;
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
-    background: var(--color-surface);
+    background-color: var(--color-surface);
     box-shadow: var(--shadow-soft);
   }
 
@@ -56,14 +63,7 @@ const {
   .empty-state--terminal {
     border-color: var(--color-border-strong);
     border-radius: 0;
-    background:
-      linear-gradient(
-        90deg,
-        transparent 0 96%,
-        color-mix(in srgb, var(--color-border-strong) 16%, transparent) 96%
-      ),
-      var(--color-surface-raised);
-    background-size: 1rem 1rem;
+    background-color: var(--color-surface-raised);
     box-shadow: var(--shadow-soft);
   }
 

@@ -14,7 +14,11 @@ type Props = {
 const { headings } = Astro.props;
 ---
 
-<aside class="on-this-page pixel-corner" aria-labelledby="on-this-page-title" data-on-this-page>
+<aside
+  class="on-this-page pixel-corner coordinate-grid"
+  aria-labelledby="on-this-page-title"
+  data-on-this-page
+>
   <header>
     <h2 id="on-this-page-title">On this page</h2>
     <span>{headings.length.toString().padStart(2, "0")}</span>
@@ -105,7 +109,7 @@ const { headings } = Astro.props;
     top: 1.25rem;
     padding: 0.85rem;
     border: 1px solid var(--color-border);
-    background: color-mix(
+    background-color: color-mix(
       in srgb,
       var(--color-surface) 90%,
       var(--section-soft)

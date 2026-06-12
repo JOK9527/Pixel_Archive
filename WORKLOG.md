@@ -1,5 +1,23 @@
 # WORKLOG
 
+## 2026-06-12 / Phase 22.2
+
+### Cross-page coordinate grid
+
+- Added reusable subtle and strong coordinate-grid utilities using existing semantic color tokens.
+- Extended the motif to the Notes table of contents, Archive record track, and About profile rail.
+- Upgraded terminal empty states, including the 404 panel, to a controlled two-axis grid.
+- Kept the reading body and full-page backgrounds free from repeated texture.
+- Preserved routes, content models, and component behavior.
+
+### Verification
+
+- `npm run build`: passed; 51 static pages generated.
+- Notes TOC, Archive record tracks, About profile rail, and terminal empty states expose the intended coordinate-grid backgrounds.
+- Markdown reading content retains `background-image: none`.
+- 404 strong grid resolves at 20px in desktop and 390px mobile dark mode with 0 actual horizontal scroll.
+- Browser console: 0 errors, 0 warnings.
+
 ## 2026-06-12 / Phase 22.1
 
 ### Language-role consistency

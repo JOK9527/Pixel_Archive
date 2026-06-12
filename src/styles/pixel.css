@@ -74,6 +74,21 @@
   background-size: calc(var(--pixel-unit) * 6) calc(var(--pixel-unit) * 6);
 }
 
+.coordinate-grid {
+  background-image:
+    linear-gradient(var(--color-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-grid) 1px, transparent 1px);
+  background-position: -1px -1px;
+  background-size: calc(var(--pixel-unit) * 8) calc(var(--pixel-unit) * 8);
+}
+
+.coordinate-grid--strong {
+  background-image:
+    linear-gradient(var(--color-grid-strong) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-grid-strong) 1px, transparent 1px);
+  background-size: calc(var(--pixel-unit) * 5) calc(var(--pixel-unit) * 5);
+}
+
 .pixel-ruler {
   position: relative;
 }

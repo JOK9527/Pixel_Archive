@@ -45,7 +45,7 @@ const monthLabels = [
               <h3 id={`archive-month-${group.year}-${month.month}`}>
                 {monthLabels[Number(month.month) - 1] ?? month.month}
               </h3>
-              <div class="archive-month__entries">
+              <div class="archive-month__entries coordinate-grid">
                 {month.entries.map((entry) => (
                   <div
                     class="archive-month__record"
@@ -119,6 +119,11 @@ const monthLabels = [
     position: relative;
     display: grid;
     padding-left: var(--timeline-offset);
+    background-color: color-mix(
+      in srgb,
+      var(--color-surface) 94%,
+      transparent
+    );
     gap: var(--space-5);
   }
 
