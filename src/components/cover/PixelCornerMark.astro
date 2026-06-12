@@ -22,7 +22,7 @@ const { position = "top-left" } = Astro.props;
   .pixel-corner-mark::before,
   .pixel-corner-mark::after {
     position: absolute;
-    background: var(--cover-accent);
+    background: var(--cover-corner-accent, var(--cover-accent));
     content: "";
   }
 

@@ -41,7 +41,7 @@ const { items = [], label, compact = false } = Astro.props;
   }
 
   .pixel-meta-bar strong {
-    color: var(--cover-accent);
+    color: var(--cover-meta-accent, var(--cover-accent));
   }
 
   .pixel-meta-bar ul {

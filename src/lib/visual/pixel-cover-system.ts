@@ -30,7 +30,7 @@ export type CoverMeta = {
 export type CoverRecipe = Required<CoverMeta>;
 
 export type PixelHeatCell = {
-  level: 0 | 1 | 2 | 3;
+  level: 0 | 1 | 2 | 3 | 4;
   active: boolean;
   completed: boolean;
   highlighted: boolean;
@@ -95,6 +95,30 @@ function clampProgress(progress?: number) {
   return Math.min(100, Math.max(0, Math.round(progress)));
 }
 
+const heatDistribution: Record<
+  CoverDensity,
+  readonly [number, number, number, number, number]
+> = {
+  low: [0.3, 0.32, 0.22, 0.13, 0.03],
+  medium: [0.25, 0.3, 0.23, 0.16, 0.06],
+  high: [0.2, 0.28, 0.25, 0.2, 0.07],
+};
+
+function getHeatLevelCounts(total: number, density: CoverDensity) {
+  const targets = heatDistribution[density].map((ratio) => ratio * total);
+  const counts = targets.map(Math.floor);
+  let remainder = total - counts.reduce((sum, count) => sum + count, 0);
+  const remainderOrder = targets
+    .map((target, level) => ({ level, fraction: target - counts[level] }))
+    .sort((left, right) => right.fraction - left.fraction);
+
+  for (let index = 0; index < remainder; index += 1) {
+    counts[remainderOrder[index].level] += 1;
+  }
+
+  return counts;
+}
+
 export function generateHeatCells({
   seed,
   variant,
@@ -103,37 +127,45 @@ export function generateHeatCells({
   intensity = 0.5,
 }: PixelHeatInput): PixelHeatCell[] {
   const total = variant === "matrix" ? 48 : 32;
-  const activeRatio = {
-    low: 0.3,
-    medium: 0.5,
-    high: 0.72,
-  }[density];
   const normalizedProgress = clampProgress(progress);
   const hash = hashSeed(`${seed}|${variant}|${density}`);
-
-  return Array.from({ length: total }, (_, index) => {
+  const scoredCells = Array.from({ length: total }, (_, index) => {
     const value = pseudoRandom(hash, index);
     const position = (index + 1) / total;
     const completed =
       normalizedProgress === undefined
-        ? value < activeRatio
+        ? value < 0.5
         : position <= normalizedProgress / 100;
-    const active = completed || value < activeRatio * (0.6 + intensity * 0.4);
-    const highlighted =
-      active &&
-      (value < 0.06 + intensity * 0.04 ||
-        (normalizedProgress !== undefined &&
-          Math.abs(position - normalizedProgress / 100) < 1 / total));
-    const level: PixelHeatCell["level"] = highlighted
-      ? 3
-      : completed
-        ? 2
-        : active
-          ? 1
-          : 0;
+    const score = value + (completed ? 0.12 + intensity * 0.04 : 0);
 
-    return { level, active, completed, highlighted };
-  });
+    return { index, completed, score };
+  }).sort((left, right) => left.score - right.score);
+  const levelCounts = getHeatLevelCounts(total, density);
+  const levels: PixelHeatCell["level"][] = Array(total).fill(0);
+  let cursor = levelCounts[0];
+
+  for (let level = 1; level <= 4; level += 1) {
+    const nextCursor = cursor + levelCounts[level];
+
+    for (const cell of scoredCells.slice(cursor, nextCursor)) {
+      levels[cell.index] = level as PixelHeatCell["level"];
+    }
+
+    cursor = nextCursor;
+  }
+
+  return scoredCells
+    .sort((left, right) => left.index - right.index)
+    .map(({ index, completed }) => {
+      const level = levels[index];
+
+      return {
+        level,
+        active: level > 0,
+        completed,
+        highlighted: level === 4,
+      };
+    });
 }
 
 function getInitials(title: string) {

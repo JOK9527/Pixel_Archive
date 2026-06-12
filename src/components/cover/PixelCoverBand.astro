@@ -43,12 +43,15 @@ const normalizedProgress =
     justify-content: space-between;
     gap: 0.75rem;
     border-top: 1px solid var(--color-border);
-    background: color-mix(
-      in srgb,
-      var(--cover-accent) 12%,
-      var(--color-surface-raised)
+    background: var(
+      --cover-band-surface,
+      color-mix(
+        in srgb,
+        var(--cover-accent) 12%,
+        var(--color-surface-raised)
+      )
     );
-    color: var(--color-heading);
+    color: var(--cover-band-ink, var(--color-heading));
     font-family: var(--font-mono);
     font-size: 0.62rem;
     font-weight: 700;
@@ -65,7 +68,7 @@ const normalizedProgress =
   }
 
   .pixel-cover-band strong {
-    color: var(--cover-accent);
+    color: var(--cover-band-accent, var(--cover-accent));
   }
 
   .pixel-cover-band i {
@@ -74,7 +77,7 @@ const normalizedProgress =
     left: 0;
     width: var(--band-progress);
     height: var(--pixel-unit);
-    background: var(--cover-accent);
+    background: var(--cover-band-accent, var(--cover-accent));
   }
 
   .pixel-cover-band--vertical {

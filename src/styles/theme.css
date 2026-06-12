@@ -64,6 +64,38 @@
   --color-code-bg: #edf0ec;
   --color-selection: #ddefe8;
 
+  /* Pixel Cover System: Notes and Lab semantic palettes. */
+  --cover-notes-main: #ed5126;
+  --cover-notes-deep: #9d2933;
+  --cover-notes-ink: #2a3c5c;
+  --cover-notes-neutral: #d8d5c8;
+  --cover-notes-cool: #8fa7a0;
+  --cover-notes-soft: #fff3ea;
+  --cover-notes-paper: #fff9f2;
+  --cover-notes-band-dark: #1f2528;
+  --cover-notes-heat-0: #fff7ef;
+  --cover-notes-heat-1: #d8d5c8;
+  --cover-notes-heat-2: #8fa7a0;
+  --cover-notes-heat-3: #f28a5b;
+  --cover-notes-heat-4: #ed5126;
+  --cover-notes-grid: rgb(237 81 38 / 12%);
+
+  --cover-lab-main: #7257a5;
+  --cover-lab-deep: #4b3785;
+  --cover-lab-soft: #f4f0fa;
+  --cover-lab-paper: #fbfaf5;
+  --cover-lab-neutral: #d5dce0;
+  --cover-lab-cool: #7fa7a0;
+  --cover-lab-bluegray: #9aa8b4;
+  --cover-lab-ink: #2a3c5c;
+  --cover-lab-hot: #ed5126;
+  --cover-lab-heat-0: #f8f7f2;
+  --cover-lab-heat-1: #d5dce0;
+  --cover-lab-heat-2: #7fa7a0;
+  --cover-lab-heat-3: #7257a5;
+  --cover-lab-heat-4: #ed5126;
+  --cover-lab-grid: rgb(114 87 165 / 10%);
+
   /* Page-level accents. */
   --section-accent: var(--color-primary);
   --section-hot: var(--color-accent);
@@ -180,6 +212,37 @@
   --color-selection: rgb(115 184 165 / 28%);
   --color-grid: rgb(238 247 242 / 5%);
   --color-grid-strong: rgb(115 184 165 / 13%);
+
+  --cover-notes-main: #ff7652;
+  --cover-notes-deep: #e85737;
+  --cover-notes-ink: #f4e8d8;
+  --cover-notes-neutral: #4a4540;
+  --cover-notes-cool: #6f8c84;
+  --cover-notes-soft: #2a1a16;
+  --cover-notes-paper: #241c19;
+  --cover-notes-band-dark: #171c1f;
+  --cover-notes-heat-0: #33231e;
+  --cover-notes-heat-1: #4a4540;
+  --cover-notes-heat-2: #6f8c84;
+  --cover-notes-heat-3: #e85737;
+  --cover-notes-heat-4: #ff7652;
+  --cover-notes-grid: rgb(255 118 82 / 14%);
+
+  --cover-lab-main: #a58ad8;
+  --cover-lab-deep: #7e62c2;
+  --cover-lab-ink: #f1eafb;
+  --cover-lab-neutral: #3d4650;
+  --cover-lab-cool: #6f9a91;
+  --cover-lab-bluegray: #7f91a3;
+  --cover-lab-soft: #221b2c;
+  --cover-lab-paper: #1d1b22;
+  --cover-lab-hot: #ff7652;
+  --cover-lab-heat-0: #2b2830;
+  --cover-lab-heat-1: #3d4650;
+  --cover-lab-heat-2: #6f9a91;
+  --cover-lab-heat-3: #a58ad8;
+  --cover-lab-heat-4: #ff7652;
+  --cover-lab-grid: rgb(165 138 216 / 13%);
 
   --shadow-xs: 0 1px 0 rgb(0 0 0 / 35%);
   --shadow-sm: 0 8px 24px rgb(0 0 0 / 28%);

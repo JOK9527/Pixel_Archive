@@ -58,19 +58,29 @@ const cells = generateHeatCells({
   .pixel-heat-strip i {
     min-width: 0;
     aspect-ratio: 1.45;
-    background: color-mix(in srgb, var(--color-border) 72%, transparent);
+    background: var(
+      --cover-heat-empty,
+      color-mix(in srgb, var(--color-border) 72%, transparent)
+    );
   }
 
   .pixel-heat-strip i[data-level="1"] {
-    background: var(--color-stone);
+    background: var(--cover-heat-low, var(--color-stone));
   }
 
   .pixel-heat-strip i[data-level="2"] {
-    background: var(--cover-accent);
+    background: var(
+      --cover-heat-mid,
+      color-mix(in srgb, var(--cover-accent) 42%, var(--color-stone))
+    );
   }
 
   .pixel-heat-strip i[data-level="3"] {
-    background: var(--cover-hot);
+    background: var(--cover-heat-high, var(--cover-accent));
+  }
+
+  .pixel-heat-strip i[data-level="4"] {
+    background: var(--cover-heat-peak, var(--cover-hot));
   }
 
   .pixel-heat-strip--pulse i:nth-child(4n + 2),

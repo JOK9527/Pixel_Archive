@@ -158,6 +158,8 @@ const bandValue =
   .pixel-cover-system {
     --cover-accent: var(--color-border-strong);
     --cover-hot: var(--color-accent);
+    --cover-surface: var(--color-surface-deep);
+    --cover-grid: var(--color-grid);
 
     position: relative;
     display: grid;
@@ -167,10 +169,10 @@ const bandValue =
     margin: 0;
     overflow: hidden;
     border: 1px solid var(--color-border-strong);
-    background-color: var(--color-surface-deep);
+    background-color: var(--cover-surface);
     background-image:
-      linear-gradient(var(--color-grid) 1px, transparent 1px),
-      linear-gradient(90deg, var(--color-grid) 1px, transparent 1px);
+      linear-gradient(var(--cover-grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--cover-grid) 1px, transparent 1px);
     background-size: 24px 24px;
     color: var(--color-text-muted);
     font-family: var(--font-ui);
@@ -201,8 +203,54 @@ const bandValue =
     --cover-hot: var(--color-cyan);
   }
 
+  .pixel-cover-system--terminal-record {
+    --cover-accent: var(--cover-notes-main);
+    --cover-hot: var(--cover-notes-heat-4);
+    --cover-surface: var(--cover-notes-paper);
+    --cover-grid: var(--cover-notes-grid);
+    --cover-code: var(--cover-notes-main);
+    --cover-ink: var(--cover-notes-ink);
+    --cover-tag: var(--cover-notes-cool);
+    --cover-header-accent: var(--cover-notes-main);
+    --cover-corner-accent: var(--cover-notes-main);
+    --cover-band-surface: var(--cover-notes-band-dark);
+    --cover-band-ink: var(--cover-notes-paper);
+    --cover-band-accent: var(--cover-notes-main);
+    --cover-meta-accent: var(--cover-notes-cool);
+    --cover-heat-empty: var(--cover-notes-heat-0);
+    --cover-heat-low: var(--cover-notes-heat-1);
+    --cover-heat-mid: var(--cover-notes-heat-2);
+    --cover-heat-high: var(--cover-notes-heat-3);
+    --cover-heat-peak: var(--cover-notes-heat-4);
+  }
+
   .pixel-cover-system--save-point {
     grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .pixel-cover-system--experiment-sheet {
+    --cover-accent: var(--cover-lab-main);
+    --cover-hot: var(--cover-lab-hot);
+    --cover-surface: var(--cover-lab-paper);
+    --cover-grid: var(--cover-lab-grid);
+    --cover-code: var(--cover-lab-deep);
+    --cover-ink: var(--cover-lab-ink);
+    --cover-tag: var(--cover-lab-cool);
+    --cover-header-accent: var(--cover-lab-main);
+    --cover-corner-accent: var(--cover-lab-main);
+    --cover-band-surface: color-mix(
+      in srgb,
+      var(--cover-lab-deep) 13%,
+      var(--cover-lab-paper)
+    );
+    --cover-band-ink: var(--cover-lab-ink);
+    --cover-band-accent: var(--cover-lab-deep);
+    --cover-meta-accent: var(--cover-lab-bluegray);
+    --cover-heat-empty: var(--cover-lab-heat-0);
+    --cover-heat-low: var(--cover-lab-heat-1);
+    --cover-heat-mid: var(--cover-lab-heat-2);
+    --cover-heat-high: var(--cover-lab-heat-3);
+    --cover-heat-peak: var(--cover-lab-heat-4);
   }
 
   .pixel-cover-system__content {
@@ -239,7 +287,7 @@ const bandValue =
   }
 
   .pixel-cover-system__content > header span:first-child {
-    color: var(--cover-accent);
+    color: var(--cover-header-accent, var(--cover-accent));
   }
 
   .pixel-cover-system__primary {
@@ -254,7 +302,7 @@ const bandValue =
   .pixel-cover-system__primary > strong {
     min-width: 0;
     overflow: hidden;
-    color: var(--cover-accent);
+    color: var(--cover-code, var(--cover-accent));
     font-family: var(--font-ui);
     font-size: clamp(2.8rem, 7vw, 4.75rem);
     font-weight: 800;
@@ -281,7 +329,7 @@ const bandValue =
   .pixel-cover-system h3 {
     margin: 0;
     overflow-wrap: anywhere;
-    color: var(--color-heading);
+    color: var(--cover-ink, var(--color-heading));
     font-size: clamp(1rem, 3vw, 1.35rem);
     letter-spacing: -0.035em;
     line-height: 1.12;
@@ -306,7 +354,7 @@ const bandValue =
     overflow: hidden;
     flex-wrap: wrap;
     gap: 0.35rem 0.55rem;
-    color: var(--cover-accent);
+    color: var(--cover-tag, var(--cover-accent));
     font-family: var(--font-mono);
     font-size: 0.56rem;
     list-style: none;
