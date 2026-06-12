@@ -1,4 +1,5 @@
 .markdown-content {
+  width: 100%;
   max-width: var(--reading-width);
   color: var(--color-text);
   font-family: var(--font-sans);
@@ -7,6 +8,7 @@
 }
 
 .markdown-content :is(h1, h2, h3, h4) {
+  max-width: var(--measure-narrow);
   margin-block: 2em 0.75em;
   letter-spacing: -0.025em;
   line-height: 1.25;

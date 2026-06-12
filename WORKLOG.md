@@ -1,5 +1,23 @@
 # WORKLOG
 
+## 2026-06-12 / Phase 21.4
+
+### Text measure and detail-title calibration
+
+- Added a shared display-title measure alongside narrow, reading, and wide text measures.
+- Bound Markdown headings and body content to explicit readable widths.
+- Reduced the Notes detail title ceiling from 5.2rem to 4.5rem and set a 3rem mobile ceiling.
+- Applied balanced display measures to Note, Project, and Lab detail titles.
+- Limited detail summaries, About copy, Note lists, and the Home terminal message independently from their containers.
+
+### Verification
+
+- `npm run build`: passed; 51 static pages generated.
+- All 5 Note details resolve to a 72px desktop title ceiling and 736px reading measure.
+- The longest mixed-language Note title resolves to 46.8px at 390px with 0 actual horizontal scroll.
+- Existing TOC heading links remain intact across all Note details.
+- Mobile dark theme and browser console: 0 errors, 0 warnings.
+
 ## 2026-06-12 / Phase 21.3
 
 ### Card internal rhythm

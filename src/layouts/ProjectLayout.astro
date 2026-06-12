@@ -153,7 +153,7 @@ const relatedArchive = (
   }
 
   .project-detail__header {
-    max-width: 50rem;
+    max-width: var(--measure-wide);
     margin-bottom: clamp(3rem, 8vw, 5.5rem);
   }
 
@@ -174,14 +174,16 @@ const relatedArchive = (
   }
 
   .project-detail h1 {
+    max-width: var(--measure-display);
     margin-bottom: 1rem;
     font-size: clamp(2.8rem, 9vw, 6rem);
     letter-spacing: -0.07em;
     line-height: 0.92;
+    text-wrap: balance;
   }
 
   .project-detail__description {
-    max-width: 42rem;
+    max-width: var(--measure-narrow);
     margin-bottom: 1.5rem;
     color: var(--color-text-muted);
     font-size: clamp(1rem, 2.5vw, 1.2rem);

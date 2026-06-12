@@ -89,12 +89,13 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   }
 
   .about__note {
-    max-width: 40rem;
+    max-width: var(--measure-reading);
     padding-top: 1.25rem;
     border-top: 1px solid var(--color-border);
   }
 
   .about__note > p {
+    max-width: var(--measure-narrow);
     margin-bottom: 2rem;
     color: var(--color-text-muted);
   }

@@ -105,6 +105,7 @@
   --measure-narrow: 38rem;
   --measure-reading: 46rem;
   --measure-wide: 58rem;
+  --measure-display: 18ch;
   --layout-sidebar: 15rem;
   --layout-gap: clamp(var(--space-6), 4vw, var(--space-8));
 
