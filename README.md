@@ -1,6 +1,8 @@
 # Pixel Archive
 
-> Phase 21–22 local development completed on 2026-06-12. Public deployment still waits for a Git remote, Cloudflare Pages project, and confirmed production URL.
+> Phase 21–22 已完成并部署到 Cloudflare Workers Static Assets。
+
+生产地址：<https://pixel-archive.pixelarchive.workers.dev>
 
 Pixel Archive 是一个以极简阅读体验为基础、以像素组件为识别符号、以复古终端和存档隐喻为氛围的个人档案馆。
 
@@ -24,10 +26,10 @@ Lab 卡片均为明确的详情入口，当前提供 `/lab/pixel-ui-component-st
 
 Archive 保留原时间线与存档点结构，同时可按 year.month 和固定类型筛选，并显示当前匹配数量。
 
-正式部署前复制 `.env.example` 的配置方式，在 Cloudflare Pages 中设置：
+生产构建在 Cloudflare Workers 中设置：
 
 ```bash
-PUBLIC_SITE_URL=https://your-production-origin.example
+PUBLIC_SITE_URL=https://pixel-archive.pixelarchive.workers.dev
 ```
 
 该变量用于 canonical、Open Graph、RSS 和 sitemap 的绝对 URL。不要提交本地 `.env`。
@@ -58,19 +60,19 @@ npm run preview
 
 构建产物输出到 `dist/`。该目录由构建生成，不提交到 Git。
 
-## Cloudflare Pages
+## Cloudflare Workers
 
-推荐通过 Cloudflare Pages 连接 GitHub 仓库：
+当前通过 Cloudflare Workers Builds 连接 GitHub 仓库：
 
 | 配置项 | 值 |
 |---|---|
-| Framework preset | Astro |
 | Production branch | `main` |
 | Build command | `npm run build` |
-| Build output directory | `dist` |
+| Deploy command | `npx wrangler deploy` |
 | Root directory | `/` |
+| Static assets directory | `dist` |
 
-第一阶段不需要环境变量、后端服务、数据库或 Cloudflare Workers。正式站点 URL、域名、RSS、搜索和高级 SEO 留到后续阶段。
+站点是纯静态部署，不需要后端、数据库、KV 或 Session。部署配置位于 `wrangler.jsonc`。
 
 部署前运行：
 
@@ -80,7 +82,9 @@ npm run build
 git status
 ```
 
-确认 `.env`、`node_modules/`、`.astro/` 和 `dist/` 未被 Git 跟踪后，再推送 `main` 分支。
+确认 `.env`、`node_modules/`、`.astro/` 和 `dist/` 未被 Git 跟踪后，再推送 `main` 分支。推送后 Cloudflare 自动构建和发布。
+
+完整操作见 [`docs/27_部署与日常更新操作指南.md`](docs/27_部署与日常更新操作指南.md)。
 
 ## 目录
 
@@ -106,4 +110,4 @@ src/styles/              主题、全局和 Markdown 样式
 
 ## 下一步
 
-Phase 21–22 已完成。下一步进入正式部署准备；当前仍缺少 Git remote、Cloudflare Pages 项目和确认后的生产域名。
+Phase 21–22 已完成并上线。下一步是持续更新真实内容、绑定自定义域名，并根据实际访问数据决定是否继续做搜索和性能增强。
