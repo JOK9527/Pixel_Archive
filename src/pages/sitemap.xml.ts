@@ -33,6 +33,7 @@ export const GET: APIRoute = async ({ site }) => {
     "/rss.xml",
     ...projects.map((project) => project.href),
     ...notes.map((note) => note.href),
+    ...labItems.map((item) => item.href),
     ...topics.map((topic) => topic.href),
   ];
   const latestLabDate = labItems
@@ -64,4 +65,3 @@ export const GET: APIRoute = async ({ site }) => {
     },
   });
 };
-

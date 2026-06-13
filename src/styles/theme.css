@@ -6,7 +6,6 @@
   --px-yuebai: #eef7f2;
   --px-baixueteng: #e8f4f0;
   --px-dailan: #2a3c5c;
-  --px-yanhan-blue: #131824;
   --px-ading-green: #428675;
   --px-qing-green: #3b7a5d;
   --px-lancuizhu: #4b8f8c;
@@ -14,8 +13,6 @@
   --px-qingting-red: #f1441d;
   --px-amber: #d69a2d;
   --px-amber-deep: #b86b24;
-  --px-ouhe: #b5a0c2;
-  --px-jiangzi: #8e354a;
   --px-violet: #7257a5;
 
   /* Semantic surfaces and text. */
@@ -174,9 +171,7 @@
 
   /* Compatibility aliases for existing component APIs. */
   --color-purple: var(--color-violet);
-  --color-purple-soft: var(--color-violet-soft);
   --color-green: var(--color-primary-text);
-  --color-green-soft: var(--color-primary-soft);
   --color-status: var(--color-primary-text);
   --color-status-soft: var(--color-primary-soft);
   --color-warning: var(--color-warm-text);
@@ -193,7 +188,6 @@
   --tracking-brand: 0.1em;
 
   /* Shared spacing scale: 4px baseline with deliberate large section steps. */
-  --space-0: 0;
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;

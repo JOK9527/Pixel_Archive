@@ -1,9 +1,12 @@
 ---
-import { getEntry } from "astro:content";
 import MarkdownContent from "../components/notes/MarkdownContent.astro";
 import NoteMeta from "../components/notes/NoteMeta.astro";
 import OnThisPage from "../components/notes/OnThisPage.astro";
 import type { NoteItem } from "../lib/content/notes";
+import {
+  resolveArchiveLinks,
+  resolveProjectLinks,
+} from "../lib/content/relations";
 import { generateCoverCode } from "../lib/visual/pixel-cover-system";
 import BaseLayout from "./BaseLayout.astro";
 
@@ -33,26 +36,10 @@ const recordId =
     seed: note.slug,
     date: note.date,
   });
-const relatedProjects = (
-  await Promise.all(
-    note.relatedProjects.map(async (slug) => {
-      const entry = await getEntry("projects", slug);
-      return entry
-        ? { href: `/projects/${slug}/`, title: entry.data.title }
-        : undefined;
-    }),
-  )
-).filter((item) => item !== undefined);
-const relatedArchive = (
-  await Promise.all(
-    note.relatedArchive.map(async (slug) => {
-      const entry = await getEntry("archive", slug);
-      return entry
-        ? { href: `/archive/#${slug}`, title: entry.data.title }
-        : undefined;
-    }),
-  )
-).filter((item) => item !== undefined);
+const [relatedProjects, relatedArchive] = await Promise.all([
+  resolveProjectLinks(note.relatedProjects),
+  resolveArchiveLinks(note.relatedArchive),
+]);
 ---
 
 <BaseLayout

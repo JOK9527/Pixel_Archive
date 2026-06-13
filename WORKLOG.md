@@ -1,5 +1,34 @@
 # WORKLOG
 
+## 2026-06-13 / Architecture and Maintenance Cleanup
+
+### Maintenance
+
+- Promoted the v1.3 standards guide to the canonical document and removed the redundant versioned copy.
+- Added shared content-relation resolvers so detail layouts no longer query Content Collections directly.
+- Restored Lab detail links on topic pages and included Lab detail routes in the sitemap.
+- Extracted the large Pixel Cover and Home Archive Terminal style blocks into dedicated stylesheets without changing their markup or visual behavior.
+- Removed six unused design tokens and added the lightweight `npm run check` TypeScript gate.
+- Updated README commands and corrected the WORKLOG to make the Phase 24 rollback the current source state.
+
+### Verification
+
+- `npm run check`: passed.
+- `npm run build`: passed; 55 static pages generated.
+- Desktop browser matrix: Home, Projects, Project detail, Notes, Note detail, Lab, Lab detail, Topics, and sitemap returned 200 with no page overflow.
+- Mobile browser checks: Home, Projects, Notes, and Lab retained a 390px body width; horizontal filter rows remain intentionally scrollable.
+- Topic Lab links and both Lab detail sitemap entries resolve correctly.
+- Browser console: 0 errors; page runtime: 0 errors.
+- Visual comparison confirmed that Pixel Cover and Archive Terminal layout, proportion, grid, color, and spacing remain unchanged.
+- No dependencies, routes, schemas, content records, or component responsibilities changed.
+
+## 2026-06-13 / Phase 24 Rollback
+
+- Ambient Pixel Band code and all Notes / Projects / Lab detail-page mounts were reverted after visual review.
+- The Phase 24 plan and the original implementation record below are retained as historical context.
+- Current source contains no `AmbientPixelBand` component, helper, stylesheet, theme tokens, or page integration.
+- `npm run build` passed after rollback with 55 static pages generated.
+
 ## 2026-06-13 / Phase 24 Ambient Pixel Band System
 
 ### Project source and scope

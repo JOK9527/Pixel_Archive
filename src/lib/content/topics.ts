@@ -62,7 +62,7 @@ export async function getDiscoveryItems(): Promise<DiscoveryItem[]> {
       kind: "Lab" as const,
       title: item.title,
       description: item.description,
-      href: "/lab/",
+      href: item.href,
       category: item.type,
       tags: item.tags,
       date: item.date,
@@ -123,4 +123,3 @@ export async function getTopicItems(
     return item.tags.some((tag) => slugifyTopic(tag) === slug);
   });
 }
-

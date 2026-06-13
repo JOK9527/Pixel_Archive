@@ -1,10 +1,13 @@
 ---
-import { getEntry } from "astro:content";
 import ProjectLinks from "../components/project/ProjectLinks.astro";
 import ProjectStatus from "../components/project/ProjectStatus.astro";
 import ProjectTechStack from "../components/project/ProjectTechStack.astro";
 import ProjectVisual from "../components/project/ProjectVisual.astro";
 import type { ProjectItem } from "../lib/content/projects";
+import {
+  resolveArchiveLinks,
+  resolvePublishedNoteLinks,
+} from "../lib/content/relations";
 import BaseLayout from "./BaseLayout.astro";
 
 type Props = {
@@ -12,26 +15,10 @@ type Props = {
 };
 
 const { project } = Astro.props;
-const relatedNotes = (
-  await Promise.all(
-    project.relatedNotes.map(async (slug) => {
-      const entry = await getEntry("notes", slug);
-      return entry && !entry.data.draft
-        ? { href: `/notes/${slug}/`, title: entry.data.title }
-        : undefined;
-    }),
-  )
-).filter((item) => item !== undefined);
-const relatedArchive = (
-  await Promise.all(
-    project.relatedArchive.map(async (slug) => {
-      const entry = await getEntry("archive", slug);
-      return entry
-        ? { href: `/archive/#${slug}`, title: entry.data.title }
-        : undefined;
-    }),
-  )
-).filter((item) => item !== undefined);
+const [relatedNotes, relatedArchive] = await Promise.all([
+  resolvePublishedNoteLinks(project.relatedNotes),
+  resolveArchiveLinks(project.relatedArchive),
+]);
 ---
 
 <BaseLayout title={project.title} description={project.description}>
