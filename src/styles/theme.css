@@ -120,19 +120,6 @@
   --heat-lab-3: #7257a5;
   --heat-lab-4: #ed5126;
 
-  /* Detail-page ambient pixel bands derive from the section palettes. */
-  --ambient-opacity-low: 0.16;
-  --ambient-opacity-medium: 0.23;
-  --ambient-opacity-faint: 0.12;
-  --ambient-opacity-compact: 0.1;
-  --ambient-pixel-opacity: 0.3;
-  --ambient-a: color-mix(in srgb, var(--section-cool) 48%, var(--section-paper));
-  --ambient-b: color-mix(in srgb, var(--section-neutral) 54%, var(--section-paper));
-  --ambient-c: color-mix(in srgb, var(--section-main) 28%, var(--section-paper));
-  --ambient-facet: color-mix(in srgb, var(--section-deep) 18%, var(--section-paper));
-  --ambient-pixel: var(--section-cool);
-  --ambient-hot: var(--section-peak);
-
   /* Compatibility aliases for the Phase 22 cover API. */
   --cover-notes-main: var(--section-notes-main);
   --cover-notes-deep: var(--section-notes-deep);
@@ -348,12 +335,6 @@
   --heat-lab-3: #a58ad8;
   --heat-lab-4: #ff7652;
 
-  --ambient-opacity-low: 0.1;
-  --ambient-opacity-medium: 0.15;
-  --ambient-opacity-faint: 0.07;
-  --ambient-opacity-compact: 0.065;
-  --ambient-pixel-opacity: 0.2;
-
   --cover-notes-main: var(--section-notes-main);
   --cover-notes-deep: var(--section-notes-deep);
   --cover-notes-ink: var(--section-notes-ink);
@@ -416,12 +397,6 @@
   --heat-2: var(--heat-projects-2);
   --heat-3: var(--heat-projects-3);
   --heat-4: var(--heat-projects-4);
-  --ambient-a: color-mix(in srgb, var(--section-projects-main) 42%, var(--section-projects-paper));
-  --ambient-b: color-mix(in srgb, var(--section-projects-cool) 46%, var(--section-projects-paper));
-  --ambient-c: color-mix(in srgb, var(--section-projects-peak) 18%, var(--section-projects-paper));
-  --ambient-facet: color-mix(in srgb, var(--section-projects-deep) 18%, var(--section-projects-paper));
-  --ambient-pixel: var(--section-projects-cool);
-  --ambient-hot: var(--section-projects-peak);
 }
 
 [data-section="notes"] {
@@ -437,12 +412,6 @@
   --heat-2: var(--heat-notes-2);
   --heat-3: var(--heat-notes-3);
   --heat-4: var(--heat-notes-4);
-  --ambient-a: color-mix(in srgb, var(--section-notes-cool) 58%, var(--section-notes-paper));
-  --ambient-b: color-mix(in srgb, var(--section-archive-cool) 32%, var(--section-notes-paper));
-  --ambient-c: color-mix(in srgb, var(--heat-notes-3) 32%, var(--section-notes-paper));
-  --ambient-facet: color-mix(in srgb, var(--section-notes-ink) 16%, var(--section-notes-paper));
-  --ambient-pixel: var(--section-notes-cool);
-  --ambient-hot: var(--section-notes-main);
 }
 
 [data-section="archive"] {
@@ -458,12 +427,6 @@
   --heat-2: var(--heat-archive-2);
   --heat-3: var(--heat-archive-3);
   --heat-4: var(--heat-archive-4);
-  --ambient-a: color-mix(in srgb, var(--section-archive-cool) 54%, var(--section-archive-paper));
-  --ambient-b: color-mix(in srgb, var(--section-archive-neutral) 56%, var(--section-archive-paper));
-  --ambient-c: color-mix(in srgb, var(--section-archive-main) 30%, var(--section-archive-paper));
-  --ambient-facet: color-mix(in srgb, var(--section-archive-deep) 18%, var(--section-archive-paper));
-  --ambient-pixel: var(--section-archive-cool);
-  --ambient-hot: var(--section-archive-peak);
 }
 
 [data-section="lab"] {
@@ -479,12 +442,6 @@
   --heat-2: var(--heat-lab-2);
   --heat-3: var(--heat-lab-3);
   --heat-4: var(--heat-lab-4);
-  --ambient-a: color-mix(in srgb, var(--section-lab-main) 36%, var(--section-lab-paper));
-  --ambient-b: color-mix(in srgb, var(--section-lab-bluegray) 45%, var(--section-lab-paper));
-  --ambient-c: color-mix(in srgb, var(--section-lab-cool) 34%, var(--section-lab-paper));
-  --ambient-facet: color-mix(in srgb, var(--section-lab-deep) 17%, var(--section-lab-paper));
-  --ambient-pixel: var(--section-lab-bluegray);
-  --ambient-hot: var(--section-lab-peak);
 }
 
 [data-section="projects"],
