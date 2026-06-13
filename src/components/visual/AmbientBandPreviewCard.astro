@@ -1,0 +1,249 @@
+---
+import type { AmbientBandPreview } from "../../data/ambient-band-variants";
+import AmbientPixelBand from "./AmbientPixelBand.astro";
+
+type Props = {
+  sample: AmbientBandPreview;
+  debug?: boolean;
+};
+
+const { sample, debug = false } = Astro.props;
+---
+
+<article
+  class:list={[
+    "ambient-preview-card",
+    `ambient-preview-card--${sample.section}`,
+    `ambient-preview-card--${sample.status}`,
+    "pixel-corner",
+  ]}
+  data-section={sample.section}
+  data-variant={sample.variant}
+  data-review-status={sample.status}
+>
+  <header class="ambient-preview-card__header">
+    <div>
+      <p class="ui-label">{sample.section}</p>
+      <h3>{sample.variant}</h3>
+    </div>
+    <span class="ambient-preview-card__status ui-label">{sample.status}</span>
+  </header>
+
+  <div class="ambient-preview-card__stage">
+    <AmbientPixelBand
+      section={sample.section}
+      variant={sample.variant}
+      seed={sample.seed}
+      intensity={sample.intensity}
+      maxWidth={sample.maxWidth}
+      debug={debug}
+    />
+    <div class="ambient-preview-card__safe-zone" aria-hidden="true">
+      <span>TEXT SAFE AREA</span>
+      <i></i>
+      <i></i>
+      <i></i>
+    </div>
+  </div>
+
+  <dl class="ambient-preview-card__specs">
+    <div>
+      <dt>seed</dt>
+      <dd>{sample.seed}</dd>
+    </div>
+    <div>
+      <dt>maxWidth</dt>
+      <dd>{sample.maxWidth}px</dd>
+    </div>
+    <div>
+      <dt>opacity</dt>
+      <dd>{sample.intensity}</dd>
+    </div>
+    <div>
+      <dt>use</dt>
+      <dd>{sample.status}</dd>
+    </div>
+  </dl>
+
+  <p class="ambient-preview-card__note">{sample.note}</p>
+</article>
+
+<style>
+  .ambient-preview-card {
+    --preview-accent: var(--section-main);
+    display: grid;
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface-raised);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .ambient-preview-card--projects {
+    --preview-accent: var(--section-projects-main);
+    --color-pixel-mark: var(--section-projects-main);
+  }
+
+  .ambient-preview-card--notes {
+    --preview-accent: var(--section-notes-main);
+    --color-pixel-mark: var(--section-notes-main);
+  }
+
+  .ambient-preview-card--archive {
+    --preview-accent: var(--section-archive-main);
+    --color-pixel-mark: var(--section-archive-main);
+  }
+
+  .ambient-preview-card--lab {
+    --preview-accent: var(--section-lab-main);
+    --color-pixel-mark: var(--section-lab-main);
+  }
+
+  .ambient-preview-card__header {
+    display: flex;
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid var(--color-border);
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+  }
+
+  .ambient-preview-card__header p {
+    margin-bottom: 0.18rem;
+    color: var(--preview-accent);
+    font-size: 0.58rem;
+    font-weight: 700;
+  }
+
+  .ambient-preview-card__header h3 {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.86rem;
+    letter-spacing: -0.02em;
+  }
+
+  .ambient-preview-card__status {
+    padding: 0.22rem 0.35rem;
+    border: 1px solid color-mix(in srgb, var(--preview-accent) 38%, transparent);
+    color: var(--preview-accent);
+    font-size: 0.54rem;
+    font-weight: 700;
+  }
+
+  .ambient-preview-card--rejected .ambient-preview-card__status {
+    border-color: var(--color-border);
+    color: var(--color-text-muted);
+  }
+
+  .ambient-preview-card__stage {
+    position: relative;
+    display: grid;
+    min-height: 13.5rem;
+    overflow: hidden;
+    background:
+      linear-gradient(var(--color-grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-grid) 1px, transparent 1px),
+      var(--color-surface);
+    background-size: 24px 24px;
+    place-items: center;
+  }
+
+  .ambient-preview-card__stage > :global(.ambient-pixel-band) {
+    width: 112%;
+    max-width: none;
+    transform: translateX(-1%);
+  }
+
+  .ambient-preview-card__safe-zone {
+    position: absolute;
+    z-index: 2;
+    top: 24%;
+    right: 7%;
+    width: 34%;
+    padding: 0.65rem;
+    border: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--color-surface-raised) 88%, transparent);
+    box-shadow: var(--shadow-xs);
+    backdrop-filter: blur(2px);
+  }
+
+  .ambient-preview-card__safe-zone span {
+    display: block;
+    margin-bottom: 0.45rem;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.5rem;
+    letter-spacing: 0.06em;
+  }
+
+  .ambient-preview-card__safe-zone i {
+    display: block;
+    height: 3px;
+    margin-top: 0.35rem;
+    background: var(--color-border-strong);
+  }
+
+  .ambient-preview-card__safe-zone i:nth-child(3) {
+    width: 78%;
+  }
+
+  .ambient-preview-card__safe-zone i:nth-child(4) {
+    width: 54%;
+  }
+
+  .ambient-preview-card__specs {
+    display: grid;
+    margin: 0;
+    padding: 0.9rem 1rem;
+    border-top: 1px solid var(--color-border-subtle);
+    border-bottom: 1px solid var(--color-border-subtle);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.55rem 1rem;
+  }
+
+  .ambient-preview-card__specs div {
+    display: grid;
+    min-width: 0;
+    grid-template-columns: 4.4rem minmax(0, 1fr);
+    gap: 0.35rem;
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+  }
+
+  .ambient-preview-card__specs dt {
+    color: var(--color-text-faint);
+  }
+
+  .ambient-preview-card__specs dd {
+    min-width: 0;
+    margin: 0;
+    overflow-wrap: anywhere;
+    color: var(--color-text);
+  }
+
+  .ambient-preview-card__note {
+    margin: 0;
+    padding: 0.85rem 1rem 1rem;
+    color: var(--color-text-muted);
+    font-size: 0.78rem;
+  }
+
+  .ambient-preview-card--rejected {
+    box-shadow: none;
+  }
+
+  .ambient-preview-card--rejected .ambient-preview-card__stage {
+    filter: saturate(0.72);
+  }
+
+  @media (max-width: 32rem) {
+    .ambient-preview-card__stage {
+      min-height: 11rem;
+    }
+
+    .ambient-preview-card__safe-zone {
+      width: 38%;
+    }
+  }
+</style>

@@ -1,5 +1,44 @@
 # WORKLOG
 
+## 2026-06-13 / Phase 24B Ambient Pixel Band Preview Library
+
+### Scope and implementation
+
+- Confirmed the Phase 24 rollback baseline before implementation: no ambient component, style, token, or real detail-page mount remained.
+- Added a deterministic visual model with four stable variants: `diagonal-up`, `diagonal-down`, `right-sweep`, and `low-cross`.
+- Added an inline SVG Ambient Pixel Band component with four explicit layers: main silhouette, 5–6 geometric facets, a clipped pixel grid, and seeded edge pixels.
+- Added the noindex preview route `/lab/ambient-band-preview/` with 4 sections × 4 variants, 16 samples total.
+- Each sample records section, variant, seed, max width, intensity, review status, and a short suitability note.
+- Marked 12 samples as `candidate` and 4 as `rejected`; `approved` remains 0 until user review.
+- Added `?ambient=debug` support for preview-only SVG bounds, maximum-width labels, and the central safety area.
+
+### Visual and architecture boundaries
+
+- Reused the existing Projects, Notes, Archive, and Lab section tokens without changing Phase 23 colors.
+- Kept Notes on warm paper and blue-green neutrals with limited red nodes; kept Archive on clear green-blue layers with sparse amber nodes.
+- Added no dependency, bitmap, canvas, runtime random generation, animation, Content Collection field, or navigation entry.
+- Did not mount Ambient Pixel Band in Notes, Projects, or Lab detail layouts.
+- Did not modify Pixel Cover System, real content, routes other than the preview route, schema, TOC, or reading layouts.
+
+### Verification
+
+- `npm run check`: passed.
+- `npm run build`: passed; 56 static pages generated.
+- Preview route returned 200 and rendered 16 bands, 12 candidates, and 4 rejected comparison samples.
+- All 16 samples passed structural checks for silhouette/facets, clipped grid, and edge pixels.
+- Determinism check: the same seed produced the same pixel signature after reload.
+- Debug query displayed 16 visual bounds; normal mode displayed none.
+- Desktop light and dark visual review confirmed visible geometry, section-specific color identity, readable safety zones, and no ordinary shadow-only variants.
+- 390px mobile review retained all 16 single-column samples with no body overflow.
+- Notes, Projects, and Lab detail checks each rendered 0 ambient bands.
+- Browser console: 0 errors; page runtime: 0 errors.
+- Screenshots remain local under `output/playwright/` and are not committed.
+
+### Next decision
+
+- User review is required to promote 3–5 `candidate` samples to `approved`.
+- Phase 24C must not begin until approved variants and their target pages are explicitly recorded.
+
 ## 2026-06-13 / Architecture and Maintenance Cleanup
 
 ### Maintenance

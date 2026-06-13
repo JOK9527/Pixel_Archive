@@ -1,0 +1,192 @@
+.ambient-pixel-band {
+  --ambient-paper: var(--section-projects-paper);
+  --ambient-neutral: var(--section-projects-neutral);
+  --ambient-cool: var(--section-projects-cool);
+  --ambient-main: var(--section-projects-main);
+  --ambient-deep: var(--section-projects-deep);
+  --ambient-peak: var(--section-projects-peak);
+  position: relative;
+  width: min(100%, var(--ambient-max-width));
+  margin: 0;
+  isolation: isolate;
+}
+
+.ambient-pixel-band--notes {
+  --ambient-paper: var(--section-notes-paper);
+  --ambient-neutral: var(--section-notes-neutral);
+  --ambient-cool: var(--section-notes-cool);
+  --ambient-main: var(--section-notes-main);
+  --ambient-deep: var(--section-notes-ink);
+  --ambient-peak: var(--heat-notes-4);
+}
+
+.ambient-pixel-band--archive {
+  --ambient-paper: var(--section-archive-paper);
+  --ambient-neutral: var(--section-archive-neutral);
+  --ambient-cool: var(--section-archive-cool);
+  --ambient-main: var(--section-archive-main);
+  --ambient-deep: var(--section-archive-deep);
+  --ambient-peak: var(--section-archive-peak);
+}
+
+.ambient-pixel-band--lab {
+  --ambient-paper: var(--section-lab-paper);
+  --ambient-neutral: var(--section-lab-neutral);
+  --ambient-cool: var(--section-lab-cool);
+  --ambient-main: var(--section-lab-main);
+  --ambient-deep: var(--section-lab-deep);
+  --ambient-peak: var(--section-lab-peak);
+}
+
+.ambient-pixel-band svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.ambient-pixel-band__geometry {
+  opacity: 0.24;
+}
+
+.ambient-pixel-band--low .ambient-pixel-band__geometry {
+  opacity: 0.18;
+}
+
+.ambient-pixel-band__silhouette {
+  fill: var(--ambient-paper);
+  stroke: color-mix(in srgb, var(--ambient-main) 32%, transparent);
+  stroke-width: 2;
+}
+
+.ambient-pixel-band__facet {
+  stroke: color-mix(in srgb, var(--ambient-deep) 12%, transparent);
+  stroke-width: 1;
+}
+
+.ambient-pixel-band__facet--1 {
+  fill: var(--ambient-neutral);
+}
+
+.ambient-pixel-band__facet--2 {
+  fill: color-mix(in srgb, var(--ambient-cool) 76%, var(--ambient-paper));
+}
+
+.ambient-pixel-band__facet--3 {
+  fill: color-mix(in srgb, var(--ambient-main) 58%, var(--ambient-paper));
+}
+
+.ambient-pixel-band__facet--4 {
+  fill: color-mix(in srgb, var(--ambient-deep) 34%, var(--ambient-neutral));
+}
+
+.ambient-pixel-band__grid {
+  opacity: 0.3;
+}
+
+.ambient-pixel-band--low .ambient-pixel-band__grid {
+  opacity: 0.22;
+}
+
+.ambient-pixel-band__grid-line {
+  fill: none;
+  stroke: var(--ambient-deep);
+  stroke-width: 1;
+  opacity: 0.7;
+}
+
+.ambient-pixel-band__grid-node {
+  fill: var(--ambient-main);
+  opacity: 0.75;
+}
+
+.ambient-pixel-band__pixels {
+  opacity: 0.4;
+}
+
+.ambient-pixel-band--low .ambient-pixel-band__pixels {
+  opacity: 0.3;
+}
+
+.ambient-pixel-band__pixel {
+  shape-rendering: crispEdges;
+}
+
+.ambient-pixel-band__pixel--0 {
+  fill: var(--ambient-neutral);
+}
+
+.ambient-pixel-band__pixel--1 {
+  fill: var(--ambient-cool);
+}
+
+.ambient-pixel-band__pixel--2 {
+  fill: var(--ambient-main);
+}
+
+.ambient-pixel-band__pixel--3 {
+  fill: var(--ambient-peak);
+}
+
+.ambient-pixel-band__debug {
+  position: absolute;
+  inset: 0;
+  display: none;
+  padding: 0.4rem;
+  border: 1px dashed var(--ambient-main);
+  align-items: flex-start;
+  justify-content: space-between;
+  color: var(--ambient-deep);
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  pointer-events: none;
+}
+
+.ambient-pixel-band--debug .ambient-pixel-band__debug,
+[data-ambient-debug="true"] .ambient-pixel-band__debug {
+  display: flex;
+}
+
+.ambient-pixel-band__debug::after {
+  position: absolute;
+  inset: 18% 22%;
+  border: 1px dotted color-mix(in srgb, var(--ambient-peak) 62%, transparent);
+  content: "";
+}
+
+[data-theme="dark"] .ambient-pixel-band__geometry {
+  opacity: 0.27;
+}
+
+[data-theme="dark"] .ambient-pixel-band--low .ambient-pixel-band__geometry {
+  opacity: 0.21;
+}
+
+[data-theme="dark"] .ambient-pixel-band__grid {
+  opacity: 0.34;
+}
+
+[data-theme="dark"] .ambient-pixel-band__pixels {
+  opacity: 0.44;
+}
+
+@media (max-width: 42rem) {
+  .ambient-pixel-band__geometry {
+    opacity: 0.2;
+  }
+
+  .ambient-pixel-band__grid {
+    opacity: 0.24;
+  }
+
+  .ambient-pixel-band__pixels {
+    opacity: 0.3;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient-pixel-band,
+  .ambient-pixel-band * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
