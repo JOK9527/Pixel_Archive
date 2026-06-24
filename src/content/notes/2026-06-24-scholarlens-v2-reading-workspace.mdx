@@ -1,0 +1,110 @@
+---
+title: "ScholarLens AI V2：从解析原型到本地阅读工作区"
+description: "记录 V2 如何围绕规范化内容、三栏阅读、渐进 OCR、翻译、笔记与文档上下文 AI 重新建立稳定边界。"
+type: "Log"
+category: "AI / Reading"
+tags:
+  - ai
+  - ocr
+  - pdf
+  - reading-tools
+date: "2026-06-24"
+updated: "2026-06-24"
+coverMeta:
+  code: "SL/V2-0624"
+  accent: blue
+  progress: 78
+  density: high
+draft: false
+relatedProjects:
+  - "scholarlens-ai"
+relatedArchive:
+  - "2026-06-scholarlens-v2-reading-workspace"
+---
+
+## 为什么重新建立 V2
+
+ScholarLens AI V1 已经证明 PDF、Markdown、翻译、笔记和 AI 可以进入同一个阅读流程，但也积累了多 provider UI、标签页耦合和解析状态互相影响的问题。
+
+V2 没有直接复制旧结构，而是先固定一条更小的主流程：
+
+```text
+导入 PDF
+-> 检查文档约束
+-> 解析或 OCR
+-> 规范化结果
+-> 对照阅读
+-> 翻译 / 笔记 / AI
+```
+
+所有长期能力都围绕稳定的页面、内容块和结果版本展开，而不是让前端直接消费某个 provider 的临时输出。
+
+## 阅读工作区已经形成
+
+当前界面保持三个稳定区域：
+
+1. 左侧始终显示原始 PDF 页面。
+2. 中间在 Markdown 与 Translation 之间切换。
+3. 右侧独立承载 Chat 与 Note。
+
+PDF 页面和规范化内容块共享页面编号与 block id。单击内容用于选择上下文，双击才执行跨栏跳转。这样既能把笔记和问题绑定到具体原文，也不会让一次普通点击打断当前阅读位置。
+
+## 两条解析路径，一个内容契约
+
+V2 当前同时保留：
+
+- PyMuPDF 本地解析，用于原生文本较好的文档。
+- GLM-OCR 远程解析，用于扫描件、复杂双栏、公式和图表内容。
+
+两种结果都会进入统一 normalized contract，再由 Markdown 阅读器、Translation、Notes 和 Chat 消费。
+
+这个边界让 provider 选择停留在后端，不重新变成第一版中复杂的可见 UI 状态。
+
+## 大 PDF 不再等待整本完成
+
+GLM-OCR 路径已经支持自适应物理分块和渐进发布：
+
+- 短文档直接处理。
+- 中型文档根据平均文件体积选择 10 或 20 页分块。
+- 超过单次上传约束的大文档使用 5 页物理分块。
+- 独立任务最多并发 6 个。
+- 已完成范围立即合并到可阅读结果。
+- 部分任务失败时，只重试失败或缺失的分块。
+
+真实样本验证表明，重复上传完整 PDF 的 page-range 方式在中长文档上通常更慢。物理分块减少上传体积，但分块过小也会增加下载资产、阅读顺序修复和重复合并的本地开销，因此最终采用了按页数和平均字节数调整的策略。
+
+一次 151 页持续测试在高频调用后遇到 provider 限流，系统保留了已经成功的 25 个分块，随后只重试 6 个失败分块并恢复为连续的 1–151 页结果。
+
+## 正确性比速度更重要
+
+性能测试随后暴露了一个空白页对齐问题：阅读顺序修复曾跳过没有 layout block 的 PDF 页，导致后续 OCR 内容向前错位。
+
+修复后的硬约束是：
+
+- 每个原始 PDF 页都保留对应页面槽位。
+- 空白页可以没有内容块，但不能从结果中消失。
+- 物理分块的局部页码必须恢复成原始页码。
+- 图片资产必须指向本地合并后的路径。
+
+现有原始 OCR 输出可以重新规范化，无需再次调用 provider。
+
+## Translation、Notes 与 Reading Assistant
+
+Translation 使用版本化 prompt、严格 block id 和缓存身份。结果按分块渐进显示，同时保留 PDF 页面与内容块的定位关系。
+
+Notes 记录页面、block、引用文本、OCR provider 和结果 hash，并可导出 Markdown。Reading Assistant 支持文档概览、当前页和选中块三种上下文，不再要求用户每次先选择一段文字才能提问。
+
+真实 provider 配置仍与主阅读界面分离。默认 mock 路径用于无网络验证，API key 不写入公开内容或日志。
+
+## 当前验证与边界
+
+2026-06-24 当前代码通过：
+
+```text
+146 Python tests
+9 frontend JavaScript syntax checks
+```
+
+项目仍是本地个人工具。Windows 便携包、安装器、干净系统验证、MinerU adapter、PDF 虚拟滚动和 MathJax 离线资源仍属于后续工作。
+
+这次保存点的意义不是“功能全部完成”，而是 V2 已经从单一解析实验进入可持续维护的阅读工作区阶段。

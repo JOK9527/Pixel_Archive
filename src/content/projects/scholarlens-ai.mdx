@@ -1,56 +1,113 @@
 ---
 title: "ScholarLens AI"
-description: "面向英文论文阅读的 PDF 辅助工具，整合原文、Markdown 内容层、翻译、笔记与 AI 对话。"
+description: "面向个人论文阅读的本地 PDF 工作区，围绕原文、规范化 Markdown、翻译、笔记与文档上下文 AI 组织完整阅读流程。"
 type: "ai-tool"
 status: "WIP"
 category: "AI / Reading"
 tags:
   - ai
+  - ocr
   - pdf
   - reading-tools
 techStack:
   - Python
+  - FastAPI
   - JavaScript
-  - VLM Parser
+  - PyMuPDF
+  - GLM-OCR
 featured: false
-updatedDate: "2026-06-12"
+updatedDate: "2026-06-24"
+coverMeta:
+  code: "SL/V2"
+  accent: blue
+  progress: 78
+  density: high
 relatedNotes:
   - 2026-06-12-project-detail-structure
+  - 2026-06-24-scholarlens-v2-reading-workspace
+relatedArchive:
+  - 2026-06-scholarlens-v2-reading-workspace
 ---
 
 ## Project brief
 
-ScholarLens AI 面向英文论文阅读流程，将 PDF 原文阅读、结构化 Markdown 内容、翻译、笔记和 AI 对话放在同一个阅读界面中。
+ScholarLens AI V2 是一个面向个人日常使用的本地 PDF 阅读工作区。它不是对 V1 的直接重写，而是重新围绕一条可恢复、可验证的主流程组织系统：
 
-## Current focus
+```text
+导入 PDF
+-> 检查页数与文件约束
+-> 选择本地解析或远程 OCR
+-> 规范化页面与内容块
+-> 对照阅读 PDF / Markdown
+-> 翻译、笔记与文档上下文 AI
+```
 
-- 支持在不同解析来源之间切换
-- 验证 VLM Parser 的真实接口调用与分批解析流程
-- 改善长文阅读、定位和内容层切换体验
-- 保持解析结果与原始文档之间的可追溯关系
+第一目标是可靠的本地个人阅读体验，而不是多用户平台、云同步或复杂插件系统。
 
-## Highlights
+## Reader workspace
 
-- 在同一阅读流程中组织 PDF 原文与结构化 Markdown 内容层
-- 将翻译、笔记和 AI 对话放回具体文档上下文
-- 把解析源切换与分批解析作为可独立验证的技术环节
+当前阅读界面已经形成稳定的三栏结构：
+
+| 区域 | 职责 |
+| --- | --- |
+| 左栏 | 原始 PDF 页面，保持为主要事实来源 |
+| 中栏 | 规范化 Markdown / Translation 切换 |
+| 右栏 | Chat / Note 独立开关与当前上下文 |
+
+PDF 页、Markdown 页面和内容块之间保留轻量同步。单击用于选择 Chat / Note 上下文，双击用于跨栏定位，避免阅读操作和导航操作互相干扰。
+
+## Parsing and OCR
+
+V2 当前提供两条解析路径：
+
+- `pymupdf_native`：本地提取文本、图片、基础表格和阅读顺序，不上传文档。
+- `zhipu_glm_ocr`：通过 GLM-OCR 处理复杂版面、公式、图表和扫描型内容。
+
+两条路径最终写入同一份 provider-independent normalized contract，使阅读器、翻译、笔记和 AI 不直接依赖原始 provider 输出。
+
+GLM-OCR 执行已经从单次整文档调用扩展为：
+
+- 按页数与平均文件体积选择 5 / 10 / 20 页物理分块
+- 最多 6 个独立任务并发
+- 已完成分块渐进发布，允许提前开始阅读
+- 保留成功分块，仅重试失败或缺失范围
+- 合并时恢复原始页码、图片资产与空白页槽位
+
+## Translation, notes and AI
+
+- Translation 使用版本化 prompt、内容块 ID、缓存身份和渐进结果，保留原始页面与内容块引用。
+- Notes 按文档保存，可关联页面、内容块、OCR provider 和结果 hash，并支持 Markdown 导出。
+- Reading Assistant 默认使用无网络 mock 路径，也可连接 OpenAI-compatible provider。
+- Chat 上下文支持文档概览、当前页和选中内容块，不要求用户每次先做精确选择。
+- Settings 只保存非敏感配置；真实 API key 不进入公开内容或浏览器日志。
 
 ## Current state
 
-项目仍处于 WIP。当前公开信息只确认阅读流程、解析方向和正在验证的 VLM Parser 范围，不声明未复核的完整度或性能。
+V2 已建立 FastAPI 后端、模块化原生 JavaScript 前端和按文档隔离的本地文件结构。2026-06-24 的当前代码通过：
+
+```text
+146 Python tests
+9 frontend JavaScript syntax checks
+```
+
+真实多页 PDF 验证已覆盖渐进结果、物理分块、并发执行、限流后的失败块重试、连续页码、图片资产和空白页对齐。相关耗时只作为当前样本下的调优依据，不作为固定性能承诺。
 
 ## Next checkpoint
 
-继续验证真实接口调用、分批解析和内容定位的一致性，再决定哪些界面与技术记录适合公开。
+- 建立 Windows `onedir` 便携包和可写用户数据目录
+- 完成干净 Windows 环境下的导入、阅读与 OCR 冒烟测试
+- 继续改善大文档渲染与虚拟滚动
+- 评估 MinerU 作为未来 normalized adapter，而不是重新引入多 provider UI
+- 在离线阅读成为明确需求后再本地化 MathJax
 
 ## Public boundary
 
-当前公开条目只记录产品方向和已经进入开发验证的技术范围。服务地址、密钥、私有论文、用户数据与尚未复核的性能指标不进入本站。
+当前公开条目只记录已经进入代码和测试验证的能力。服务地址、密钥、私有论文、用户数据、本地目录、OCR 原文与 provider 账号信息不进入本站。
 
 ## Screenshot status
 
-真实界面仍包含需要检查的文档和环境信息，因此详情页暂时使用抽象系统记录。完成统一脱敏后再替换为公开截图。
+真实界面仍可能包含论文正文、文件名和本地状态，因此详情页继续使用抽象系统记录。完成统一脱敏后再加入公开截图。
 
 ## Public links
 
-公开仓库、演示地址和文档地址尚未确认，因此当前不展示占位外链。
+V2 当前定位为本地个人工具，公开仓库、安装包和在线演示尚未确认，因此不展示占位外链。

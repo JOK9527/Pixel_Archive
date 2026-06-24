@@ -18,7 +18,7 @@ Pixel Cover System 使用 `project-code`、`terminal-record`、`save-point` 与 
 
 本地设计预览位于 `/design/pixel-cover-system/`，不进入公开导航并设置为 `noindex, nofollow`。
 
-当前内容基线为 3 个 Projects、5 篇 Notes、5 个 Archive 节点和 2 个 Lab 实验。`/topics/`、`/rss.xml`、`/sitemap.xml` 与 `/robots.txt` 已生成。
+当前内容基线为 3 个 Projects、7 篇 Notes、6 个 Archive 节点和 2 个 Lab 实验。`/topics/`、`/rss.xml`、`/sitemap.xml` 与 `/robots.txt` 已生成。
 
 Projects 可按 type / status / year.month / tech 浏览，Notes 可按 category / year.month 浏览。筛选使用原生客户端脚本，静态 HTML 默认保留全部内容。
 
